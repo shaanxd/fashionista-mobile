@@ -9,6 +9,10 @@ import com.shahid.fashionista_mobile.dto.response.AuthResponse;
 public class AuthStore {
     private MutableLiveData<AuthResponse> authentication = new MutableLiveData<>();
 
+    public AuthStore() {
+        authentication.setValue(new AuthResponse());
+    }
+
     public AuthResponse getAuthentication() {
         return authentication.getValue();
     }
@@ -23,5 +27,9 @@ public class AuthStore {
 
     public void removeAuthenticationObserver(LifecycleOwner lifecycleOwner) {
         authentication.removeObservers(lifecycleOwner);
+    }
+
+    public boolean hasObservers() {
+        return authentication.hasObservers();
     }
 }

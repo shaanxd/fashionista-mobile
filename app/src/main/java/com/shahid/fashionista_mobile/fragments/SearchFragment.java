@@ -1,17 +1,13 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.databinding.FragmentSearchBinding;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends ExpireFragment {
     private FragmentSearchBinding binding;
 
     public SearchFragment() {

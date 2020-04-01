@@ -13,7 +13,6 @@ public class OrdersFragment extends AuthFragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

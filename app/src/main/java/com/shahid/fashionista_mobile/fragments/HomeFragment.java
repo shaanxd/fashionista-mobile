@@ -1,16 +1,13 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shahid.fashionista_mobile.R;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends ExpireFragment {
 
     public HomeFragment() {
         // Required empty public constructor

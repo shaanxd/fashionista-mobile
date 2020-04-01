@@ -1,4 +1,4 @@
-package com.shahid.fashionista_mobile.api;
+package com.shahid.fashionista_mobile.callbacks;
 
 import retrofit2.Response;
 
