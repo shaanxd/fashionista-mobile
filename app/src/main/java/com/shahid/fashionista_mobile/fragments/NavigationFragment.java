@@ -1,29 +1,21 @@
 package com.shahid.fashionista_mobile.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.databinding.FragmentNavigationBinding;
 
-public class NavigationFragment extends RootBaseFragment {
+public class NavigationFragment extends RootFragment {
     private FragmentNavigationBinding binding;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;

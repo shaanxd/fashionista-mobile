@@ -1,18 +1,13 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.databinding.FragmentCartBinding;
 
-public class CartFragment extends AuthenticatedBaseFragment {
+public class CartFragment extends AuthFragment {
 
     private FragmentCartBinding binding;
 

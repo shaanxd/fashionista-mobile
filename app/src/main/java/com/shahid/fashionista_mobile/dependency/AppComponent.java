@@ -1,6 +1,6 @@
 package com.shahid.fashionista_mobile.dependency;
 
-import com.shahid.fashionista_mobile.activities.MainActivity;
+import com.shahid.fashionista_mobile.fragments.AuthFragment;
 
 import javax.inject.Singleton;
 
@@ -9,5 +9,6 @@ import dagger.Component;
 @Singleton
 @Component(modules = AppModule.class)
 public interface AppComponent {
-    void inject(MainActivity mainActivity);
+    // Fragment injection functions
+    void inject(AuthFragment x);
 }

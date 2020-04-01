@@ -1,9 +1,12 @@
 package com.shahid.fashionista_mobile.dependency;
 
-import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
+import com.shahid.fashionista_mobile.dto.response.AuthResponse;
 import com.shahid.fashionista_mobile.services.AuthenticationService;
+import com.shahid.fashionista_mobile.store.AuthStore;
 
 import javax.inject.Singleton;
 
@@ -40,4 +43,15 @@ public class AppModule {
         return new AuthenticationService(retrofit);
     }
 
+    @Provides
+    @Singleton
+    public AuthStore getSharedPrefStoreInstance() {
+        return new AuthStore();
+    }
+
+    @Nullable
+    @Provides
+    public AuthResponse getIsLoggedIn(AuthStore authStore) {
+        return authStore.getAuthentication();
+    }
 }
