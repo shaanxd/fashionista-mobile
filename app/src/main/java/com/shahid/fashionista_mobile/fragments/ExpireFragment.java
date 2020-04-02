@@ -36,7 +36,7 @@ public abstract class ExpireFragment extends RootFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (authObj != null) {
-            authStore.setAuthenticationObserver(this, authParam -> {
+            authStore.setAuthObserver(this, authParam -> {
                 if (authParam == null) {
                     rootNavController.navigate(R.id.action_navigationFragment_to_logoutFragment);
                 }
@@ -47,6 +47,6 @@ public abstract class ExpireFragment extends RootFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        authStore.removeAuthenticationObserver(this);
+        authStore.removeAuthObserver(this);
     }
 }

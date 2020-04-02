@@ -6,27 +6,40 @@ import androidx.lifecycle.Observer;
 
 import com.shahid.fashionista_mobile.dto.response.AuthResponse;
 
+import javax.inject.Inject;
+
 public class AuthStore {
-    private MutableLiveData<AuthResponse> authentication = new MutableLiveData<>();
+    private MutableLiveData<AuthResponse> auth = new MutableLiveData<>();
+    private SharedPrefStore sharedPrefStore;
 
-    public AuthStore() {
-        //  authentication.setValue(new AuthResponse());
+    @Inject
+    public AuthStore(SharedPrefStore sharedPrefStore) {
+        this.sharedPrefStore = sharedPrefStore;
+        loadAuthentication();
     }
 
-    public AuthResponse getAuthentication() {
-        return authentication.getValue();
+    public AuthResponse getAuth() {
+        return auth.getValue();
     }
 
-    public void setAuthentication(AuthResponse authResponse) {
-        authentication.setValue(authResponse);
+    public void setAuth(AuthResponse authObj) {
+        auth.setValue(authObj);
+        if (authObj == null) {
+            sharedPrefStore.clearAuthSharedPreferences();
+        } else {
+            sharedPrefStore.setAuthSharedPreferences(authObj);
+        }
     }
 
-    public void setAuthenticationObserver(LifecycleOwner lifecycleOwner, Observer<AuthResponse> observer) {
-        authentication.observe(lifecycleOwner, observer);
+    public void setAuthObserver(LifecycleOwner lifecycleOwner, Observer<AuthResponse> observer) {
+        auth.observe(lifecycleOwner, observer);
     }
 
-    public void removeAuthenticationObserver(LifecycleOwner lifecycleOwner) {
-        authentication.removeObservers(lifecycleOwner);
+    public void removeAuthObserver(LifecycleOwner lifecycleOwner) {
+        auth.removeObservers(lifecycleOwner);
     }
 
+    private void loadAuthentication() {
+        auth.setValue(sharedPrefStore.getAuthSharedPreferences());
+    }
 }

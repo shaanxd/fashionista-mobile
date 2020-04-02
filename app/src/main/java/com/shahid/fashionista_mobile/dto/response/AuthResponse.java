@@ -1,5 +1,7 @@
 package com.shahid.fashionista_mobile.dto.response;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,4 +15,5 @@ public class AuthResponse {
     private String name;
     private String role;
     private long expirationInSeconds;
+    private Date expirationDate;
 }

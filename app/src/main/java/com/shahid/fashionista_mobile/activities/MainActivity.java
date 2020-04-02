@@ -30,6 +30,6 @@ public class MainActivity extends AppCompatActivity implements TimerCallback, Ru
 
     @Override
     public void run() {
-        authStore.setAuthentication(null);
+        authStore.setAuth(null);
     }
 }

@@ -21,6 +21,8 @@ import com.shahid.fashionista_mobile.dto.response.AuthResponse;
 import com.shahid.fashionista_mobile.services.AuthenticationService;
 import com.shahid.fashionista_mobile.store.AuthStore;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import retrofit2.Response;
@@ -97,9 +99,22 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
     @Override
     public void onSuccess(Response mResponse) {
         AuthResponse authResponse = (AuthResponse) mResponse.body();
-        authStore.setAuthentication(authResponse);
-        ((TimerCallback) activity).start(10000);
-        rootNavController.navigate(R.id.action_loginFragment_to_navigationFragment);
+        if (authResponse != null) {
+            long expirationInMilliSeconds = authResponse.getExpirationInSeconds() * 1000;
+            // Start Timer to Logout
+            ((TimerCallback) activity).start(expirationInMilliSeconds);
+            // Current Date
+            Date currentDate = new Date();
+            // Expiration Date
+            Date expirationDate = new Date(currentDate.getTime() + expirationInMilliSeconds);
+            // Set Expiration Date and Set Authentication Obj
+            authResponse.setExpirationDate(expirationDate);
+            authStore.setAuth(authResponse);
+
+            rootNavController.navigate(R.id.action_loginFragment_to_navigationFragment);
+        } else {
+            // Error
+        }
     }
 
     @Override
