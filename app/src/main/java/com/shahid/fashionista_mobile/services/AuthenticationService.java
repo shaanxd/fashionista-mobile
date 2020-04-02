@@ -3,9 +3,9 @@ package com.shahid.fashionista_mobile.services;
 import com.shahid.fashionista_mobile.api.AuthInterface;
 import com.shahid.fashionista_mobile.callbacks.CustomCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
-import com.shahid.fashionista_mobile.dto.request.AuthRequest;
+import com.shahid.fashionista_mobile.dto.request.AuthenticationRequest;
 import com.shahid.fashionista_mobile.dto.request.SignUpRequest;
-import com.shahid.fashionista_mobile.dto.response.AuthResponse;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 
 import javax.inject.Inject;
 
@@ -20,9 +20,9 @@ public class AuthenticationService {
         this.retrofit = retrofit;
     }
 
-    public void signInUser(AuthRequest request, ServiceCallback serviceCallback) {
+    public void signInUser(AuthenticationRequest request, ServiceCallback serviceCallback) {
         AuthInterface authInterface = retrofit.create(AuthInterface.class);
-        Call<AuthResponse> authResponseCall = authInterface.signIn(request);
+        Call<AuthenticationResponse> authResponseCall = authInterface.signIn(request);
         authResponseCall.enqueue(new CustomCallback<>(serviceCallback));
     }
 

@@ -4,10 +4,10 @@ import android.content.Context;
 
 import androidx.annotation.Nullable;
 
-import com.shahid.fashionista_mobile.dto.response.AuthResponse;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 import com.shahid.fashionista_mobile.services.AuthenticationService;
-import com.shahid.fashionista_mobile.store.AuthStore;
-import com.shahid.fashionista_mobile.store.SharedPrefStore;
+import com.shahid.fashionista_mobile.store.SessionStorage;
+import com.shahid.fashionista_mobile.store.SharedStorage;
 
 import javax.inject.Singleton;
 
@@ -46,19 +46,19 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public SharedPrefStore getSharedPrefInstance(Context context) {
-        return new SharedPrefStore(context);
+    public SharedStorage getSharedPrefInstance(Context context) {
+        return new SharedStorage(context);
     }
 
     @Provides
     @Singleton
-    public AuthStore getAuthStoreInstance(SharedPrefStore sharedPrefStore) {
-        return new AuthStore(sharedPrefStore);
+    public SessionStorage getAuthStoreInstance(SharedStorage sharedStorage) {
+        return new SessionStorage(sharedStorage);
     }
 
     @Nullable
     @Provides
-    public AuthResponse getAuthentication(AuthStore authStore) {
-        return authStore.getAuth();
+    public AuthenticationResponse getAuthentication(SessionStorage sessionStorage) {
+        return sessionStorage.getSession();
     }
 }

@@ -4,38 +4,38 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.shahid.fashionista_mobile.dto.response.AuthResponse;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 
 import javax.inject.Inject;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class SharedPrefStore {
+public class SharedStorage {
     private final String USER_FILE = "USER_FILE";
     private final String USER_INFO = "USER_INFO";
     private Context context;
 
     @Inject
-    public SharedPrefStore(Context context) {
+    public SharedStorage(Context context) {
         this.context = context;
     }
 
-    public SharedPreferences getSharedPreferences(String FILE_KEY, int FILE_MODE) {
-        return context.getSharedPreferences(FILE_KEY, FILE_MODE);
+    public SharedPreferences getSharedPreferences(String key, int mode) {
+        return context.getSharedPreferences(key, mode);
     }
 
-    public AuthResponse getAuthSharedPreferences() {
+    public AuthenticationResponse getAuthSharedPreferences() {
         SharedPreferences sharedPrefs = getSharedPreferences(USER_FILE, MODE_PRIVATE);
         String authString = sharedPrefs.getString(USER_INFO, null);
         if (authString == null) {
             return null;
         }
-        return new Gson().fromJson(authString, AuthResponse.class);
+        return new Gson().fromJson(authString, AuthenticationResponse.class);
     }
 
-    public void setAuthSharedPreferences(AuthResponse authObj) {
+    public void setAuthSharedPreferences(AuthenticationResponse obj) {
         SharedPreferences.Editor prefsEditor = getSharedPreferences(USER_FILE, MODE_PRIVATE).edit();
-        String authString = new Gson().toJson(authObj);
+        String authString = new Gson().toJson(obj);
         prefsEditor.putString(USER_INFO, authString).apply();
     }
 

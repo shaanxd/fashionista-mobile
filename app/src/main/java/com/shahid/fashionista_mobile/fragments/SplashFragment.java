@@ -12,8 +12,8 @@ import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.TimerCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentSplashBinding;
-import com.shahid.fashionista_mobile.dto.response.AuthResponse;
-import com.shahid.fashionista_mobile.store.AuthStore;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
+import com.shahid.fashionista_mobile.store.SessionStorage;
 
 import java.util.Date;
 
@@ -21,12 +21,11 @@ import javax.inject.Inject;
 
 public class SplashFragment extends RootFragment {
     private FragmentSplashBinding binding;
-
     @Nullable
     @Inject
-    AuthResponse authObj;
+    AuthenticationResponse authState;
     @Inject
-    AuthStore authStore;
+    SessionStorage sessionStorage;
 
     public SplashFragment() {
 
@@ -53,17 +52,17 @@ public class SplashFragment extends RootFragment {
     }
 
     private void checkAuthenticationValidity() {
-        if (authObj != null) {
+        if (authState != null) {
             // Get current date and expiration date from existing authentication object
             Date currentDate = new Date();
-            Date expirationDate = authObj.getExpirationDate();
+            Date expirationDate = authState.getExpirationDate();
 
             // Get the difference between and logout or start logout timer based on a threshold value
             long difference = expirationDate.getTime() - currentDate.getTime();
             if (difference > 10000) {
                 ((TimerCallback) activity).start(difference);
             } else {
-                authStore.setAuth(null);
+                sessionStorage.setSession(null);
             }
         }
         rootNavController.navigate(R.id.action_splashFragment_to_home_nav_graph);

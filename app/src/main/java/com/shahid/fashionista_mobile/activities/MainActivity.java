@@ -8,13 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.TimerCallback;
-import com.shahid.fashionista_mobile.store.AuthStore;
+import com.shahid.fashionista_mobile.store.SessionStorage;
 
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements TimerCallback, Runnable {
     @Inject
-    AuthStore authStore;
+    SessionStorage sessionStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,6 @@ public class MainActivity extends AppCompatActivity implements TimerCallback, Ru
 
     @Override
     public void run() {
-        authStore.setAuth(null);
+        sessionStorage.setSession(null);
     }
 }

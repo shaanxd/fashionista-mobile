@@ -8,19 +8,18 @@ import androidx.annotation.Nullable;
 
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
-import com.shahid.fashionista_mobile.dto.response.AuthResponse;
-import com.shahid.fashionista_mobile.store.AuthStore;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
+import com.shahid.fashionista_mobile.store.SessionStorage;
 
 import javax.inject.Inject;
 
 
 public abstract class ExpireFragment extends RootFragment {
     @Inject
-    AuthStore authStore;
-
+    SessionStorage sessionStorage;
     @Nullable
     @Inject
-    AuthResponse authObj;
+    AuthenticationResponse authState;
 
     public ExpireFragment() {
         // Required empty public constructor
@@ -35,8 +34,8 @@ public abstract class ExpireFragment extends RootFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (authObj != null) {
-            authStore.setAuthObserver(this, authParam -> {
+        if (authState != null) {
+            sessionStorage.attachObserver(this, authParam -> {
                 if (authParam == null) {
                     rootNavController.navigate(R.id.action_navigationFragment_to_logoutFragment);
                 }
@@ -47,6 +46,6 @@ public abstract class ExpireFragment extends RootFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        authStore.removeAuthObserver(this);
+        sessionStorage.detachObserver(this);
     }
 }

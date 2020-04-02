@@ -16,10 +16,10 @@ import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.callbacks.TimerCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentLoginBinding;
-import com.shahid.fashionista_mobile.dto.request.AuthRequest;
-import com.shahid.fashionista_mobile.dto.response.AuthResponse;
+import com.shahid.fashionista_mobile.dto.request.AuthenticationRequest;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 import com.shahid.fashionista_mobile.services.AuthenticationService;
-import com.shahid.fashionista_mobile.store.AuthStore;
+import com.shahid.fashionista_mobile.store.SessionStorage;
 
 import java.util.Date;
 
@@ -35,7 +35,7 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
     @Inject
     AuthenticationService authService;
     @Inject
-    AuthStore authStore;
+    SessionStorage sessionStorage;
     private EditText emailTxt;
     private EditText passwordTxt;
 
@@ -87,8 +87,8 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
             Toast.makeText(activity, "Fields cannot be empty.", Toast.LENGTH_SHORT).show();
             return;
         }
-        AuthRequest authRequest = new AuthRequest(emailString, passwordString);
-        authService.signInUser(authRequest, this);
+        AuthenticationRequest authenticationRequest = new AuthenticationRequest(emailString, passwordString);
+        authService.signInUser(authenticationRequest, this);
 
     }
 
@@ -98,19 +98,16 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
 
     @Override
     public void onSuccess(Response mResponse) {
-        AuthResponse authResponse = (AuthResponse) mResponse.body();
-        if (authResponse != null) {
-            long expirationInMilliSeconds = authResponse.getExpirationInSeconds() * 1000;
+        AuthenticationResponse response = (AuthenticationResponse) mResponse.body();
+        if (response != null) {
+            long expirationInMilliSeconds = response.getExpirationInSeconds() * 1000;
             // Start Timer to Logout
             ((TimerCallback) activity).start(expirationInMilliSeconds);
-            // Current Date
-            Date currentDate = new Date();
             // Expiration Date
-            Date expirationDate = new Date(currentDate.getTime() + expirationInMilliSeconds);
+            Date expirationDate = new Date(new Date().getTime() + expirationInMilliSeconds);
             // Set Expiration Date and Set Authentication Obj
-            authResponse.setExpirationDate(expirationDate);
-            authStore.setAuth(authResponse);
-
+            response.setExpirationDate(expirationDate);
+            sessionStorage.setSession(response);
             rootNavController.navigate(R.id.action_loginFragment_to_navigationFragment);
         } else {
             // Error
