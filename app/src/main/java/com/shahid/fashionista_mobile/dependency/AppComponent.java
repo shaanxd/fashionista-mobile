@@ -2,6 +2,7 @@ package com.shahid.fashionista_mobile.dependency;
 
 import com.shahid.fashionista_mobile.activities.MainActivity;
 import com.shahid.fashionista_mobile.fragments.ExpireFragment;
+import com.shahid.fashionista_mobile.fragments.LoginFragment;
 
 import javax.inject.Singleton;
 
@@ -14,4 +15,6 @@ public interface AppComponent {
     void inject(MainActivity x);
     // Fragment injection functions
     void inject(ExpireFragment x);
+
+    void inject(LoginFragment x);
 }

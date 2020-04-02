@@ -29,7 +29,7 @@ public class SplashFragment extends RootFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((TimerCallback) activity).start();
+        ((TimerCallback) activity).start(10000);
         rootNavController.navigate(R.id.action_splashFragment_to_home_nav_graph);
     }
 }

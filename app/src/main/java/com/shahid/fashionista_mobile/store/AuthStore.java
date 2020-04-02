@@ -10,7 +10,7 @@ public class AuthStore {
     private MutableLiveData<AuthResponse> authentication = new MutableLiveData<>();
 
     public AuthStore() {
-        authentication.setValue(new AuthResponse());
+        //  authentication.setValue(new AuthResponse());
     }
 
     public AuthResponse getAuthentication() {
@@ -29,7 +29,4 @@ public class AuthStore {
         authentication.removeObservers(lifecycleOwner);
     }
 
-    public boolean hasObservers() {
-        return authentication.hasObservers();
-    }
 }

@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity implements TimerCallback, Ru
     }
 
     @Override
-    public void start() {
-        new Handler().postDelayed(this, 10000);
+    public void start(long expiresIn) {
+        new Handler().postDelayed(this, expiresIn);
     }
 
     @Override
