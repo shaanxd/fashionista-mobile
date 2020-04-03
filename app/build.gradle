@@ -69,4 +69,7 @@ dependencies {
     //Awesome Validation
     implementation 'com.basgeekball:awesome-validation:4.2'
 
+    //Dynamic Toasts
+    implementation 'com.pranavpandey.android:dynamic-toasts:3.2.0'
+
 }

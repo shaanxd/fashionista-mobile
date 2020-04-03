@@ -1,19 +1,21 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
@@ -35,14 +37,21 @@ import static com.basgeekball.awesomevalidation.ValidationStyle.UNDERLABEL;
 public class SignUpFragment extends RootFragment implements View.OnClickListener, ServiceCallback {
     private static final String TAG = "SignUpFragment";
 
+    private MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
+
     private FragmentSignUpBinding binding;
+
     @Inject
     AuthenticationService authService;
     @Inject
     SessionStorage sessionStorage;
+
     private EditText emailTxt, firstNameTxt, lastNameTxt, passwordTxt, confirmPasswordTxt;
-    private Button signUpBtn, signInBtn;
     private AwesomeValidation validator;
+    private RelativeLayout hiddenLayout;
+    private LinearLayout loadingLayout;
+
+
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -72,8 +81,8 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
         passwordTxt = binding.passwordTxt;
         confirmPasswordTxt = binding.confirmPasswordTxt;
 
-        signUpBtn = binding.signUpBtn;
-        signInBtn = binding.signInBtn;
+        hiddenLayout = binding.hiddenLayout;
+        loadingLayout = binding.loadingLayout;
 
         validator.addValidation(emailTxt, Patterns.EMAIL_ADDRESS, "Invalid Email Address");
         validator.addValidation(firstNameTxt, RegexTemplate.NOT_EMPTY, "Please Enter First Name");
@@ -81,8 +90,10 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
         validator.addValidation(passwordTxt, "[0-9a-zA-Z]{6,}", "Password should contain at least 6 characters");
         validator.addValidation(confirmPasswordTxt, passwordTxt, "Passwords do not match");
 
-        signUpBtn.setOnClickListener(this);
-        signInBtn.setOnClickListener(this);
+        binding.signUpBtn.setOnClickListener(this);
+        binding.signInBtn.setOnClickListener(this);
+
+        loading.observe(getViewLifecycleOwner(), this::onLoadingStateChange);
     }
 
     @Override
@@ -104,12 +115,23 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
 
     private void onSignUpClick() {
         if (validator.validate()) {
+            loading.setValue(true);
             String email = emailTxt.getText().toString();
             String name = firstNameTxt.getText().toString() + " " + lastNameTxt.getText().toString();
             String password = passwordTxt.getText().toString();
             String confirmPassword = confirmPasswordTxt.getText().toString();
             SignUpRequest request = new SignUpRequest(email, name, password, confirmPassword);
             authService.signUpUser(request, this);
+        }
+    }
+
+    private void onLoadingStateChange(boolean value) {
+        if (value) {
+            hiddenLayout.setVisibility(View.GONE);
+            loadingLayout.setVisibility(View.VISIBLE);
+        } else {
+            loadingLayout.setVisibility(View.GONE);
+            hiddenLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -130,7 +152,15 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        loading.removeObservers(this);
+    }
+
+    @Override
     public void onFailure(String mErrorMessage) {
-        Log.e(TAG, mErrorMessage);
+        // TODO style the toast
+        loading.setValue(false);
+        DynamicToast.makeError(activity, mErrorMessage).show();
     }
 }
