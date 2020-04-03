@@ -9,8 +9,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shahid.fashionista_mobile.FashionApp;
+import com.shahid.fashionista_mobile.adapters.ProductAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentHomeBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
@@ -33,6 +37,10 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback {
     private MutableLiveData<String> error = new MutableLiveData<>(null);
 
     private LinearLayout loadingLayout, errorLayout, productsLayout;
+    private RecyclerView productRecyclerView;
+
+    private ProductAdapter adapter;
+    private GridLayoutManager layoutManager;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,6 +67,8 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback {
         errorLayout = binding.errorLayout;
         productsLayout = binding.productsLayout;
 
+        productRecyclerView = binding.productRecyclerView;
+
         loading.observe(getViewLifecycleOwner(), value -> {
             if (value) {
                 onLoading();
@@ -83,8 +93,16 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback {
     }
 
     private void onProductsLoaded() {
-        loadingLayout.setVisibility(GONE);
-        productsLayout.setVisibility(VISIBLE);
+        if (products.getValue() != null) {
+            loadingLayout.setVisibility(GONE);
+            if (layoutManager == null) {
+                layoutManager = new GridLayoutManager(activity, 2, LinearLayoutManager.VERTICAL, false);
+            }
+            adapter = new ProductAdapter(products.getValue().getProducts(), activity);
+            productRecyclerView.setLayoutManager(layoutManager);
+            productRecyclerView.setAdapter(adapter);
+            productsLayout.setVisibility(VISIBLE);
+        }
     }
 
     private void getProducts() {
