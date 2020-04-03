@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 import com.shahid.fashionista_mobile.store.SessionStorage;
@@ -28,7 +27,6 @@ public abstract class ExpireFragment extends RootFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((FashionApp) activity.getApplication()).getAppComponent().inject(this);
     }
 
     @Override
