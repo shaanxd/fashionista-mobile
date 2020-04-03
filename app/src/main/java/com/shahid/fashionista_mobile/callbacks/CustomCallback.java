@@ -26,8 +26,6 @@ public class CustomCallback<T> implements Callback<T> {
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        if (t.getMessage() != null) {
-            mServiceCallback.onFailure(t.getMessage());
-        }
+        mServiceCallback.onFailure("A network error occurred. Please try again.");
     }
 }

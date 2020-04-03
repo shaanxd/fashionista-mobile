@@ -15,6 +15,7 @@ import javax.inject.Inject;
 public class MainActivity extends AppCompatActivity implements TimerCallback, Runnable {
     @Inject
     SessionStorage sessionStorage;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,16 @@ public class MainActivity extends AppCompatActivity implements TimerCallback, Ru
     }
 
     @Override
-    public void start(long expiresIn) {
-        new Handler().postDelayed(this, expiresIn);
+    public void start(long difference) {
+        handler = new Handler();
+        handler.postDelayed(this, difference);
+    }
+
+    @Override
+    public void destroy() {
+        if (handler != null) {
+            handler.removeCallbacks(this);
+        }
     }
 
     @Override
