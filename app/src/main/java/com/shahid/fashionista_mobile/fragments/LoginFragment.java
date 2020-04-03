@@ -109,8 +109,6 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
             response.setExpirationDate(expirationDate);
             sessionStorage.setSession(response);
             rootNavController.navigate(R.id.action_loginFragment_to_navigationFragment);
-        } else {
-            // Error
         }
     }
 

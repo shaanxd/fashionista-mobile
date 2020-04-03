@@ -20,14 +20,16 @@ public class AuthenticationService {
         this.retrofit = retrofit;
     }
 
-    public void signInUser(AuthenticationRequest request, ServiceCallback serviceCallback) {
-        AuthInterface authInterface = retrofit.create(AuthInterface.class);
-        Call<AuthenticationResponse> authResponseCall = authInterface.signIn(request);
-        authResponseCall.enqueue(new CustomCallback<>(serviceCallback));
+    public void signInUser(AuthenticationRequest request, ServiceCallback callback) {
+        AuthInterface auth = retrofit.create(AuthInterface.class);
+        Call<AuthenticationResponse> call = auth.signIn(request);
+        call.enqueue(new CustomCallback<>(callback));
     }
 
-    public void signUpUser(SignUpRequest request) {
-
+    public void signUpUser(SignUpRequest request, ServiceCallback callback) {
+        AuthInterface api = retrofit.create(AuthInterface.class);
+        Call<AuthenticationResponse> call = api.signUp(request);
+        call.enqueue(new CustomCallback<>(callback));
     }
 
 }

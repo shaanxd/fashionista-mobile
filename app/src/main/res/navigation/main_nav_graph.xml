@@ -45,7 +45,15 @@
         android:id="@+id/signUpFragment"
         android:name="com.shahid.fashionista_mobile.fragments.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up">
+
+        <action
+            android:id="@+id/action_signUpFragment_to_navigationFragment"
+            app:destination="@id/navigationFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigationFragment"

@@ -61,9 +61,12 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:$lombok"
 
 
-    //Jetpack Navigation
+    //Navigation
     def nav_version = "2.3.0-alpha04"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    //Awesome Validation
+    implementation 'com.basgeekball:awesome-validation:4.2'
 
 }
