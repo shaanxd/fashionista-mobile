@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 
 import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 import com.shahid.fashionista_mobile.services.AuthenticationService;
+import com.shahid.fashionista_mobile.services.ProductService;
 import com.shahid.fashionista_mobile.store.SessionStorage;
 import com.shahid.fashionista_mobile.store.SharedStorage;
 
@@ -42,6 +43,12 @@ public class AppModule {
     @Singleton
     public AuthenticationService getAuthenticationServiceInstance(Retrofit retrofit) {
         return new AuthenticationService(retrofit);
+    }
+
+    @Provides
+    @Singleton
+    public ProductService getProductServiceInstance(Retrofit retrofit) {
+        return new ProductService(retrofit);
     }
 
     @Provides

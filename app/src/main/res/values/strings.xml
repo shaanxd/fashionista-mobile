@@ -17,4 +17,5 @@
     <string name="error_password">Password should contain at least 6 characters</string>
     <string name="error_confirm_password">Passwords do not match</string>
     <string name="signing_in">Signing In</string>
+    <string name="loading_products">Loading Products</string>
 </resources>

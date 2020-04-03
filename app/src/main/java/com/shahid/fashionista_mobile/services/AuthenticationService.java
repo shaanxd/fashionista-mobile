@@ -13,21 +13,19 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 
 public class AuthenticationService {
-    private Retrofit retrofit;
+    private AuthInterface api;
 
     @Inject
     public AuthenticationService(Retrofit retrofit) {
-        this.retrofit = retrofit;
+        this.api = retrofit.create(AuthInterface.class);
     }
 
     public void signInUser(AuthenticationRequest request, ServiceCallback callback) {
-        AuthInterface auth = retrofit.create(AuthInterface.class);
-        Call<AuthenticationResponse> call = auth.signIn(request);
+        Call<AuthenticationResponse> call = api.signIn(request);
         call.enqueue(new CustomCallback<>(callback));
     }
 
     public void signUpUser(SignUpRequest request, ServiceCallback callback) {
-        AuthInterface api = retrofit.create(AuthInterface.class);
         Call<AuthenticationResponse> call = api.signUp(request);
         call.enqueue(new CustomCallback<>(callback));
     }
