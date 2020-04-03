@@ -35,10 +35,7 @@ import retrofit2.Response;
 import static com.basgeekball.awesomevalidation.ValidationStyle.UNDERLABEL;
 
 public class SignUpFragment extends RootFragment implements View.OnClickListener, ServiceCallback {
-    private static final String TAG = "SignUpFragment";
-
     private MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
-
     private FragmentSignUpBinding binding;
 
     @Inject
@@ -50,8 +47,6 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
     private AwesomeValidation validator;
     private RelativeLayout hiddenLayout;
     private LinearLayout loadingLayout;
-
-
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -84,11 +79,11 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
         hiddenLayout = binding.hiddenLayout;
         loadingLayout = binding.loadingLayout;
 
-        validator.addValidation(emailTxt, Patterns.EMAIL_ADDRESS, "Invalid Email Address");
-        validator.addValidation(firstNameTxt, RegexTemplate.NOT_EMPTY, "Please Enter First Name");
-        validator.addValidation(lastNameTxt, RegexTemplate.NOT_EMPTY, "Please Enter Last Name");
-        validator.addValidation(passwordTxt, "[0-9a-zA-Z]{6,}", "Password should contain at least 6 characters");
-        validator.addValidation(confirmPasswordTxt, passwordTxt, "Passwords do not match");
+        validator.addValidation(emailTxt, Patterns.EMAIL_ADDRESS, getString(R.string.error_email_address));
+        validator.addValidation(firstNameTxt, RegexTemplate.NOT_EMPTY, getString(R.string.error_first_name));
+        validator.addValidation(lastNameTxt, RegexTemplate.NOT_EMPTY, getString(R.string.error_last_name));
+        validator.addValidation(passwordTxt, "[0-9a-zA-Z]{6,}", getString(R.string.error_password));
+        validator.addValidation(confirmPasswordTxt, passwordTxt, getString(R.string.error_confirm_password));
 
         binding.signUpBtn.setOnClickListener(this);
         binding.signInBtn.setOnClickListener(this);
@@ -111,15 +106,18 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
     }
 
     private void onSignInClick() {
+        rootNavController.navigate(R.id.action_signUpFragment_to_loginFragment);
     }
 
     private void onSignUpClick() {
         if (validator.validate()) {
             loading.setValue(true);
+
             String email = emailTxt.getText().toString();
             String name = firstNameTxt.getText().toString() + " " + lastNameTxt.getText().toString();
             String password = passwordTxt.getText().toString();
             String confirmPassword = confirmPasswordTxt.getText().toString();
+
             SignUpRequest request = new SignUpRequest(email, name, password, confirmPassword);
             authService.signUpUser(request, this);
         }
@@ -152,15 +150,14 @@ public class SignUpFragment extends RootFragment implements View.OnClickListener
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        loading.removeObservers(this);
+    public void onFailure(String mErrorMessage) {
+        loading.setValue(false);
+        DynamicToast.makeError(activity, mErrorMessage).show();
     }
 
     @Override
-    public void onFailure(String mErrorMessage) {
-        // TODO style the toast
-        loading.setValue(false);
-        DynamicToast.makeError(activity, mErrorMessage).show();
+    public void onDestroyView() {
+        super.onDestroyView();
+        loading.removeObservers(this);
     }
 }

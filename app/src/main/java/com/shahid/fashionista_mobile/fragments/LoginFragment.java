@@ -1,16 +1,20 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
@@ -27,17 +31,22 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
+import static com.basgeekball.awesomevalidation.ValidationStyle.UNDERLABEL;
+
 public class LoginFragment extends RootFragment implements View.OnClickListener, ServiceCallback {
-
-    private static final String TAG = "LoginFragment";
-
+    private MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
     private FragmentLoginBinding binding;
+
     @Inject
     AuthenticationService authService;
     @Inject
     SessionStorage sessionStorage;
+
     private EditText emailTxt;
     private EditText passwordTxt;
+    private RelativeLayout hiddenLayout;
+    private LinearLayout loadingLayout;
+    private AwesomeValidation validator;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -47,6 +56,8 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((FashionApp) activity.getApplication()).getAppComponent().inject(this);
+        validator = new AwesomeValidation(UNDERLABEL);
+        validator.setContext(activity);
     }
 
     @Override
@@ -61,38 +72,56 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
         super.onViewCreated(view, savedInstanceState);
         emailTxt = binding.emailTxt;
         passwordTxt = binding.passwordTxt;
+
+        hiddenLayout = binding.hiddenLayout;
+        loadingLayout = binding.loadingLayout;
+
         binding.signInBtn.setOnClickListener(this);
         binding.signUpBtn.setOnClickListener(this);
+
+        validator.addValidation(emailTxt, Patterns.EMAIL_ADDRESS, getString(R.string.error_email_address));
+        validator.addValidation(passwordTxt, "[0-9a-zA-Z]{6,}", getString(R.string.error_password));
+
+        loading.observe(getViewLifecycleOwner(), this::onLoadingStateChange);
+    }
+
+    private void onLoadingStateChange(boolean value) {
+        if (value) {
+            hiddenLayout.setVisibility(View.GONE);
+            loadingLayout.setVisibility(View.VISIBLE);
+        } else {
+            loadingLayout.setVisibility(View.GONE);
+            hiddenLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.signInBtn: {
-                signInUser();
+                onSignInClick();
                 break;
             }
             case R.id.signUpBtn: {
-                signUpUser();
+                onSignUpClick();
                 break;
             }
         }
     }
 
-    private void signInUser() {
-        String emailString = emailTxt.getText().toString();
-        String passwordString = passwordTxt.getText().toString();
+    private void onSignInClick() {
+        if (validator.validate()) {
+            loading.setValue(true);
 
-        if (emailString.isEmpty() || passwordString.isEmpty()) {
-            Toast.makeText(activity, "Fields cannot be empty.", Toast.LENGTH_SHORT).show();
-            return;
+            String emailString = emailTxt.getText().toString();
+            String passwordString = passwordTxt.getText().toString();
+
+            AuthenticationRequest authenticationRequest = new AuthenticationRequest(emailString, passwordString);
+            authService.signInUser(authenticationRequest, this);
         }
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(emailString, passwordString);
-        authService.signInUser(authenticationRequest, this);
-
     }
 
-    private void signUpUser() {
+    private void onSignUpClick() {
         rootNavController.navigate(R.id.action_loginFragment_to_signUpFragment);
     }
 
@@ -114,6 +143,13 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
 
     @Override
     public void onFailure(String mErrorMessage) {
-        Log.e(TAG, mErrorMessage);
+        loading.setValue(false);
+        DynamicToast.makeError(activity, mErrorMessage).show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        loading.removeObservers(this);
     }
 }

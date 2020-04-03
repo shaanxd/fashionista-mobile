@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fashionista-Mobile</string>
+    <string name="app_name">Welcome</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hint_first_name">First Name</string>
@@ -11,4 +11,10 @@
     <string name="btn_sign_in">Sign In</string>
     <string name="signing_out">Signing out</string>
     <string name="signing_up">Signing up</string>
+    <string name="error_email_address">Invalid Email Address</string>
+    <string name="error_first_name">Please Enter First Name</string>
+    <string name="error_last_name">Please Enter Last Name</string>
+    <string name="error_password">Password should contain at least 6 characters</string>
+    <string name="error_confirm_password">Passwords do not match</string>
+    <string name="signing_in">Signing In</string>
 </resources>
