@@ -17,6 +17,8 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.shahid.fashionista_mobile.constants.Constants.BASE_URL;
+
 @Module
 public class AppModule {
     private Context context;
@@ -34,7 +36,7 @@ public class AppModule {
     @Singleton
     public Retrofit getRetroFitInstance() {
         return new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

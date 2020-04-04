@@ -11,6 +11,7 @@ import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.databinding.ProductViewHolderBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
+import com.shahid.fashionista_mobile.utils.ProductUtils;
 
 import java.util.List;
 
@@ -51,12 +52,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
 
         void bind(ProductResponse product) {
-            binding.productName.setText(product.getName());
-
-            String thumbnail = "http://10.0.2.2:8080/api/products/image/" + product.getThumbnail();
+            binding.setProduct(product);
 
             Glide.with(binding.getRoot())
-                    .load(thumbnail)
+                    .load(ProductUtils.getProductImageURL(product.getThumbnail()))
                     .placeholder(R.drawable.placeholder_img)
                     .into(binding.productImage);
 

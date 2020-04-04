@@ -1,7 +1,6 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shahid.fashionista_mobile.FashionApp;
+import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.ProductAdapter;
 import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
@@ -138,6 +138,8 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
 
     @Override
     public void onItemClick(String id) {
-        Log.e(TAG, "onItemClick: " + id);
+        Bundle bundle = new Bundle();
+        bundle.putString("PRODUCT_ID", id);
+        rootNavController.navigate(R.id.action_navigationFragment_to_productFragment, bundle);
     }
 }
