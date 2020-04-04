@@ -1,6 +1,7 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.adapters.ProductAdapter;
+import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentHomeBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
@@ -27,7 +29,7 @@ import retrofit2.Response;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class HomeFragment extends ExpireFragment implements ServiceCallback {
+public class HomeFragment extends ExpireFragment implements ServiceCallback, ItemClickCallback {
     private static final String TAG = "HomeFragment";
     @Inject
     ProductService service;
@@ -98,7 +100,7 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback {
             if (layoutManager == null) {
                 layoutManager = new GridLayoutManager(activity, 2, LinearLayoutManager.VERTICAL, false);
             }
-            adapter = new ProductAdapter(products.getValue().getProducts(), activity);
+            adapter = new ProductAdapter(products.getValue().getProducts(), this);
             productRecyclerView.setLayoutManager(layoutManager);
             productRecyclerView.setAdapter(adapter);
             productsLayout.setVisibility(VISIBLE);
@@ -132,5 +134,10 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback {
     public void onDestroyView() {
         super.onDestroyView();
         loading.removeObservers(this);
+    }
+
+    @Override
+    public void onItemClick(String id) {
+        Log.e(TAG, "onItemClick: " + id);
     }
 }
