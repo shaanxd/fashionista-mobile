@@ -20,4 +20,5 @@
     <string name="loading_products">Loading Products</string>
     <string name="add_to_cart">ADD TO CART</string>
     <string name="available_sizes">Available Sizes</string>
+    <string name="quantity">Quantity</string>
 </resources>

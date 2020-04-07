@@ -28,6 +28,5 @@ public interface AppComponent {
     void inject(HomeFragment f);
     void inject(OrdersFragment f);
     void inject(SearchFragment f);
-
     void inject(ProductFragment f);
 }

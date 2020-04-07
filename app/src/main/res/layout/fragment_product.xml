@@ -2,6 +2,16 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="loading"
+            type="boolean" />
+
+        <variable
+            name="error"
+            type="String" />
         <variable
             name="product"
             type="com.shahid.fashionista_mobile.dto.response.ProductResponse" />
@@ -19,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="@{loading ? View.VISIBLE : View.GONE}">
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -38,24 +49,24 @@
             android:id="@+id/errorLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="@{!loading &amp;&amp; error != null ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:id="@+id/errorTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Error Occured">
-
-            </TextView>
+                android:text="@{error}" />
 
         </LinearLayout>
 
         <ScrollView
+            android:id="@+id/productLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="@{!loading &amp;&amp; product != null ? View.VISIBLE : View.GONE}">
 
             <LinearLayout
-                android:id="@+id/productLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -138,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
-                        android:text="Quantity" />
+                        android:text="@string/quantity" />
 
                     <it.sephiroth.android.library.numberpicker.NumberPicker
                         android:id="@+id/quantityPicker"
@@ -146,8 +157,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/quantity_picker_background"
-                        app:picker_max="10"
-                        app:picker_min="1"
+                        app:picker_max="@{product.stock > 0 ? product.stock : 0}"
+                        app:picker_min="0"
                         app:picker_orientation="horizontal"
                         app:picker_stepSize="1" />
 
@@ -173,7 +184,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/add_to_cart" />
 
-                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
 

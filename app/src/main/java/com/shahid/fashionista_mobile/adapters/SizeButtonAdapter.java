@@ -30,7 +30,7 @@ public class SizeButtonAdapter extends RecyclerView.Adapter<SizeButtonAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(sizes.get(position), this.position == position);
+        holder.bind(sizes.get(position), this.position == position, position == sizes.size() - 1);
     }
 
     @Override
@@ -59,7 +59,8 @@ public class SizeButtonAdapter extends RecyclerView.Adapter<SizeButtonAdapter.Vi
             this.listener = listener;
         }
 
-        void bind(String size, boolean checked) {
+        void bind(String size, boolean checked, boolean last) {
+            binding.setIsLastItem(last);
             binding.radioButton.setText(size);
             binding.radioButton.setChecked(checked);
 

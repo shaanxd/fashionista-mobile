@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +16,10 @@ import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.SizeButtonAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentProductBinding;
+import com.shahid.fashionista_mobile.dto.request.CartRequest;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
+import com.shahid.fashionista_mobile.services.CartService;
 import com.shahid.fashionista_mobile.services.ProductService;
 
 import java.util.Arrays;
@@ -27,24 +29,23 @@ import javax.inject.Inject;
 import it.sephiroth.android.library.numberpicker.NumberPicker;
 import retrofit2.Response;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
-public class ProductFragment extends RootFragment implements ServiceCallback {
-    private static final String TAG = "ProductFragment";
+public class ProductFragment extends RootFragment {
 
     @Inject
     ProductService productService;
+    @Inject
+    CartService cartService;
+    @Nullable
+    @Inject
+    AuthenticationResponse auth;
 
-    FragmentProductBinding binding;
+    private FragmentProductBinding binding;
 
     private MutableLiveData<Boolean> loading = new MutableLiveData<>(true);
     private MutableLiveData<String> error = new MutableLiveData<>(null);
     private MutableLiveData<ProductResponse> product = new MutableLiveData<>(null);
 
     private String productId;
-
-    private LinearLayout errorLayout, productLayout, loadingLayout;
 
     private SizeButtonAdapter adapter;
     private NumberPicker quantityPicker;
@@ -74,96 +75,88 @@ public class ProductFragment extends RootFragment implements ServiceCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        errorLayout = binding.errorLayout;
-        loadingLayout = binding.loadingLayout;
-        productLayout = binding.productLayout;
         quantityPicker = binding.quantityPicker;
 
         binding.addToCartBtn.setOnClickListener(this::onAddToCartClick);
 
         loading.observe(getViewLifecycleOwner(), this::onLoadingStateChange);
-        productService.getProduct(productId, this);
+        product.observe(getViewLifecycleOwner(), this::onProductStateChange);
+        error.observe(getViewLifecycleOwner(), this::onErrorStateChange);
+
+        productService.getProduct(productId, new ServiceCallback() {
+            @Override
+            public void onSuccess(Response mResponse) {
+                product.setValue((ProductResponse) mResponse.body());
+                loading.setValue(false);
+            }
+
+            @Override
+            public void onFailure(String mErrorMessage) {
+                error.setValue(mErrorMessage);
+                loading.setValue(false);
+            }
+        });
     }
 
     private void onAddToCartClick(View view) {
-        int quantity = quantityPicker.getProgress();
-        int stock = product.getValue().getStock();
+        if (auth != null) {
+            int quantity = quantityPicker.getProgress();
+            int stock = product.getValue().getStock();
+            String size = adapter.getSelectedSize();
 
-        if (quantity == 0) {
-            DynamicToast.makeWarning(activity, "Quantity cannot be zero").show();
-            return;
-        } else if (quantity > stock) {
-            DynamicToast.makeWarning(activity, "Only " + stock + " pieces available.").show();
-            return;
+            if (quantity == 0) {
+                DynamicToast.makeWarning(activity, "Quantity cannot be zero").show();
+                return;
+            } else if (quantity > stock) {
+                DynamicToast.makeWarning(activity, "Only " + stock + " pieces available.").show();
+                return;
+            }
+            if (size == null) {
+                DynamicToast.makeWarning(activity, "Please select a size.").show();
+                return;
+            }
+            CartRequest request = new CartRequest(productId, quantity, size);
+            cartService.addToCart("Bearer " + auth.getToken(), request, new ServiceCallback() {
+                @Override
+                public void onSuccess(Response mResponse) {
+                    DynamicToast.makeSuccess(activity, "Added to cart successfully!").show();
+                }
+
+                @Override
+                public void onFailure(String mErrorMessage) {
+                    DynamicToast.makeError(activity, mErrorMessage).show();
+                }
+            });
+        } else {
+            rootNavController.navigate(R.id.action_productFragment_to_loginFragment);
         }
-        if (adapter.getSelectedSize() == null) {
-            DynamicToast.makeWarning(activity, "Please select a size.").show();
-            return;
-        }
-        // Do API Call
-        System.out.println("=== API CALL ===");
     }
 
     private void onLoadingStateChange(Boolean value) {
-        if (value) {
-            onLoading();
-        } else if (error.getValue() != null) {
-            onError();
-        } else {
-            onProductLoaded();
-        }
+        binding.setLoading(value);
     }
 
-    private void onProductLoaded() {
-        if (product.getValue() != null) {
-            ProductResponse response = product.getValue();
+    private void onProductStateChange(ProductResponse product) {
+        binding.setProduct(product);
 
-            loadingLayout.setVisibility(GONE);
-
+        if (product != null) {
             // Set image
             Glide.with(binding.getRoot())
-                    .load(response.getThumbnail())
+                    .load(product.getThumbnail())
                     .placeholder(R.drawable.placeholder_img)
                     .into(binding.thumbnailImage);
 
             // Set product related data here
-            binding.setProduct(response);
+            //  binding.setProduct(response);
 
             if (adapter == null) {
                 adapter = new SizeButtonAdapter(Arrays.asList("S", "M", "L", "XL"));
             }
             binding.sizeButtonList.setAdapter(adapter);
-
-            productLayout.setVisibility(VISIBLE);
         }
     }
 
-    private void onError() {
-        loadingLayout.setVisibility(GONE);
-        errorLayout.setVisibility(VISIBLE);
-    }
-
-    private void onLoading() {
-        if (loading.getValue() != null && !loading.getValue()) {
-            loading.setValue(true);
-        }
-        if (error.getValue() != null) {
-            error.setValue(null);
-        }
-        productLayout.setVisibility(GONE);
-        errorLayout.setVisibility(GONE);
-        loadingLayout.setVisibility(VISIBLE);
-    }
-
-    @Override
-    public void onSuccess(Response mResponse) {
-        product.setValue((ProductResponse) mResponse.body());
-        loading.setValue(false);
-    }
-
-    @Override
-    public void onFailure(String mErrorMessage) {
-        error.setValue(mErrorMessage);
-        loading.setValue(false);
+    private void onErrorStateChange(String error) {
+        binding.setError(error);
     }
 }
