@@ -11,7 +11,6 @@ import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.databinding.ProductViewHolderBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
-import com.shahid.fashionista_mobile.utils.ProductUtils;
 
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             binding.setProduct(product);
 
             Glide.with(binding.getRoot())
-                    .load(ProductUtils.getProductImageURL(product.getThumbnail()))
+                    .load(product.getThumbnail())
                     .placeholder(R.drawable.placeholder_img)
                     .into(binding.productImage);
 

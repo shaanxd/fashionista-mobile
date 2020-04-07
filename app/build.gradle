@@ -76,4 +76,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
+    //Material Number Picker
+    implementation 'com.github.sephiroth74:NumberSlidingPicker:v.1.1.1'
+
 }

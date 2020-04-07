@@ -5,23 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.Glide;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
+import com.shahid.fashionista_mobile.adapters.SizeButtonAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentProductBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.services.ProductService;
-import com.shahid.fashionista_mobile.utils.ProductUtils;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
+import it.sephiroth.android.library.numberpicker.NumberPicker;
 import retrofit2.Response;
 
 import static android.view.View.GONE;
@@ -32,14 +35,19 @@ public class ProductFragment extends RootFragment implements ServiceCallback {
 
     @Inject
     ProductService productService;
+
     FragmentProductBinding binding;
+
     private MutableLiveData<Boolean> loading = new MutableLiveData<>(true);
     private MutableLiveData<String> error = new MutableLiveData<>(null);
     private MutableLiveData<ProductResponse> product = new MutableLiveData<>(null);
+
     private String productId;
 
     private LinearLayout errorLayout, productLayout, loadingLayout;
-    private TextView productName;
+
+    private SizeButtonAdapter adapter;
+    private NumberPicker quantityPicker;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -69,11 +77,31 @@ public class ProductFragment extends RootFragment implements ServiceCallback {
         errorLayout = binding.errorLayout;
         loadingLayout = binding.loadingLayout;
         productLayout = binding.productLayout;
+        quantityPicker = binding.quantityPicker;
 
-        productName = binding.productName;
+        binding.addToCartBtn.setOnClickListener(this::onAddToCartClick);
 
         loading.observe(getViewLifecycleOwner(), this::onLoadingStateChange);
         productService.getProduct(productId, this);
+    }
+
+    private void onAddToCartClick(View view) {
+        int quantity = quantityPicker.getProgress();
+        int stock = product.getValue().getStock();
+
+        if (quantity == 0) {
+            DynamicToast.makeWarning(activity, "Quantity cannot be zero").show();
+            return;
+        } else if (quantity > stock) {
+            DynamicToast.makeWarning(activity, "Only " + stock + " pieces available.").show();
+            return;
+        }
+        if (adapter.getSelectedSize() == null) {
+            DynamicToast.makeWarning(activity, "Please select a size.").show();
+            return;
+        }
+        // Do API Call
+        System.out.println("=== API CALL ===");
     }
 
     private void onLoadingStateChange(Boolean value) {
@@ -93,14 +121,18 @@ public class ProductFragment extends RootFragment implements ServiceCallback {
             loadingLayout.setVisibility(GONE);
 
             // Set image
-            String thumbnail = ProductUtils.getProductImageURL(response.getThumbnail());
             Glide.with(binding.getRoot())
-                    .load(thumbnail)
+                    .load(response.getThumbnail())
                     .placeholder(R.drawable.placeholder_img)
                     .into(binding.thumbnailImage);
 
             // Set product related data here
             binding.setProduct(response);
+
+            if (adapter == null) {
+                adapter = new SizeButtonAdapter(Arrays.asList("S", "M", "L", "XL"));
+            }
+            binding.sizeButtonList.setAdapter(adapter);
 
             productLayout.setVisibility(VISIBLE);
         }
