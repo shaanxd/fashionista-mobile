@@ -44,6 +44,7 @@ public class ProductFragment extends RootFragment {
     private MutableLiveData<Boolean> loading = new MutableLiveData<>(true);
     private MutableLiveData<String> error = new MutableLiveData<>(null);
     private MutableLiveData<ProductResponse> product = new MutableLiveData<>(null);
+    private MutableLiveData<Boolean> cart = new MutableLiveData<>(false);
 
     private String productId;
 
@@ -82,6 +83,7 @@ public class ProductFragment extends RootFragment {
         loading.observe(getViewLifecycleOwner(), this::onLoadingStateChange);
         product.observe(getViewLifecycleOwner(), this::onProductStateChange);
         error.observe(getViewLifecycleOwner(), this::onErrorStateChange);
+        cart.observe(getViewLifecycleOwner(), this::onCartStateChange);
 
         productService.getProduct(productId, new ServiceCallback() {
             @Override
@@ -96,6 +98,10 @@ public class ProductFragment extends RootFragment {
                 loading.setValue(false);
             }
         });
+    }
+
+    private void onCartStateChange(Boolean value) {
+        binding.setCart(value);
     }
 
     private void onAddToCartClick(View view) {
@@ -115,15 +121,21 @@ public class ProductFragment extends RootFragment {
                 DynamicToast.makeWarning(activity, "Please select a size.").show();
                 return;
             }
+            loading.setValue(true);
+            cart.setValue(true);
             CartRequest request = new CartRequest(productId, quantity, size);
             cartService.addToCart("Bearer " + auth.getToken(), request, new ServiceCallback() {
                 @Override
                 public void onSuccess(Response mResponse) {
+                    loading.setValue(false);
+                    cart.setValue(false);
                     DynamicToast.makeSuccess(activity, "Added to cart successfully!").show();
                 }
 
                 @Override
                 public void onFailure(String mErrorMessage) {
+                    loading.setValue(false);
+                    cart.setValue(false);
                     DynamicToast.makeError(activity, mErrorMessage).show();
                 }
             });

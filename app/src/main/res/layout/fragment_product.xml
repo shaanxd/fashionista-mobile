@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.ProductFragment">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable
+            name="cart"
+            type="boolean" />
+        <variable
             name="loading"
             type="boolean" />
-
         <variable
             name="error"
             type="String" />
@@ -17,11 +21,9 @@
             type="com.shahid.fashionista_mobile.dto.response.ProductResponse" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".fragments.ProductFragment">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/loadingLayout"
@@ -41,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/loading_products" />
+                android:text="@{cart ? `Adding to Cart` : `Loading Product`}" />
 
         </LinearLayout>
 
