@@ -37,8 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{product.name}"
-                    android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceListItemSecondary" />
+                    android:textAlignment="center" />
 
             </LinearLayout>
 

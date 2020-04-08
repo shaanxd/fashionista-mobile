@@ -6,10 +6,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="materialButtonStyle">@style/MaterialOutlineButton</item>
     </style>
 
+    <style name="TextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="MaterialOutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:inset">0dp</item>
+        <item name="android:padding">10dp</item>
     </style>
 </resources>
