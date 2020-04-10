@@ -2,6 +2,7 @@ package com.shahid.fashionista_mobile.dependency;
 
 import com.shahid.fashionista_mobile.activities.MainActivity;
 import com.shahid.fashionista_mobile.fragments.CartFragment;
+import com.shahid.fashionista_mobile.fragments.CheckoutFragment;
 import com.shahid.fashionista_mobile.fragments.HomeFragment;
 import com.shahid.fashionista_mobile.fragments.LoginFragment;
 import com.shahid.fashionista_mobile.fragments.OrdersFragment;
@@ -29,4 +30,6 @@ public interface AppComponent {
     void inject(OrdersFragment f);
     void inject(SearchFragment f);
     void inject(ProductFragment f);
+
+    void inject(CheckoutFragment f);
 }

@@ -71,7 +71,6 @@
                             android:paddingVertical="2dp"
                             android:text="@{cart.size}"
                             android:textAlignment="center"
-                            android:textColor="@color/colorWhite"
                             android:textSize="13sp" />
 
                         <TextView

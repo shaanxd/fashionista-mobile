@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CheckoutFragment">
+
+    <com.stepstone.stepper.StepperLayout
+        android:id="@+id/stepper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ms_showBottomNavigation="false"
+        app:ms_stepperType="tabs" />
 
 </LinearLayout>
