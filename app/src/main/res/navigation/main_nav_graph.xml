@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_navigationFragment_to_productFragment"
             app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_navigationFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
 
     </fragment>
 
@@ -109,4 +112,11 @@
             app:destination="@id/loginFragment" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.shahid.fashionista_mobile.fragments.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout" />
+
 </navigation>

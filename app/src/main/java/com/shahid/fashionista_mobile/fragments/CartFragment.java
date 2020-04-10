@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.shahid.fashionista_mobile.FashionApp;
+import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.CartAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentCartBinding;
@@ -58,6 +59,8 @@ public class CartFragment extends AuthFragment {
         cart.observe(getViewLifecycleOwner(), this::onCartStateChange);
         error.observe(getViewLifecycleOwner(), this::onErrorStateChange);
 
+        binding.checkoutBtn.setOnClickListener(this::onCheckoutClick);
+
         if (authState == null) {
             return;
         }
@@ -75,6 +78,10 @@ public class CartFragment extends AuthFragment {
                 loading.setValue(false);
             }
         });
+    }
+
+    private void onCheckoutClick(View view) {
+        rootNavController.navigate(R.id.action_navigationFragment_to_checkoutFragment);
     }
 
     private void onErrorStateChange(String error) {

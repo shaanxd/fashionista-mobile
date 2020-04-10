@@ -40,10 +40,4 @@ public abstract class ExpireFragment extends RootFragment {
             });
         }
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        sessionStorage.detachObserver(this);
-    }
 }
