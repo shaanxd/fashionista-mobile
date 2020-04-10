@@ -1,62 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.HomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical">
+    <data>
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+        <import type="android.view.View" />
 
+        <variable
+            name="loading"
+            type="boolean" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading_products" />
+        <variable
+            name="error"
+            type="String" />
 
-    </LinearLayout>
+        <variable
+            name="products"
+            type="com.shahid.fashionista_mobile.dto.response.ProductListResponse" />
+    </data>
 
-    <LinearLayout
-        android:id="@+id/errorLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/errorTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Error Occured">
-
-        </TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/productsLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        tools:context=".fragments.HomeFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/productRecyclerView"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{loading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading_products" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:visibility="@{!loading &amp;&amp; error != null ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:id="@+id/errorTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{error}">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp" />
+            android:orientation="vertical"
+            android:visibility="@{!loading &amp;&amp; products != null &amp;&amp; products.products.size() > 0 ? View.VISIBLE : View.GONE}">
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/productView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp" />
 
-</RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

@@ -32,8 +32,6 @@ public class CartFragment extends AuthFragment {
     private MutableLiveData<String> error = new MutableLiveData<>(null);
     private MutableLiveData<CartResponse> cart = new MutableLiveData<>(null);
 
-    private CartAdapter adapter;
-
     public CartFragment() {
         // Required empty public constructor
     }
@@ -60,9 +58,47 @@ public class CartFragment extends AuthFragment {
         error.observe(getViewLifecycleOwner(), this::onErrorStateChange);
 
         binding.checkoutBtn.setOnClickListener(this::onCheckoutClick);
+    }
 
-        if (authState == null) {
-            return;
+    @Override
+    public void onPause() {
+        super.onPause();
+        loading.setValue(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadCartFromApi();
+    }
+
+    private void onCheckoutClick(View view) {
+        rootNavController.navigate(R.id.action_navigationFragment_to_checkoutFragment);
+    }
+
+    private void onErrorStateChange(String error) {
+        binding.setError(error);
+    }
+
+    private void onCartStateChange(CartResponse cart) {
+        binding.setCart(cart);
+
+        if (cart != null) {
+            CartAdapter adapter = new CartAdapter(cart.getItems(), this::onDeleteClick);
+            binding.cartList.setAdapter(adapter);
+        }
+    }
+
+    private void onLoadingStateChange(Boolean loading) {
+        binding.setLoading(loading);
+    }
+
+    private void loadCartFromApi() {
+        if (loading.getValue() != null && !loading.getValue()) {
+            loading.setValue(true);
+        }
+        if (error.getValue() != null) {
+            error.setValue(null);
         }
 
         cartService.getCart("Bearer " + authState.getToken(), new ServiceCallback() {
@@ -78,23 +114,6 @@ public class CartFragment extends AuthFragment {
                 loading.setValue(false);
             }
         });
-    }
-
-    private void onCheckoutClick(View view) {
-        rootNavController.navigate(R.id.action_navigationFragment_to_checkoutFragment);
-    }
-
-    private void onErrorStateChange(String error) {
-        binding.setError(error);
-    }
-
-    private void onCartStateChange(CartResponse cart) {
-        binding.setCart(cart);
-
-        if (cart != null) {
-            adapter = new CartAdapter(cart.getItems(), this::onDeleteClick);
-            binding.cartList.setAdapter(adapter);
-        }
     }
 
     private void onDeleteClick(String id) {
@@ -113,9 +132,5 @@ public class CartFragment extends AuthFragment {
                 loading.setValue(false);
             }
         });
-    }
-
-    private void onLoadingStateChange(Boolean loading) {
-        binding.setLoading(loading);
     }
 }

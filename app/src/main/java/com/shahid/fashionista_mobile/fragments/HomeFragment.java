@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,23 +25,18 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 public class HomeFragment extends ExpireFragment implements ServiceCallback, ItemClickCallback {
     private static final String TAG = "HomeFragment";
     @Inject
     ProductService service;
     private FragmentHomeBinding binding;
     private MutableLiveData<Boolean> loading = new MutableLiveData<>(true);
-    private MutableLiveData<ProductListResponse> products = new MutableLiveData<>();
+    private MutableLiveData<ProductListResponse> productList = new MutableLiveData<>();
     private MutableLiveData<String> error = new MutableLiveData<>(null);
 
-    private LinearLayout loadingLayout, errorLayout, productsLayout;
-    private RecyclerView productRecyclerView;
+    private RecyclerView productView;
 
     private ProductAdapter adapter;
-    private GridLayoutManager layoutManager;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,7 +49,7 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -65,46 +59,23 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loadingLayout = binding.loadingLayout;
-        errorLayout = binding.errorLayout;
-        productsLayout = binding.productsLayout;
+        productView = binding.productView;
 
-        productRecyclerView = binding.productRecyclerView;
+        loading.observe(getViewLifecycleOwner(), this::onLoadingChange);
+        productList.observe(getViewLifecycleOwner(), this::onProductsChange);
+        error.observe(getViewLifecycleOwner(), this::onErrorChange);
+    }
 
-        loading.observe(getViewLifecycleOwner(), value -> {
-            if (value) {
-                onLoading();
-            } else if (error.getValue() != null) {
-                onError();
-            } else {
-                onProductsLoaded();
-            }
-        });
+    @Override
+    public void onPause() {
+        super.onPause();
+        loading.setValue(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getProducts();
-    }
-
-    private void onLoading() {
-        productsLayout.setVisibility(GONE);
-        errorLayout.setVisibility(GONE);
-        loadingLayout.setVisibility(VISIBLE);
-    }
-
-    private void onError() {
-        loadingLayout.setVisibility(GONE);
-        errorLayout.setVisibility(VISIBLE);
-    }
-
-    private void onProductsLoaded() {
-        if (products.getValue() != null) {
-            loadingLayout.setVisibility(GONE);
-            if (layoutManager == null) {
-                layoutManager = new GridLayoutManager(activity, 2, LinearLayoutManager.VERTICAL, false);
-            }
-            adapter = new ProductAdapter(products.getValue().getProducts(), this);
-            productRecyclerView.setLayoutManager(layoutManager);
-            productRecyclerView.setAdapter(adapter);
-            productsLayout.setVisibility(VISIBLE);
-        }
     }
 
     private void getProducts() {
@@ -117,10 +88,29 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
         service.getProducts(0, 8, this);
     }
 
+    private void onLoadingChange(Boolean loading) {
+        binding.setLoading(loading);
+    }
+
+    private void onErrorChange(String error) {
+        binding.setError(error);
+    }
+
+    private void onProductsChange(ProductListResponse products) {
+        binding.setProducts(products);
+
+        if (products != null && products.getProducts().size() != 0) {
+            if (productView.getLayoutManager() == null) {
+                productView.setLayoutManager(new GridLayoutManager(activity, 2, LinearLayoutManager.VERTICAL, false));
+            }
+            adapter = new ProductAdapter(products.getProducts(), this);
+            productView.setAdapter(adapter);
+        }
+    }
+
     @Override
     public void onSuccess(Response mResponse) {
-        ProductListResponse response = (ProductListResponse) mResponse.body();
-        products.setValue(response);
+        productList.setValue((ProductListResponse) mResponse.body());
         loading.setValue(false);
     }
 
@@ -128,12 +118,6 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
     public void onFailure(String mErrorMessage) {
         error.setValue(mErrorMessage);
         loading.setValue(false);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        loading.removeObservers(this);
     }
 
     @Override

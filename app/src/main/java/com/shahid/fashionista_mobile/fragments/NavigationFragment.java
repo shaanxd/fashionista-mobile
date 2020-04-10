@@ -7,18 +7,30 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.shahid.fashionista_mobile.R;
+import com.shahid.fashionista_mobile.adapters.NavigationPagerAdapter;
 import com.shahid.fashionista_mobile.databinding.FragmentNavigationBinding;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class NavigationFragment extends RootFragment {
     private FragmentNavigationBinding binding;
-    private NavController navController;
-    private BottomNavigationView bottomNavigationView;
+
+    private List<String> tabText = Arrays.asList("Home", "Cart", "Orders", "Search");
+    private List<Integer> tabIcons = Arrays.asList(
+            R.drawable.icon_store,
+            R.drawable.icon_cart,
+            R.drawable.icon_orders,
+            R.drawable.icon_search
+    );
+
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
 
     public NavigationFragment() {
         // Required empty public constructor
@@ -39,14 +51,15 @@ public class NavigationFragment extends RootFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(activity, R.id.home_nav_host);
-        bottomNavigationView = binding.homeBottomNavigation;
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+        tabLayout = binding.tabLayout;
+        viewPager = binding.viewPager;
+
+        viewPager.setAdapter(new NavigationPagerAdapter(this));
+
+        new TabLayoutMediator(tabLayout, viewPager, ((tab, position) -> {
+            tab.setText(tabText.get(position));
+            tab.setIcon(tabIcons.get(position));
+        })).attach();
     }
 }
