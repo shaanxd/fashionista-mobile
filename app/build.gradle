@@ -44,45 +44,55 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
-    //Retrofit
+    // Retrofit
     def retrofit = "2.6.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
-    //Dagger
+    // Dagger
     def dagger = "2.27"
     implementation "com.google.dagger:dagger:$dagger"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
 
 
-    //Lombok
+    // Lombok
     def lombok = "1.18.12"
     implementation "org.projectlombok:lombok:$lombok"
     annotationProcessor "org.projectlombok:lombok:$lombok"
 
 
-    //Navigation
-    def nav_version = "2.3.0-alpha04"
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
+    // Navigation
+    def navigation = "2.3.0-alpha04"
+    implementation "androidx.navigation:navigation-fragment:$navigation"
+    implementation "androidx.navigation:navigation-ui:$navigation"
 
-    //Awesome Validation
-    implementation 'com.basgeekball:awesome-validation:4.2'
+    // Awesome Validation
+    def awesome_validation = "4.2"
+    implementation "com.basgeekball:awesome-validation:$awesome_validation"
 
-    //Dynamic Toasts
-    implementation 'com.pranavpandey.android:dynamic-toasts:3.2.0'
+    // Dynamic Toasts
+    def dynamic_toasts = "3.2.0"
+    implementation "com.pranavpandey.android:dynamic-toasts:$dynamic_toasts"
 
-    //Glide layout
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    // Glide
+    def glide = "4.11.0"
+    implementation "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
-    //Material Number Picker
-    implementation 'com.github.sephiroth74:NumberSlidingPicker:v.1.1.1'
+    // Material Number Picker
+    def material_number_picker = "v.1.1.1"
+    implementation "com.github.sephiroth74:NumberSlidingPicker:$material_number_picker"
 
-    //Material Stepper
-    implementation 'com.stepstone.stepper:material-stepper:4.3.1'
+    // Material Stepper
+    def material_stepper = "4.3.1"
+    implementation "com.stepstone.stepper:material-stepper:$material_stepper"
 
-    //Material Design
-    implementation 'com.google.android.material:material:1.1.0'
+    // Material Design
+    def material_design = "1.1.0"
+    implementation "com.google.android.material:material:$material_design"
+
+    // Shimmer Android
+    def shimmer_android = "0.5.0"
+    implementation "com.facebook.shimmer:shimmer:$shimmer_android"
 
 }
