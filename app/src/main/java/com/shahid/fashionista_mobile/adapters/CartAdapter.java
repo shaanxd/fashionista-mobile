@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
-import com.shahid.fashionista_mobile.databinding.CartItemViewHolderBinding;
+import com.shahid.fashionista_mobile.databinding.ViewHolderCartBinding;
 import com.shahid.fashionista_mobile.dto.response.CartItemResponse;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CartItemViewHolderBinding binding = CartItemViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ViewHolderCartBinding binding = ViewHolderCartBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding, callback);
     }
 
@@ -41,10 +41,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CartItemViewHolderBinding binding;
+        ViewHolderCartBinding binding;
         ItemClickCallback callback;
 
-        ViewHolder(@NonNull CartItemViewHolderBinding binding, ItemClickCallback callback) {
+        ViewHolder(@NonNull ViewHolderCartBinding binding, ItemClickCallback callback) {
             super(binding.getRoot());
             this.binding = binding;
             this.callback = callback;

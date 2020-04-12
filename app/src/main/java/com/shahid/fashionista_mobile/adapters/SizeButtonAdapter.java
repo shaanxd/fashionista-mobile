@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shahid.fashionista_mobile.databinding.SizeButtonViewHolderBinding;
+import com.shahid.fashionista_mobile.databinding.ViewHolderSizeButtonBinding;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class SizeButtonAdapter extends RecyclerView.Adapter<SizeButtonAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        SizeButtonViewHolderBinding binding = SizeButtonViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ViewHolderSizeButtonBinding binding = ViewHolderSizeButtonBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding, this);
     }
 
@@ -50,10 +50,10 @@ public class SizeButtonAdapter extends RecyclerView.Adapter<SizeButtonAdapter.Vi
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        SizeButtonViewHolderBinding binding;
+        ViewHolderSizeButtonBinding binding;
         onSizeClickListener listener;
 
-        ViewHolder(@NonNull SizeButtonViewHolderBinding binding, onSizeClickListener listener) {
+        ViewHolder(@NonNull ViewHolderSizeButtonBinding binding, onSizeClickListener listener) {
             super(binding.getRoot());
             this.binding = binding;
             this.listener = listener;

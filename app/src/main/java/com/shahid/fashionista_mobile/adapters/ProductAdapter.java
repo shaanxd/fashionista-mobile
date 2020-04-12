@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
-import com.shahid.fashionista_mobile.databinding.ProductViewHolderBinding;
+import com.shahid.fashionista_mobile.databinding.ViewHolderProductBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ProductViewHolderBinding binding = ProductViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ViewHolderProductBinding binding = ViewHolderProductBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding, callback);
     }
 
@@ -41,10 +41,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private ProductViewHolderBinding binding;
+        private ViewHolderProductBinding binding;
         private ItemClickCallback callback;
 
-        ViewHolder(@NonNull ProductViewHolderBinding binding, ItemClickCallback callback) {
+        ViewHolder(@NonNull ViewHolderProductBinding binding, ItemClickCallback callback) {
             super(binding.getRoot());
             this.binding = binding;
             this.callback = callback;

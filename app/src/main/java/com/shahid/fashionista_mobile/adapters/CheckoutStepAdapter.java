@@ -52,32 +52,4 @@ public class CheckoutStepAdapter extends AbstractFragmentStepAdapter {
     public int getCount() {
         return 4;
     }
-
-    //    @NonNull
-    //    @Override
-    //    public StepViewModel getViewModel(int position) {
-    //        String title = null;
-    //
-    //        switch (position) {
-    //            case 0: {
-    //                title = "Contact";
-    //                break;
-    //            }
-    //            case 1: {
-    //                title = "Shipping";
-    //                break;
-    //            }
-    //            case 2: {
-    //                title = "Payment";
-    //                break;
-    //            }
-    //            default: {
-    //                title = "Confirmation";
-    //            }
-    //        }
-    //
-    //        return new StepViewModel.Builder(context)
-    //                .setTitle(title)
-    //                .create();
-    //    }
 }

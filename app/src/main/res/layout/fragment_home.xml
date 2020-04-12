@@ -39,11 +39,11 @@
                     android:layout_margin="5dp"
                     android:orientation="vertical">
 
-                    <include layout="@layout/shimmer_product_view_holder" />
+                    <include layout="@layout/shimmer_view_holder_product" />
 
-                    <include layout="@layout/shimmer_product_view_holder" />
+                    <include layout="@layout/shimmer_view_holder_product" />
 
-                    <include layout="@layout/shimmer_product_view_holder" />
+                    <include layout="@layout/shimmer_view_holder_product" />
 
                 </LinearLayout>
 
