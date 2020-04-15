@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.CheckoutFragment">
 
-    <com.stepstone.stepper.StepperLayout
-        android:id="@+id/stepper"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:ms_showBottomNavigation="false"
-        app:ms_stepperType="tabs" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="This is Checkout"
+        android:textAlignment="center" />
+
 
 </LinearLayout>

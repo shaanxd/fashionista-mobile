@@ -4,21 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.shahid.fashionista_mobile.FashionApp;
-import com.shahid.fashionista_mobile.adapters.CheckoutStepAdapter;
 import com.shahid.fashionista_mobile.databinding.FragmentCheckoutBinding;
-import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
 
-public class CheckoutFragment extends AuthFragment implements StepperLayout.StepperListener {
+public class CheckoutFragment extends AuthFragment {
 
     private FragmentCheckoutBinding binding;
-    private StepperLayout stepper;
 
     public CheckoutFragment() {
         // Required empty public constructor
@@ -40,28 +35,5 @@ public class CheckoutFragment extends AuthFragment implements StepperLayout.Step
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        stepper = binding.stepper;
-        stepper.setAdapter(new CheckoutStepAdapter(getParentFragmentManager(), activity));
-    }
-
-    @Override
-    public void onCompleted(View completeButton) {
-        Toast.makeText(activity, "Completed", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onError(VerificationError verificationError) {
-        Toast.makeText(activity, "Error occurred", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onStepSelected(int newStepPosition) {
-
-    }
-
-    @Override
-    public void onReturn() {
-        Toast.makeText(activity, "End of stepper", Toast.LENGTH_SHORT).show();
     }
 }

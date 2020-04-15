@@ -83,10 +83,6 @@ dependencies {
     def material_number_picker = "v.1.1.1"
     implementation "com.github.sephiroth74:NumberSlidingPicker:$material_number_picker"
 
-    // Material Stepper
-    def material_stepper = "4.3.1"
-    implementation "com.stepstone.stepper:material-stepper:$material_stepper"
-
     // Material Design
     def material_design = "1.1.0"
     implementation "com.google.android.material:material:$material_design"
