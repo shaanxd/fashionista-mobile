@@ -1,15 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.OrdersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello Orders Fragment"
-        android:layout_centerInParent="true"/>
+    <data>
 
-</RelativeLayout>
+        <import type="android.view.View" />
+
+        <import type="com.shahid.fashionista_mobile.dto.response.PurchaseListResponse" />
+
+        <variable
+            name="loading"
+            type="Boolean" />
+
+        <variable
+            name="error"
+            type="String" />
+
+        <variable
+            name="orders"
+            type="PurchaseListResponse" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"></com.facebook.shimmer.ShimmerFrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{!loading &amp;&amp; error == null ? View.VISIBLE : View.GONE }">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/purchasesView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:visibility="@{orders != null &amp;&amp; orders.purchases.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You do not have any orders yet!"
+                android:visibility="@{orders == null || orders.purchases.size() &lt; 1 ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="@{!loading &amp;&amp; error != null ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{error}" />
+        </LinearLayout>
+    </FrameLayout>
+</layout>

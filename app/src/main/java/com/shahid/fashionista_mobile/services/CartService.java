@@ -5,6 +5,7 @@ import com.shahid.fashionista_mobile.callbacks.CustomCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.dto.request.CartRequest;
 import com.shahid.fashionista_mobile.dto.response.CartResponse;
+import com.shahid.fashionista_mobile.dto.response.PurchaseListResponse;
 
 import javax.inject.Inject;
 
@@ -31,6 +32,11 @@ public class CartService {
 
     public void deleteCart(String token, String id, ServiceCallback callback) {
         Call<CartResponse> call = api.deleteCart(token, id);
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void getPurchases(String token, int pageNumber, ServiceCallback callback) {
+        Call<PurchaseListResponse> call = api.getPurchases(token, pageNumber, 8, "createdAt,desc");
         call.enqueue(new CustomCallback<>(callback));
     }
 }

@@ -69,7 +69,9 @@ public class CartFragment extends AuthFragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadCartFromApi();
+        if (authState != null) {
+            loadCartFromApi();
+        }
     }
 
     private void onCheckoutClick(View view) {
@@ -100,7 +102,9 @@ public class CartFragment extends AuthFragment {
         if (error.getValue() != null) {
             error.setValue(null);
         }
-
+        if (authState == null) {
+            return;
+        }
         cartService.getCart("Bearer " + authState.getToken(), new ServiceCallback() {
             @Override
             public void onSuccess(Response mResponse) {
@@ -118,7 +122,9 @@ public class CartFragment extends AuthFragment {
 
     private void onDeleteClick(String id) {
         loading.setValue(true);
-
+        if (authState == null) {
+            return;
+        }
         cartService.deleteCart("Bearer " + authState.getToken(), id, new ServiceCallback() {
             @Override
             public void onSuccess(Response mResponse) {

@@ -1,6 +1,7 @@
 package com.shahid.fashionista_mobile.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -59,9 +60,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     .placeholder(R.drawable.placeholder_img)
                     .into(binding.productImage);
 
-            binding.deleteBtn.setOnClickListener(v -> {
-                callback.onItemClick(item.getId());
-            });
+            if (callback != null) {
+                binding.deleteBtn.setOnClickListener(v -> callback.onItemClick(item.getId()));
+            } else {
+                binding.deleteBtn.setVisibility(View.GONE);
+            }
         }
     }
 }

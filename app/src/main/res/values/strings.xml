@@ -24,4 +24,6 @@
     <string name="total_price">TOTAL PRICE</string>
     <string name="loading_cart">Loading Cart</string>
     <string name="check_out">CHECK OUT</string>
+    <string name="number_of_items">NO OF ITEMS</string>
+    <string name="order_text">ORDER</string>
 </resources>
