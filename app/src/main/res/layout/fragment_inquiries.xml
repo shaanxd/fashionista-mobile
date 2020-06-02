@@ -6,12 +6,18 @@
 
         <import type="com.shahid.fashionista_mobile.NumberFormatter" />
 
+        <import type="android.view.View" />
+
         <variable
             name="current"
             type="int" />
 
         <variable
             name="total"
+            type="int" />
+
+        <variable
+            name="size"
             type="int" />
     </data>
 
@@ -46,6 +52,26 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"
                 android:background="@color/colorLightGray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{size == 0 ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:text="No inquiries yet. Be the first one to!" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLightGray" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

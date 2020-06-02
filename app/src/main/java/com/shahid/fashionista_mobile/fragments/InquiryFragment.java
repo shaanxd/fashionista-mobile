@@ -31,6 +31,7 @@ public class InquiryFragment extends RootFragment implements ServiceCallback {
 
     int current = 0;
     int total = 0;
+    int size = 0;
 
     @Inject
     ProductService service;
@@ -68,9 +69,11 @@ public class InquiryFragment extends RootFragment implements ServiceCallback {
     private void setInquiriesToLayout(InquiryListResponse page) {
         current = page.getCurrent();
         total = page.getTotal();
+        size = page.getInquiries().size();
 
         binding.setCurrent(current);
         binding.setTotal(total);
+        binding.setSize(size);
 
         if (adapter == null) {
             adapter = new InquiryAdapter(page.getInquiries());

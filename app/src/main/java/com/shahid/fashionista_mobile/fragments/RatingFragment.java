@@ -32,6 +32,7 @@ public class RatingFragment extends RootFragment implements ServiceCallback {
 
     int current = 0;
     int total = 0;
+    int size = 0;
 
     @Inject
     ProductService service;
@@ -70,9 +71,11 @@ public class RatingFragment extends RootFragment implements ServiceCallback {
     private void setReviewsToLayout(ReviewListResponse page) {
         current = page.getCurrent();
         total = page.getTotal();
+        size = page.getReviews().size();
 
         binding.setCurrent(current);
         binding.setTotal(total);
+        binding.setSize(size);
 
         if (adapter == null) {
             adapter = new ReviewAdapter(page.getReviews());
