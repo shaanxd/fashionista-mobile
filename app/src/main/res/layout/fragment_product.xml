@@ -84,7 +84,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="20dp"
                     android:background="#dddddd" />
@@ -100,18 +100,21 @@
                         android:layout_height="wrap_content"
                         android:text="@{product.name}"
                         android:textAppearance="?attr/textAppearanceListItemSecondary"
+                        android:textAlignment="center"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="@{`$` + String.format(`%.2f`, product.price)}"
+                        android:textAlignment="center"
                         android:textSize="30sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <RatingBar
@@ -144,14 +147,16 @@
                         android:id="@+id/productDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{product.description}" />
+                        android:text="@{product.description}"
+                        android:textAlignment="center" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/quantity" />
+                        android:text="@string/quantity"
+                        android:textAlignment="center" />
 
                     <it.sephiroth.android.library.numberpicker.NumberPicker
                         android:id="@+id/quantityPicker"
@@ -162,6 +167,7 @@
                         app:picker_max="@{product.stock > 0 ? product.stock : 0}"
                         app:picker_min="0"
                         app:picker_orientation="horizontal"
+                        android:layout_gravity="center"
                         app:picker_stepSize="1" />
 
                     <TextView
@@ -169,13 +175,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/available_sizes" />
+                        android:text="@string/available_sizes"
+                        android:textAlignment="center" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/sizeButtonList"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:layout_gravity="center"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                     <com.google.android.material.button.MaterialButton
@@ -187,6 +195,16 @@
                         android:text="@string/add_to_cart" />
 
                 </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/ratingView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:id="@+id/inquiriesView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

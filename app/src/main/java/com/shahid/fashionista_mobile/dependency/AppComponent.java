@@ -7,6 +7,7 @@ import com.shahid.fashionista_mobile.fragments.HomeFragment;
 import com.shahid.fashionista_mobile.fragments.LoginFragment;
 import com.shahid.fashionista_mobile.fragments.OrdersFragment;
 import com.shahid.fashionista_mobile.fragments.ProductFragment;
+import com.shahid.fashionista_mobile.fragments.RatingFragment;
 import com.shahid.fashionista_mobile.fragments.SearchFragment;
 import com.shahid.fashionista_mobile.fragments.SignUpFragment;
 import com.shahid.fashionista_mobile.fragments.SplashFragment;
@@ -32,4 +33,6 @@ public interface AppComponent {
     void inject(ProductFragment f);
 
     void inject(CheckoutFragment f);
+
+    void inject(RatingFragment f);
 }

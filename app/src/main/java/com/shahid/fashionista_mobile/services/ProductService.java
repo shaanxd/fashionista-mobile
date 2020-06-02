@@ -5,6 +5,7 @@ import com.shahid.fashionista_mobile.callbacks.CustomCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
+import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
 
 import javax.inject.Inject;
 
@@ -26,6 +27,11 @@ public class ProductService {
 
     public void getProduct(String id, ServiceCallback callback) {
         Call<ProductResponse> call = api.getProduct(id);
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void getProductReviews(String id, int page, int size, ServiceCallback callback) {
+        Call<ReviewListResponse> call = api.getProductReviews(id, page, size);
         call.enqueue(new CustomCallback<>(callback));
     }
 }

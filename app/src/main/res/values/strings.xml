@@ -26,4 +26,9 @@
     <string name="check_out">CHECK OUT</string>
     <string name="number_of_items">NO OF ITEMS</string>
     <string name="order_text">ORDER</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
 </resources>

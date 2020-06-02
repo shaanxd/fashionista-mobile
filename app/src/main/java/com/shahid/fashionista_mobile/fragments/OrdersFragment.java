@@ -63,6 +63,12 @@ public class OrdersFragment extends AuthFragment implements ServiceCallback, Ite
         getOrdersFromApi();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        loading.setValue(true);
+    }
+
     private void onPurchaseChange(PurchaseListResponse purchases) {
         binding.setOrders(purchases);
 

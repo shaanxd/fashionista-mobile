@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.Glide;
@@ -148,24 +149,28 @@ public class ProductFragment extends RootFragment {
         binding.setLoading(value);
     }
 
-    private void onProductStateChange(ProductResponse product) {
-        binding.setProduct(product);
+    private void onProductStateChange(ProductResponse updated) {
+        binding.setProduct(updated);
 
-        if (product != null) {
+        if (updated != null) {
             // Set image
             Glide.with(binding.getRoot())
-                    .load(product.getThumbnail())
+                    .load(updated.getThumbnail())
                     .placeholder(R.drawable.placeholder_img)
                     .into(binding.thumbnailImage);
-
-            // Set product related data here
-            //  binding.setProduct(response);
 
             if (adapter == null) {
                 adapter = new SizeButtonAdapter(Arrays.asList("S", "M", "L", "XL"));
             }
             binding.sizeButtonList.setAdapter(adapter);
+            setReviewsFragment(updated);
         }
+    }
+
+    private void setReviewsFragment(ProductResponse updated) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.ratingView, new RatingFragment(updated));
+        transaction.commit();
     }
 
     private void onErrorStateChange(String error) {
