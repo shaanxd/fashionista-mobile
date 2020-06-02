@@ -21,4 +21,8 @@ public class StringFormatter {
     public static String getFormattedPrice(Double price) {
         return "$" + String.format(Locale.getDefault(), "%.2f", price);
     }
+
+    public static String getFirstCharacter(String name) {
+        return String.valueOf(name.charAt(0));
+    }
 }

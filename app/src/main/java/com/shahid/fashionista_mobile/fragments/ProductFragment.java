@@ -163,13 +163,14 @@ public class ProductFragment extends RootFragment {
                 adapter = new SizeButtonAdapter(Arrays.asList("S", "M", "L", "XL"));
             }
             binding.sizeButtonList.setAdapter(adapter);
-            setReviewsFragment(updated);
+            setProductDetailsFragments(updated);
         }
     }
 
-    private void setReviewsFragment(ProductResponse updated) {
+    private void setProductDetailsFragments(ProductResponse updated) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.ratingView, new RatingFragment(updated));
+        transaction.replace(R.id.inquiryView, new InquiryFragment(updated));
         transaction.commit();
     }
 

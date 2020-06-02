@@ -12,23 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.shahid.fashionista_mobile.FashionApp;
-import com.shahid.fashionista_mobile.adapters.ReviewAdapter;
+import com.shahid.fashionista_mobile.adapters.InquiryAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
-import com.shahid.fashionista_mobile.databinding.FragmentRatingBinding;
+import com.shahid.fashionista_mobile.databinding.FragmentInquiriesBinding;
+import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
-import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
 import com.shahid.fashionista_mobile.services.ProductService;
 
 import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class RatingFragment extends RootFragment implements ServiceCallback {
-
-    FragmentRatingBinding binding;
+public class InquiryFragment extends RootFragment implements ServiceCallback {
+    FragmentInquiriesBinding binding;
     ProductResponse product;
-    RecyclerView reviewsList;
-    ReviewAdapter adapter;
+    RecyclerView inquiryList;
+    InquiryAdapter adapter;
 
     int current = 0;
     int total = 0;
@@ -36,38 +35,37 @@ public class RatingFragment extends RootFragment implements ServiceCallback {
     @Inject
     ProductService service;
 
-    public RatingFragment(ProductResponse product) {
+    public InquiryFragment(ProductResponse product) {
         this.product = product;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((FashionApp) activity.getApplication()).getAppComponent().inject(this);
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentRatingBinding.inflate(LayoutInflater.from(inflater.getContext()), container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentInquiriesBinding.inflate(LayoutInflater.from(inflater.getContext()), container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        reviewsList = binding.reviewsList;
+        inquiryList = binding.inquiryList;
 
         //Set pagination on clicks
         binding.nextButton.setOnClickListener(this::onNextClick);
         binding.previousButton.setOnClickListener(this::onPreviousClick);
 
-        //Set Review data
-        binding.setProduct(product);
-        setReviewsToLayout(product.getReviews());
+        //Set Inquiry data
+        setInquiriesToLayout(product.getInquiries());
     }
 
-    private void setReviewsToLayout(ReviewListResponse page) {
+    private void setInquiriesToLayout(InquiryListResponse page) {
         current = page.getCurrent();
         total = page.getTotal();
 
@@ -75,30 +73,31 @@ public class RatingFragment extends RootFragment implements ServiceCallback {
         binding.setTotal(total);
 
         if (adapter == null) {
-            adapter = new ReviewAdapter(page.getReviews());
-            reviewsList.setAdapter(adapter);
+            adapter = new InquiryAdapter(page.getInquiries());
+            inquiryList.setAdapter(adapter);
         } else {
-            adapter.setReviews(page.getReviews());
+            adapter.setReviews(page.getInquiries());
         }
     }
 
     private void onNextClick(View v) {
         if (current != total) {
-            service.getProductReviews(product.getId(), current + 1, 3, this);
+            service.getProductInquiries(product.getId(), current + 1, 3, this);
         }
     }
 
     private void onPreviousClick(View v) {
         if (current != 0) {
-            service.getProductReviews(product.getId(), current - 1, 3, this);
+            service.getProductInquiries(product.getId(), current - 1, 3, this);
         }
     }
 
     @Override
     public void onSuccess(Response mResponse) {
-        ReviewListResponse response = (ReviewListResponse) mResponse.body();
+        InquiryListResponse response = (InquiryListResponse) mResponse.body();
+
         if (response != null) {
-            setReviewsToLayout(response);
+            setInquiriesToLayout(response);
         }
     }
 

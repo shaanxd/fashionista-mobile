@@ -1,5 +1,6 @@
 package com.shahid.fashionista_mobile.api;
 
+import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
@@ -18,4 +19,7 @@ public interface ProductInterface {
 
     @GET("api/products/reviews/{id}")
     Call<ReviewListResponse> getProductReviews(@Path("id") String id, @Query("page") int page, @Query("size") int size);
+
+    @GET("api/products/inquiries/{id}")
+    Call<InquiryListResponse> getProductInquiries(@Path("id") String id, @Query("page") int page, @Query("size") int size);
 }

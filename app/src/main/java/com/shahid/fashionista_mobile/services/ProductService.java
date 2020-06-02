@@ -3,6 +3,7 @@ package com.shahid.fashionista_mobile.services;
 import com.shahid.fashionista_mobile.api.ProductInterface;
 import com.shahid.fashionista_mobile.callbacks.CustomCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
+import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
@@ -32,6 +33,11 @@ public class ProductService {
 
     public void getProductReviews(String id, int page, int size, ServiceCallback callback) {
         Call<ReviewListResponse> call = api.getProductReviews(id, page, size);
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void getProductInquiries(String id, int page, int size, ServiceCallback callback) {
+        Call<InquiryListResponse> call = api.getProductInquiries(id, page, size);
         call.enqueue(new CustomCallback<>(callback));
     }
 }

@@ -21,6 +21,7 @@ public class ProductResponse {
     private List<String> images = new ArrayList<>();
     private List<TagResponse> tags = new ArrayList<>();
     private ReviewListResponse reviews;
+    private InquiryListResponse inquiries;
     private Integer oneStars = null;
     private Integer twoStars = null;
     private Integer threeStars = null;
