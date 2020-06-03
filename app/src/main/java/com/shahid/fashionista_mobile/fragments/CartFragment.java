@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.CartAdapter;
@@ -75,7 +76,10 @@ public class CartFragment extends AuthFragment {
     }
 
     private void onCheckoutClick(View view) {
-        rootNavController.navigate(R.id.action_navigationFragment_to_checkoutFragment);
+        Bundle bundle = new Bundle();
+        String json = new Gson().toJson(cart.getValue());
+        bundle.putString("CART_LIST", json);
+        rootNavController.navigate(R.id.action_navigationFragment_to_checkoutFragment, bundle);
     }
 
     private void onErrorStateChange(String error) {

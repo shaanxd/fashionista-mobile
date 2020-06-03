@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFeatureSettings="18sp"
+                android:textSize="18sp"
                 android:text="Favourites is Empty!" />
 
         </LinearLayout>

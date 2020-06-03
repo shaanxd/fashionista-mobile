@@ -1,8 +1,10 @@
 package com.shahid.fashionista_mobile.api;
 
 import com.shahid.fashionista_mobile.dto.request.CartRequest;
+import com.shahid.fashionista_mobile.dto.request.PurchaseRequest;
 import com.shahid.fashionista_mobile.dto.response.CartResponse;
 import com.shahid.fashionista_mobile.dto.response.PurchaseListResponse;
+import com.shahid.fashionista_mobile.dto.response.PurchaseResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -24,4 +26,7 @@ public interface CartInterface {
 
     @GET("api/purchases")
     Call<PurchaseListResponse> getPurchases(@Header("Authorization") String token, @Query("page") int page, @Query("size") int size, @Query("sort") String sort);
+
+    @POST("api/purchases/purchase-cart")
+    Call<PurchaseResponse> purchaseCart(@Header("Authorization") String token, @Body PurchaseRequest request);
 }

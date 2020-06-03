@@ -15,7 +15,8 @@ public class StringFormatter {
     }
 
     public static String getFormattedId(String id) {
-        return "#" + id.replaceAll("-", "").toUpperCase();
+        String replaced = id.replaceAll("-", "").toUpperCase();
+        return "ORDER #" + replaced.substring(replaced.length() - 5);
     }
 
     public static String getFormattedPrice(Double price) {

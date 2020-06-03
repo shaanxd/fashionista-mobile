@@ -52,22 +52,68 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="@{!loading &amp;&amp; error == null ? View.VISIBLE : View.GONE }">
+            android:padding="10dp"
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; orders != null &amp;&amp; orders.purchases.size() > 0 ? View.VISIBLE : View.GONE }">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorLightGray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Your Orders"
+                    android:textAppearance="?attr/textAppearanceListItemSecondary"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorLightGray" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/purchasesView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
-                android:visibility="@{orders != null &amp;&amp; orders.purchases.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; orders != null &amp;&amp; orders.purchases.size() == 0 ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_orders"
+                android:tint="@color/colorWhite" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You do not have any orders yet!"
-                android:visibility="@{orders == null || orders.purchases.size() &lt; 1 ? View.VISIBLE : View.GONE}" />
+                android:layout_marginTop="10dp"
+                android:text="Orders is Empty!"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
         <LinearLayout

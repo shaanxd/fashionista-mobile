@@ -4,8 +4,10 @@ import com.shahid.fashionista_mobile.api.CartInterface;
 import com.shahid.fashionista_mobile.callbacks.CustomCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.dto.request.CartRequest;
+import com.shahid.fashionista_mobile.dto.request.PurchaseRequest;
 import com.shahid.fashionista_mobile.dto.response.CartResponse;
 import com.shahid.fashionista_mobile.dto.response.PurchaseListResponse;
+import com.shahid.fashionista_mobile.dto.response.PurchaseResponse;
 
 import javax.inject.Inject;
 
@@ -37,6 +39,11 @@ public class CartService {
 
     public void getPurchases(String token, int pageNumber, ServiceCallback callback) {
         Call<PurchaseListResponse> call = api.getPurchases(token, pageNumber, 8, "createdAt,desc");
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void purchaseCart(String token, PurchaseRequest request, ServiceCallback callback) {
+        Call<PurchaseResponse> call = api.purchaseCart(token, request);
         call.enqueue(new CustomCallback<>(callback));
     }
 }

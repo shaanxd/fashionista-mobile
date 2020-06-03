@@ -8,7 +8,6 @@ import com.shahid.fashionista_mobile.fragments.CartFragment;
 import com.shahid.fashionista_mobile.fragments.FavouritesFragment;
 import com.shahid.fashionista_mobile.fragments.HomeFragment;
 import com.shahid.fashionista_mobile.fragments.OrdersFragment;
-import com.shahid.fashionista_mobile.fragments.SearchFragment;
 
 public class NavigationPagerAdapter extends FragmentStateAdapter {
     public NavigationPagerAdapter(@NonNull Fragment fragment) {
@@ -33,12 +32,8 @@ public class NavigationPagerAdapter extends FragmentStateAdapter {
                 fragment = new FavouritesFragment();
                 break;
             }
-            case 3: {
-                fragment = new OrdersFragment();
-                break;
-            }
             default: {
-                fragment = new SearchFragment();
+                fragment = new OrdersFragment();
                 break;
             }
         }
@@ -48,6 +43,6 @@ public class NavigationPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 4;
     }
 }

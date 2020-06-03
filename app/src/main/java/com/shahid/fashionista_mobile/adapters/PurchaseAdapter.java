@@ -31,7 +31,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(purchases.get(position), callback);
+        holder.bind(purchases.get(position), callback, position == purchases.size() - 1);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.ViewHo
             this.binding = binding;
         }
 
-        void bind(PurchaseResponse purchase, ItemClickCallback callback) {
+        void bind(PurchaseResponse purchase, ItemClickCallback callback, boolean last) {
             binding.setPurchase(purchase);
 
             String[] formattedDate = StringFormatter.getDayOfWeek(purchase.getOrderedAt()).split("-");
@@ -55,6 +55,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.ViewHo
             binding.setDay(formattedDate[2]);
             binding.setMonth(formattedDate[1]);
             binding.setYear(formattedDate[0]);
+            binding.setLast(last);
 
             binding.purchaseLayout.setOnClickListener(v -> {
                 String orderDetails = new Gson().toJson(purchase);

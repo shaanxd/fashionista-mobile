@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; cart != null  ? View.VISIBLE : View.GONE}">
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; cart != null &amp;&amp; cart.numberOfItems != 0 ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:layout_width="match_parent"
@@ -95,6 +95,28 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/check_out" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; cart != null &amp;&amp; cart.numberOfItems == 0 ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_cart"
+                android:tint="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Cart is Empty!"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
