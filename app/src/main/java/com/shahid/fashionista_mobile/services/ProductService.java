@@ -52,4 +52,9 @@ public class ProductService {
         Call<InquiryListResponse> call = api.addInquiry(id, request, token);
         call.enqueue(new CustomCallback<>(callback));
     }
+
+    public void getFavourites(String token, ServiceCallback callback) {
+        Call<ProductListResponse> call = api.getFavourites(token);
+        call.enqueue(new CustomCallback<>(callback));
+    }
 }

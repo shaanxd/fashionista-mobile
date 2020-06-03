@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.shahid.fashionista_mobile.fragments.CartFragment;
+import com.shahid.fashionista_mobile.fragments.FavouritesFragment;
 import com.shahid.fashionista_mobile.fragments.HomeFragment;
 import com.shahid.fashionista_mobile.fragments.OrdersFragment;
 import com.shahid.fashionista_mobile.fragments.SearchFragment;
@@ -29,6 +30,10 @@ public class NavigationPagerAdapter extends FragmentStateAdapter {
                 break;
             }
             case 2: {
+                fragment = new FavouritesFragment();
+                break;
+            }
+            case 3: {
                 fragment = new OrdersFragment();
                 break;
             }
@@ -43,6 +48,6 @@ public class NavigationPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 }

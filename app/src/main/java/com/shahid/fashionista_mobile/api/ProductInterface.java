@@ -33,4 +33,7 @@ public interface ProductInterface {
 
     @POST("/api/products/add-inquiry/{id}")
     Call<InquiryListResponse> addInquiry(@Path("id") String id, @Body InquiryRequest request, @Header("Authorization") String token);
+
+    @GET("/api/favourites")
+    Call<ProductListResponse> getFavourites(@Header("Authorization") String token);
 }

@@ -21,10 +21,11 @@ import java.util.List;
 public class NavigationFragment extends RootFragment {
     private FragmentNavigationBinding binding;
 
-    private List<String> tabText = Arrays.asList("Home", "Cart", "Orders", "Search");
+    private List<String> tabText = Arrays.asList("Home", "Cart", "Wishlist", "Orders", "Search");
     private List<Integer> tabIcons = Arrays.asList(
             R.drawable.icon_store,
             R.drawable.icon_cart,
+            R.drawable.icon_favourite,
             R.drawable.icon_orders,
             R.drawable.icon_search
     );
@@ -58,8 +59,14 @@ public class NavigationFragment extends RootFragment {
         viewPager.setAdapter(new NavigationPagerAdapter(this));
 
         new TabLayoutMediator(tabLayout, viewPager, ((tab, position) -> {
-            tab.setText(tabText.get(position));
+            //  tab.setText(tabText.get(position));
             tab.setIcon(tabIcons.get(position));
         })).attach();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        viewPager.setCurrentItem(0);
     }
 }

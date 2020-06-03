@@ -22,7 +22,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.HomeFragment">
+        tools:context=".fragments.FavouritesFragment">
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
@@ -59,7 +59,6 @@
             android:visibility="@{!loading &amp;&amp; error != null ? View.VISIBLE : View.GONE}">
 
             <TextView
-                android:id="@+id/errorTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{error}">
@@ -116,6 +115,7 @@
 
         </ScrollView>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -126,7 +126,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_store"
+                android:src="@drawable/icon_favourite"
                 android:tint="@color/colorWhite" />
 
             <TextView

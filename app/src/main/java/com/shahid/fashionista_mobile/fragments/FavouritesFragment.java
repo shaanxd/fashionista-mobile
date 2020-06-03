@@ -17,7 +17,7 @@ import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.ProductAdapter;
 import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
-import com.shahid.fashionista_mobile.databinding.FragmentHomeBinding;
+import com.shahid.fashionista_mobile.databinding.FragmentFavouritesBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.services.ProductService;
 
@@ -25,21 +25,20 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class HomeFragment extends ExpireFragment implements ServiceCallback, ItemClickCallback {
+public class FavouritesFragment extends ExpireFragment implements ServiceCallback, ItemClickCallback {
+
     @Inject
     ProductService service;
-    private FragmentHomeBinding binding;
+
+    private FragmentFavouritesBinding binding;
+
     private MutableLiveData<Boolean> loading = new MutableLiveData<>(true);
-    private MutableLiveData<ProductListResponse> productList = new MutableLiveData<>();
+    private MutableLiveData<ProductListResponse> products = new MutableLiveData<>();
     private MutableLiveData<String> error = new MutableLiveData<>(null);
 
     private RecyclerView productView;
 
     private ProductAdapter adapter;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentFavouritesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -61,7 +60,7 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
         productView = binding.productView;
 
         loading.observe(getViewLifecycleOwner(), this::onLoadingChange);
-        productList.observe(getViewLifecycleOwner(), this::onProductsChange);
+        products.observe(getViewLifecycleOwner(), this::onProductsChange);
         error.observe(getViewLifecycleOwner(), this::onErrorChange);
     }
 
@@ -74,17 +73,16 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
     @Override
     public void onResume() {
         super.onResume();
-        getProducts();
+        getFavouritesFromApi();
     }
 
-    private void getProducts() {
-        if (loading.getValue() != null && !loading.getValue()) {
-            loading.setValue(true);
+    private void getFavouritesFromApi() {
+        loading.setValue(true);
+        error.setValue(null);
+        if (authState == null) {
+            return;
         }
-        if (error.getValue() != null) {
-            error.setValue(null);
-        }
-        service.getProducts(0, 8, this);
+        service.getFavourites("Bearer " + authState.getToken(), this);
     }
 
     private void onLoadingChange(Boolean loading) {
@@ -109,7 +107,7 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
 
     @Override
     public void onSuccess(Response mResponse) {
-        productList.setValue((ProductListResponse) mResponse.body());
+        products.setValue((ProductListResponse) mResponse.body());
         loading.setValue(false);
     }
 
