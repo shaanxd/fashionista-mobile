@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
@@ -73,6 +74,20 @@ public class ProductFragment extends RootFragment {
         return binding.getRoot();
     }
 
+    ServiceCallback productRequestCallback = new ServiceCallback() {
+        @Override
+        public void onSuccess(Response mResponse) {
+            product.setValue((ProductResponse) mResponse.body());
+            loading.setValue(false);
+        }
+
+        @Override
+        public void onFailure(String mErrorMessage) {
+            error.setValue(mErrorMessage);
+            loading.setValue(false);
+        }
+    };
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -80,25 +95,54 @@ public class ProductFragment extends RootFragment {
         quantityPicker = binding.quantityPicker;
 
         binding.addToCartBtn.setOnClickListener(this::onAddToCartClick);
+        binding.addInquiryButton.setOnClickListener(this::onAddInquiryClick);
+        binding.addReviewButton.setOnClickListener(this::onAddReviewClick);
 
         loading.observe(getViewLifecycleOwner(), this::onLoadingStateChange);
         product.observe(getViewLifecycleOwner(), this::onProductStateChange);
         error.observe(getViewLifecycleOwner(), this::onErrorStateChange);
         cart.observe(getViewLifecycleOwner(), this::onCartStateChange);
 
-        productService.getProduct(productId, new ServiceCallback() {
-            @Override
-            public void onSuccess(Response mResponse) {
-                product.setValue((ProductResponse) mResponse.body());
-                loading.setValue(false);
-            }
+        productService.getProduct(productId, productRequestCallback);
+    }
 
-            @Override
-            public void onFailure(String mErrorMessage) {
-                error.setValue(mErrorMessage);
-                loading.setValue(false);
-            }
-        });
+    @Override
+    public void onPause() {
+        super.onPause();
+        loading.setValue(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        productService.getProduct(productId, productRequestCallback);
+
+    }
+
+    private void onAddInquiryClick(View view) {
+        if (auth == null) {
+            rootNavController.navigate(R.id.action_productFragment_to_loginFragment);
+        } else {
+            String value = new Gson().toJson(product.getValue());
+
+            Bundle bundle = new Bundle();
+            bundle.putString("PRODUCT_DETAILS", value);
+
+            rootNavController.navigate(R.id.action_productFragment_to_addInquiryFragment, bundle);
+        }
+    }
+
+    private void onAddReviewClick(View view) {
+        if (auth == null) {
+            rootNavController.navigate(R.id.action_productFragment_to_loginFragment);
+        } else {
+            String value = new Gson().toJson(product.getValue());
+
+            Bundle bundle = new Bundle();
+            bundle.putString("PRODUCT_DETAILS", value);
+
+            rootNavController.navigate(R.id.action_productFragment_to_addReviewFragment, bundle);
+        }
     }
 
     private void onCartStateChange(Boolean value) {

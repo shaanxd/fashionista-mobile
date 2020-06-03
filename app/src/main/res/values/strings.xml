@@ -31,4 +31,6 @@
     <string name="_3">3</string>
     <string name="_4">4</string>
     <string name="_5">5</string>
+    <string name="error_title">Please enter a title.</string>
+    <string name="error_description">Please enter a description.</string>
 </resources>
