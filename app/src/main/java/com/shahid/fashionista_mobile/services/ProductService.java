@@ -5,6 +5,7 @@ import com.shahid.fashionista_mobile.callbacks.CustomCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
+import com.shahid.fashionista_mobile.dto.response.FavouriteResponse;
 import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
@@ -55,6 +56,16 @@ public class ProductService {
 
     public void getFavourites(String token, ServiceCallback callback) {
         Call<ProductListResponse> call = api.getFavourites(token);
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void getProductFavourite(String id, String token, ServiceCallback callback) {
+        Call<FavouriteResponse> call = api.getProductFavourite(id, token);
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void toggleProductFavourite(String id, String token, ServiceCallback callback) {
+        Call<FavouriteResponse> call = api.toggleProductFavourite(id, token);
         call.enqueue(new CustomCallback<>(callback));
     }
 }

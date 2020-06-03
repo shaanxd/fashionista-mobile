@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Our Products"
+                        android:text="Your Favourites"
                         android:textAppearance="?attr/textAppearanceListItemSecondary"
                         android:textSize="20sp" />
 

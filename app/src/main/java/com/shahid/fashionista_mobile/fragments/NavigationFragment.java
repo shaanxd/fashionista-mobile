@@ -11,15 +11,23 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.NavigationPagerAdapter;
 import com.shahid.fashionista_mobile.databinding.FragmentNavigationBinding;
+import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
 
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class NavigationFragment extends RootFragment {
     private FragmentNavigationBinding binding;
+
+    @Inject
+    @Nullable
+    AuthenticationResponse auth;
 
     private List<String> tabText = Arrays.asList("Home", "Cart", "Wishlist", "Orders", "Search");
     private List<Integer> tabIcons = Arrays.asList(
@@ -40,6 +48,7 @@ public class NavigationFragment extends RootFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((FashionApp) activity.getApplication()).getAppComponent().inject(this);
     }
 
     @Override
@@ -67,6 +76,9 @@ public class NavigationFragment extends RootFragment {
     @Override
     public void onPause() {
         super.onPause();
-        viewPager.setCurrentItem(0);
+        // TODO
+        if (auth == null) {
+            viewPager.setCurrentItem(0);
+        }
     }
 }

@@ -20,6 +20,7 @@ import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentProductBinding;
 import com.shahid.fashionista_mobile.dto.request.CartRequest;
 import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
+import com.shahid.fashionista_mobile.dto.response.FavouriteResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.services.CartService;
 import com.shahid.fashionista_mobile.services.ProductService;
@@ -74,7 +75,7 @@ public class ProductFragment extends RootFragment {
         return binding.getRoot();
     }
 
-    ServiceCallback productRequestCallback = new ServiceCallback() {
+    ServiceCallback productCallback = new ServiceCallback() {
         @Override
         public void onSuccess(Response mResponse) {
             product.setValue((ProductResponse) mResponse.body());
@@ -88,22 +89,48 @@ public class ProductFragment extends RootFragment {
         }
     };
 
+    ServiceCallback favouriteCheckCallback = new ServiceCallback() {
+        @Override
+        public void onSuccess(Response mResponse) {
+            FavouriteResponse response = (FavouriteResponse) mResponse.body();
+            if (response == null) {
+                return;
+            }
+            binding.setFavourited(response.isFavourited());
+            binding.setFavouriteLoading(false);
+        }
+
+        @Override
+        public void onFailure(String mErrorMessage) {
+            DynamicToast.makeError(activity, "Error occurred. Please try again.").show();
+            binding.setFavouriteLoading(false);
+        }
+    };
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         quantityPicker = binding.quantityPicker;
 
+        binding.setFavourited(false);
+
         binding.addToCartBtn.setOnClickListener(this::onAddToCartClick);
         binding.addInquiryButton.setOnClickListener(this::onAddInquiryClick);
         binding.addReviewButton.setOnClickListener(this::onAddReviewClick);
+        binding.addToFavouritesButton.setOnClickListener(this::onToggleFavourite);
 
         loading.observe(getViewLifecycleOwner(), this::onLoadingStateChange);
         product.observe(getViewLifecycleOwner(), this::onProductStateChange);
         error.observe(getViewLifecycleOwner(), this::onErrorStateChange);
         cart.observe(getViewLifecycleOwner(), this::onCartStateChange);
 
-        productService.getProduct(productId, productRequestCallback);
+        productService.getProduct(productId, productCallback);
+
+        if (auth != null) {
+            binding.setFavouriteLoading(true);
+            productService.getProductFavourite(productId, "Bearer " + auth.getToken(), favouriteCheckCallback);
+        }
     }
 
     @Override
@@ -115,7 +142,7 @@ public class ProductFragment extends RootFragment {
     @Override
     public void onResume() {
         super.onResume();
-        productService.getProduct(productId, productRequestCallback);
+        productService.getProduct(productId, productCallback);
 
     }
 
@@ -142,6 +169,15 @@ public class ProductFragment extends RootFragment {
             bundle.putString("PRODUCT_DETAILS", value);
 
             rootNavController.navigate(R.id.action_productFragment_to_addReviewFragment, bundle);
+        }
+    }
+
+    private void onToggleFavourite(View view) {
+        if (auth == null) {
+            rootNavController.navigate(R.id.action_productFragment_to_loginFragment);
+        } else {
+            binding.setFavouriteLoading(true);
+            productService.toggleProductFavourite(productId, "Bearer " + auth.getToken(), favouriteCheckCallback);
         }
     }
 

@@ -2,6 +2,7 @@ package com.shahid.fashionista_mobile.api;
 
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
+import com.shahid.fashionista_mobile.dto.response.FavouriteResponse;
 import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
@@ -36,4 +37,10 @@ public interface ProductInterface {
 
     @GET("/api/favourites")
     Call<ProductListResponse> getFavourites(@Header("Authorization") String token);
+
+    @GET("/api/favourites/is-favourite/{id}")
+    Call<FavouriteResponse> getProductFavourite(@Path("id") String id, @Header("Authorization") String token);
+
+    @POST("/api/favourites/toggle/{id}")
+    Call<FavouriteResponse> toggleProductFavourite(@Path("id") String id, @Header("Authorization") String token);
 }

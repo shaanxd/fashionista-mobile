@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class FavouritesFragment extends ExpireFragment implements ServiceCallback, ItemClickCallback {
+public class FavouritesFragment extends AuthFragment implements ServiceCallback, ItemClickCallback {
 
     @Inject
     ProductService service;

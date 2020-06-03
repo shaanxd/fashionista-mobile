@@ -5,17 +5,29 @@
     tools:context=".fragments.ProductFragment">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="cart"
             type="boolean" />
+
+        <variable
+            name="favourited"
+            type="boolean" />
+
+        <variable
+            name="favouriteLoading"
+            type="boolean" />
+
         <variable
             name="loading"
             type="boolean" />
+
         <variable
             name="error"
             type="String" />
+
         <variable
             name="product"
             type="com.shahid.fashionista_mobile.dto.response.ProductResponse" />
@@ -193,6 +205,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="@string/add_to_cart" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/addToFavouritesButton"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:enabled="@{!favouriteLoading}"
+                        android:text="@{favourited ? `Remove from favourites` : `Add to favourites`}" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
