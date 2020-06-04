@@ -83,16 +83,20 @@ public class RatingFragment extends RootFragment implements ServiceCallback {
         } else {
             adapter.setReviews(page.getReviews());
         }
+
+        binding.setLoading(false);
     }
 
     private void onNextClick(View v) {
         if (current != total) {
+            binding.setLoading(true);
             service.getProductReviews(product.getId(), current + 1, 3, this);
         }
     }
 
     private void onPreviousClick(View v) {
         if (current != 0) {
+            binding.setLoading(true);
             service.getProductReviews(product.getId(), current - 1, 3, this);
         }
     }
@@ -107,6 +111,7 @@ public class RatingFragment extends RootFragment implements ServiceCallback {
 
     @Override
     public void onFailure(String mErrorMessage) {
+        binding.setLoading(false);
         DynamicToast.makeError(activity, mErrorMessage, Toast.LENGTH_SHORT).show();
     }
 }

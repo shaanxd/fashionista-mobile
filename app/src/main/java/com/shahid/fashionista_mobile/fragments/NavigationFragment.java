@@ -36,6 +36,7 @@ public class NavigationFragment extends RootFragment {
             R.drawable.icon_favourite,
             R.drawable.icon_orders
     );
+    private List<String> tabHeadings = Arrays.asList("OUR PRODUCTS", "YOUR CART", "YOUR FAVOURITES", "YOUR ORDERS");
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
@@ -65,9 +66,16 @@ public class NavigationFragment extends RootFragment {
         viewPager = binding.viewPager;
 
         viewPager.setAdapter(new NavigationPagerAdapter(this));
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                binding.setText(tabHeadings.get(position));
+            }
+        });
 
         new TabLayoutMediator(tabLayout, viewPager, ((tab, position) -> {
-            tab.setText(tabText.get(position));
+            //  tab.setText(tabText.get(position));
             tab.setIcon(tabIcons.get(position));
         })).attach();
     }

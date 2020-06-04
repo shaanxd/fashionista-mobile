@@ -26,6 +26,10 @@
         <variable
             name="size"
             type="int" />
+
+        <variable
+            name="loading"
+            type="boolean" />
     </data>
 
     <LinearLayout
@@ -291,6 +295,7 @@
                 android:id="@+id/previousButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="@{!(current == 0 || loading)}"
                 android:text="Previous" />
 
             <TextView
@@ -317,6 +322,7 @@
                 android:id="@+id/nextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="@{!(current == total || loading)}"
                 android:text="Next" />
         </LinearLayout>
 
