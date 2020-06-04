@@ -3,6 +3,7 @@ package com.shahid.fashionista_mobile.services;
 import com.shahid.fashionista_mobile.api.ProductInterface;
 import com.shahid.fashionista_mobile.callbacks.CustomCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
+import com.shahid.fashionista_mobile.dto.request.CategoryRequest;
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
 import com.shahid.fashionista_mobile.dto.response.AllTagsResponse;
@@ -72,6 +73,17 @@ public class ProductService {
 
     public void getProductTags(ServiceCallback callback) {
         Call<AllTagsResponse> call = api.getAllProductTags();
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void createCategory(String token, CategoryRequest request, ServiceCallback callback) {
+        Call<Object> call = api.createCategory(
+                token,
+                request.getImage(),
+                request.getName(),
+                request.getDescription(),
+                request.getType()
+        );
         call.enqueue(new CustomCallback<>(callback));
     }
 }

@@ -9,11 +9,15 @@ import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -47,4 +51,14 @@ public interface ProductInterface {
 
     @GET("/api/tags/all")
     Call<AllTagsResponse> getAllProductTags();
+
+    @Multipart
+    @POST("/api/admin/create-tag")
+    Call<Object> createCategory(
+            @Header("Authorization") String token,
+            @Part MultipartBody.Part file,
+            @Part("name") RequestBody name,
+            @Part("description") RequestBody description,
+            @Part("type") RequestBody type
+    );
 }
