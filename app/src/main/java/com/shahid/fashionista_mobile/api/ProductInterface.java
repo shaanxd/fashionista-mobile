@@ -2,6 +2,7 @@ package com.shahid.fashionista_mobile.api;
 
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
+import com.shahid.fashionista_mobile.dto.response.AllTagsResponse;
 import com.shahid.fashionista_mobile.dto.response.FavouriteResponse;
 import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
@@ -43,4 +44,7 @@ public interface ProductInterface {
 
     @POST("/api/favourites/toggle/{id}")
     Call<FavouriteResponse> toggleProductFavourite(@Path("id") String id, @Header("Authorization") String token);
+
+    @GET("/api/tags/all")
+    Call<AllTagsResponse> getAllProductTags();
 }

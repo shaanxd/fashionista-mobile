@@ -14,7 +14,7 @@ import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.adapters.InquiryAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
-import com.shahid.fashionista_mobile.databinding.FragmentInquiriesBinding;
+import com.shahid.fashionista_mobile.databinding.FragmentInquiryBinding;
 import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.services.ProductService;
@@ -24,7 +24,7 @@ import javax.inject.Inject;
 import retrofit2.Response;
 
 public class InquiryFragment extends RootFragment implements ServiceCallback {
-    FragmentInquiriesBinding binding;
+    FragmentInquiryBinding binding;
     ProductResponse product;
     RecyclerView inquiryList;
     InquiryAdapter adapter;
@@ -49,7 +49,7 @@ public class InquiryFragment extends RootFragment implements ServiceCallback {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentInquiriesBinding.inflate(LayoutInflater.from(inflater.getContext()), container, false);
+        binding = FragmentInquiryBinding.inflate(LayoutInflater.from(inflater.getContext()), container, false);
         return binding.getRoot();
     }
 

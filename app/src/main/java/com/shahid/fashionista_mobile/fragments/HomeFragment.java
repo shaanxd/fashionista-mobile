@@ -123,6 +123,6 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
     public void onItemClick(String id) {
         Bundle bundle = new Bundle();
         bundle.putString("PRODUCT_ID", id);
-        rootNavController.navigate(R.id.action_navigationFragment_to_productFragment, bundle);
+        rootNavController.navigate(R.id.productFragment, bundle);
     }
 }

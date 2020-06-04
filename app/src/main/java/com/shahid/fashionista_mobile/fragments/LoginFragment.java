@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
@@ -137,7 +138,12 @@ public class LoginFragment extends RootFragment implements View.OnClickListener,
             // Set Expiration Date and Set Authentication Obj
             response.setExpirationDate(expirationDate);
             sessionStorage.setSession(response);
-            rootNavController.navigate(R.id.action_loginFragment_to_navigationFragment);
+
+            if (response.getRole().equals("ADMIN")) {
+                CustomNavigator.navigate(rootNavController, R.id.action_loginFragment_to_adminNavigationFragment);
+            } else {
+                CustomNavigator.navigate(rootNavController, R.id.action_loginFragment_to_navigationFragment);
+            }
         }
     }
 

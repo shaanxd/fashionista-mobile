@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.TimerCallback;
@@ -61,10 +62,15 @@ public class SplashFragment extends RootFragment {
             long difference = expirationDate.getTime() - currentDate.getTime();
             if (difference > 10000) {
                 ((TimerCallback) activity).start(difference);
+                System.out.println(authState.getRole());
+                if (authState.getRole().equals("ADMIN")) {
+                    CustomNavigator.navigate(rootNavController, R.id.action_splashFragment_to_adminNavigationFragment);
+                    return;
+                }
             } else {
                 sessionStorage.setSession(null);
             }
         }
-        rootNavController.navigate(R.id.action_splashFragment_to_home_nav_graph);
+        CustomNavigator.navigate(rootNavController, R.id.action_splashFragment_to_home_nav_graph);
     }
 }
