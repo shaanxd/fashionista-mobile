@@ -142,7 +142,7 @@ public class AddCategoryFragment extends AuthFragment implements ServiceCallback
         RequestBody requestName = RequestBody.create(MediaType.parse("multipart/form-data"), nameString);
         RequestBody requestDescription = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
         RequestBody requestType = RequestBody.create(MediaType.parse("multipart/form-data"), typeString);
-        MultipartBody.Part image = createFormData("image", file.getName(), create(parse("image/jpg"), file));
+        MultipartBody.Part image = createFormData("image", file.getName(), create(parse("image/jpeg"), file));
 
         CategoryRequest request = new CategoryRequest(
                 requestName,

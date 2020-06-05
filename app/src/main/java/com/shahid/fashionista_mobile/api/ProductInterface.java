@@ -9,6 +9,8 @@ import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -60,5 +62,18 @@ public interface ProductInterface {
             @Part("name") RequestBody name,
             @Part("description") RequestBody description,
             @Part("type") RequestBody type
+    );
+
+    @Multipart
+    @POST("/api/admin/create-product")
+    Call<Object> createProduct(
+            @Header("Authorization") String token,
+            @Part MultipartBody.Part thumbnail,
+            @Part List<MultipartBody.Part> images,
+            @Part("name") RequestBody name,
+            @Part("description") RequestBody description,
+            @Part("price") RequestBody price,
+            @Part("stock") RequestBody stock,
+            @Part List<MultipartBody.Part> tags
     );
 }

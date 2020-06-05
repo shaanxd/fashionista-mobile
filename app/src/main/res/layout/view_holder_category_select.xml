@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="tag"
+            type="com.shahid.fashionista_mobile.dto.response.TagResponse" />
+
+        <variable
+            name="last"
+            type="boolean" />
+
+        <variable
+            name="checked"
+            type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/size_toggle_background"
+            android:button="@null"
+            android:checked="@{checked}"
+            android:minHeight="40dp"
+            android:paddingHorizontal="20dp"
+            android:text="@{tag.name}"
+            android:textAlignment="center" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:visibility="@{last ? View.GONE : View.VISIBLE}" />
+    </LinearLayout>
+</layout>
