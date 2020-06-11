@@ -33,4 +33,7 @@
     <string name="_5">5</string>
     <string name="error_title">Please enter a title.</string>
     <string name="error_description">Please enter a description.</string>
+    <string name="add">ADD</string>
+    <string name="logout">LOGOUT</string>
+    <string name="login">LOGIN</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,13 +65,21 @@ public class SplashFragment extends RootFragment {
                 ((TimerCallback) activity).start(difference);
                 System.out.println(authState.getRole());
                 if (authState.getRole().equals("ADMIN")) {
-                    CustomNavigator.navigate(rootNavController, R.id.action_splashFragment_to_adminNavigationFragment);
+                    new Handler().postDelayed(this::runAdmin, 2000);
                     return;
                 }
             } else {
                 sessionStorage.setSession(null);
             }
         }
+        new Handler().postDelayed(this::run, 2000);
+    }
+
+    public void run() {
         CustomNavigator.navigate(rootNavController, R.id.action_splashFragment_to_home_nav_graph);
+    }
+
+    public void runAdmin() {
+        CustomNavigator.navigate(rootNavController, R.id.action_splashFragment_to_adminNavigationFragment);
     }
 }

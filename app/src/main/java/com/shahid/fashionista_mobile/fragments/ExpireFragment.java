@@ -35,7 +35,7 @@ public abstract class ExpireFragment extends RootFragment {
         if (auth != null) {
             sessionStorage.attachObserver(this, authParam -> {
                 if (authParam == null) {
-                    rootNavController.navigate(R.id.action_navigationFragment_to_logoutFragment);
+                    rootNavController.navigate(R.id.logoutFragment);
                 }
             });
         }

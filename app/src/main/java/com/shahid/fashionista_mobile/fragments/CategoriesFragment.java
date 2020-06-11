@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class CategoriesFragment extends AuthFragment implements ServiceCallback {
+public class CategoriesFragment extends ExpireFragment implements ServiceCallback {
     FragmentCategoriesBinding binding;
 
     RecyclerView brands, genders, types;

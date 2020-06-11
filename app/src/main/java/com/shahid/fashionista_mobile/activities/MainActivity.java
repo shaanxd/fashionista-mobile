@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.callbacks.TimerCallback;
@@ -14,7 +15,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements TimerCallback, Runnable {
     @Inject
-    SessionStorage sessionStorage;
+    SessionStorage session;
     private Handler handler;
 
     @Override
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements TimerCallback, Ru
 
     @Override
     public void run() {
-        sessionStorage.setSession(null);
+        session.setSession(null);
+        DynamicToast.make(this, "LOGGING OUT").show();
     }
 }

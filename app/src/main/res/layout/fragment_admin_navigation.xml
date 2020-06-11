@@ -11,10 +11,6 @@
         <variable
             name="text"
             type="String" />
-
-        <variable
-            name="index"
-            type="Integer" />
     </data>
 
     <LinearLayout
@@ -38,10 +34,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:letterSpacing="0.5"
                     android:text="@{text}"
-                    android:textColor="@color/colorWhite"
                     android:textSize="16sp" />
 
                 <View
@@ -56,9 +51,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:padding="0dp"
-                    android:text="ADD"
+                    android:text="@string/add"
                     android:textSize="12sp"
-                    android:visibility="@{index == 0 ? View.VISIBLE : View.GONE}" />
+                    android:visibility="@{text.equals(`OUR PRODUCTS`) ? View.VISIBLE : View.GONE}" />
 
                 <Button
                     android:id="@+id/addCategoryButton"
@@ -66,24 +61,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:padding="0dp"
-                    android:text="ADD"
+                    android:text="@string/add"
                     android:textSize="12sp"
-                    android:visibility="@{index == 2 ? View.VISIBLE : View.GONE}" />
+                    android:visibility="@{text.equals(`CATEGORIES`) ? View.VISIBLE : View.GONE}" />
 
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+        <fragment
+            android:id="@+id/admin_nav"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_weight="1"
+            app:defaultNavHost="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            app:navGraph="@navigation/admin_nav_graph" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/admin_bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="65dp"
+            android:layout_gravity="bottom"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/admin_nav_items" />
 
     </LinearLayout>
 </layout>

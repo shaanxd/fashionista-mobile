@@ -7,20 +7,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.navigation.NavController;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
-import com.shahid.fashionista_mobile.adapters.NavigationPagerAdapter;
+import com.shahid.fashionista_mobile.callbacks.TimerCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentNavigationBinding;
 import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
-
-import java.util.Arrays;
-import java.util.List;
+import com.shahid.fashionista_mobile.store.SessionStorage;
 
 import javax.inject.Inject;
+
+import static androidx.navigation.Navigation.findNavController;
+import static androidx.navigation.ui.NavigationUI.setupWithNavController;
 
 public class NavigationFragment extends RootFragment {
     private FragmentNavigationBinding binding;
@@ -29,18 +29,10 @@ public class NavigationFragment extends RootFragment {
     @Nullable
     AuthenticationResponse auth;
 
-    private List<Integer> tabIcons = Arrays.asList(
-            R.drawable.icon_store,
-            R.drawable.icon_cart,
-            R.drawable.icon_favourite,
-            R.drawable.icon_orders,
-            R.drawable.icon_categories,
-            R.drawable.icon_profile
-    );
-    private List<String> tabHeadings = Arrays.asList("OUR PRODUCTS", "YOUR CART", "YOUR FAVOURITES", "YOUR ORDERS", "CATEGORIES", "YOUR PROFILE");
+    @Inject
+    SessionStorage session;
 
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager;
+    NavController userNavController;
 
     public NavigationFragment() {
         // Required empty public constructor
@@ -63,31 +55,57 @@ public class NavigationFragment extends RootFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout = binding.tabLayout;
-        viewPager = binding.viewPager;
+        userNavController = findNavController(activity, R.id.user_nav);
+        setupWithNavController(binding.userBottomNav, userNavController);
 
-        viewPager.setAdapter(new NavigationPagerAdapter(this));
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                binding.setText(tabHeadings.get(position));
+        binding.setAuth(auth);
+
+        userNavController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            String title;
+
+            switch (destination.getId()) {
+                case R.id.user_home: {
+                    title = "OUR PRODUCTS";
+                    break;
+                }
+                case R.id.user_cart: {
+                    title = "YOUR CART";
+                    break;
+                }
+                case R.id.user_favourites: {
+                    title = "YOUR WISHLIST";
+                    break;
+                }
+                case R.id.user_orders: {
+                    title = "YOUR ORDERS";
+                    break;
+                }
+                default: {
+                    title = "CATEGORIES";
+                }
             }
+
+            binding.setText(title);
         });
 
-        new TabLayoutMediator(tabLayout, viewPager, ((tab, position) -> {
-            //  tab.setText(tabText.get(position));
-            tab.setIcon(tabIcons.get(position));
-        })).attach();
+        binding.loginButton.setOnClickListener(this::onLoginClick);
+        binding.logoutButton.setOnClickListener(this::onLogoutClick);
+    }
+
+    private void onLogoutClick(View view) {
+        session.setSession(null);
+        ((TimerCallback) activity).destroy();
+    }
+
+    private void onLoginClick(View view) {
+        CustomNavigator.navigate(rootNavController, R.id.loginFragment);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        // TODO
         if (auth == null) {
-            System.out.println("============== SET TO 0");
-            viewPager.setCurrentItem(0);
+            CustomNavigator.navigate(userNavController, R.id.user_home);
         }
     }
 }

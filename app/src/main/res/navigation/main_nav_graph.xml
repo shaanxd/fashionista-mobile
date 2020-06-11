@@ -33,9 +33,8 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
-
         <action
             android:id="@+id/action_loginFragment_to_navigationFragment"
             app:destination="@id/navigationFragment"
@@ -103,7 +102,13 @@
         <action
             android:id="@+id/action_logoutFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/logoutFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_logoutFragment_to_navigationFragment"
+            app:destination="@id/navigationFragment"
+            app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
 
     </fragment>
@@ -181,6 +186,7 @@
     <fragment
         android:id="@+id/singleInquiryFragment"
         android:name="com.shahid.fashionista_mobile.fragments.SingleInquiryFragment"
-        android:label="SingleInquiryFragment" />
+        android:label="SingleInquiryFragment"
+        tools:layout="@layout/fragment_single_inquiry" />
 
 </navigation>

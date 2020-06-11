@@ -6,9 +6,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="text"
             type="String" />
+
+        <variable
+            name="auth"
+            type="com.shahid.fashionista_mobile.dto.response.AuthenticationResponse" />
     </data>
 
     <LinearLayout
@@ -29,19 +35,12 @@
                 android:paddingHorizontal="20dp"
                 android:paddingTop="20dp">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0.5dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorWhite" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:letterSpacing="0.5"
-                    android:paddingHorizontal="10dp"
                     android:text="@{text}"
-                    android:textColor="@color/colorWhite"
                     android:textSize="16sp" />
 
                 <View
@@ -50,20 +49,47 @@
                     android:layout_weight="1"
                     android:background="@color/colorWhite" />
 
+                <Button
+                    android:id="@+id/logoutButton"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:padding="0dp"
+                    android:text="@string/logout"
+                    android:textSize="12sp"
+                    android:visibility="@{auth != null ? View.VISIBLE : View.GONE}" />
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:padding="0dp"
+                    android:text="@string/login"
+                    android:textSize="12sp"
+                    android:visibility="@{auth == null ? View.VISIBLE : View.GONE}" />
+
+
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+        <fragment
+            android:id="@+id/user_nav"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_weight="1"
+            app:defaultNavHost="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            app:navGraph="@navigation/user_nav_graph" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/user_bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="65dp"
+            android:layout_gravity="bottom"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/user_nav_items" />
 
     </LinearLayout>
 </layout>

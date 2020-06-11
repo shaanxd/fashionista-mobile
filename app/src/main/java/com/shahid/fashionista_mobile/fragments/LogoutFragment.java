@@ -30,11 +30,11 @@ public class LogoutFragment extends RootFragment implements Runnable {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new Handler().postDelayed(this, 3000);
+        new Handler().postDelayed(this, 2000);
     }
 
     @Override
     public void run() {
-        rootNavController.navigate(R.id.action_logoutFragment_to_loginFragment);
+        rootNavController.navigate(R.id.action_logoutFragment_to_navigationFragment);
     }
 }
