@@ -12,8 +12,10 @@ import androidx.navigation.NavController;
 import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
+import com.shahid.fashionista_mobile.callbacks.TimerCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentAdminNavigationBinding;
 import com.shahid.fashionista_mobile.dto.response.AuthenticationResponse;
+import com.shahid.fashionista_mobile.store.SessionStorage;
 
 import javax.inject.Inject;
 
@@ -21,6 +23,8 @@ import static androidx.navigation.Navigation.findNavController;
 import static androidx.navigation.ui.NavigationUI.setupWithNavController;
 
 public class AdminNavigationFragment extends RootFragment {
+    @Inject
+    SessionStorage session;
     @Inject
     @Nullable
     AuthenticationResponse auth;
@@ -55,7 +59,7 @@ public class AdminNavigationFragment extends RootFragment {
 
             switch (destination.getId()) {
                 case R.id.admin_home: {
-                    title = "OUR PRODUCTS";
+                    title = "PRODUCTS";
                     break;
                 }
                 case R.id.admin_categories: {
@@ -72,7 +76,13 @@ public class AdminNavigationFragment extends RootFragment {
 
         binding.addCategoryButton.setOnClickListener(this::onAddCategoryClick);
         binding.addProductButton.setOnClickListener(this::onAddProductClick);
+        binding.logoutButton.setOnClickListener(this::onLogoutClick);
 
+    }
+
+    private void onLogoutClick(View view) {
+        session.setSession(null);
+        ((TimerCallback) activity).destroy();
     }
 
     private void onAddProductClick(View view) {
