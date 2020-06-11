@@ -1,10 +1,12 @@
 package com.shahid.fashionista_mobile.api;
 
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
+import com.shahid.fashionista_mobile.dto.request.ReplyRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
 import com.shahid.fashionista_mobile.dto.response.AllTagsResponse;
 import com.shahid.fashionista_mobile.dto.response.FavouriteResponse;
 import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
+import com.shahid.fashionista_mobile.dto.response.InquiryResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
@@ -31,10 +33,10 @@ public interface ProductInterface {
     Call<ProductResponse> getProduct(@Path("id") String id);
 
     @GET("api/products/reviews/{id}")
-    Call<ReviewListResponse> getProductReviews(@Path("id") String id, @Query("page") int page, @Query("size") int size);
+    Call<ReviewListResponse> getProductReviews(@Path("id") String id, @Query("page") int page, @Query("size") int size, @Query("sort") String sort);
 
     @GET("api/products/inquiries/{id}")
-    Call<InquiryListResponse> getProductInquiries(@Path("id") String id, @Query("page") int page, @Query("size") int size);
+    Call<InquiryListResponse> getProductInquiries(@Path("id") String id, @Query("page") int page, @Query("size") int size, @Query("sort") String sort);
 
     @POST("/api/products/add-review/{id}")
     Call<ProductResponse> addReview(@Path("id") String id, @Body ReviewRequest request, @Header("Authorization") String token);
@@ -76,4 +78,15 @@ public interface ProductInterface {
             @Part("stock") RequestBody stock,
             @Part List<MultipartBody.Part> tags
     );
+
+    @GET("/api/admin/all-inquiries")
+    Call<InquiryListResponse> getAllInquiries(
+            @Header("Authorization") String token,
+            @Query("page") int page,
+            @Query("size") int size,
+            @Query("sort") String sort
+    );
+
+    @POST("/api/products/add-reply/{id}")
+    Call<InquiryResponse> addReply(@Path("id") String id, @Header("Authorization") String token, @Body ReplyRequest request);
 }

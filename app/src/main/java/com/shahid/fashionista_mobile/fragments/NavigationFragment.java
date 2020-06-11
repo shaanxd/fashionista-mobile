@@ -29,14 +29,15 @@ public class NavigationFragment extends RootFragment {
     @Nullable
     AuthenticationResponse auth;
 
-    private List<String> tabText = Arrays.asList("Home", "Cart", "Wishlist", "Orders");
     private List<Integer> tabIcons = Arrays.asList(
             R.drawable.icon_store,
             R.drawable.icon_cart,
             R.drawable.icon_favourite,
-            R.drawable.icon_orders
+            R.drawable.icon_orders,
+            R.drawable.icon_categories,
+            R.drawable.icon_profile
     );
-    private List<String> tabHeadings = Arrays.asList("OUR PRODUCTS", "YOUR CART", "YOUR FAVOURITES", "YOUR ORDERS");
+    private List<String> tabHeadings = Arrays.asList("OUR PRODUCTS", "YOUR CART", "YOUR FAVOURITES", "YOUR ORDERS", "CATEGORIES", "YOUR PROFILE");
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
@@ -52,7 +53,7 @@ public class NavigationFragment extends RootFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentNavigationBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -85,6 +86,7 @@ public class NavigationFragment extends RootFragment {
         super.onPause();
         // TODO
         if (auth == null) {
+            System.out.println("============== SET TO 0");
             viewPager.setCurrentItem(0);
         }
     }

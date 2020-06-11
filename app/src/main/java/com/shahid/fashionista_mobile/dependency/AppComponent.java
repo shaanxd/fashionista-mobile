@@ -21,6 +21,7 @@ import com.shahid.fashionista_mobile.fragments.ProfileFragment;
 import com.shahid.fashionista_mobile.fragments.RatingFragment;
 import com.shahid.fashionista_mobile.fragments.SearchFragment;
 import com.shahid.fashionista_mobile.fragments.SignUpFragment;
+import com.shahid.fashionista_mobile.fragments.SingleInquiryFragment;
 import com.shahid.fashionista_mobile.fragments.SplashFragment;
 
 import javax.inject.Singleton;
@@ -75,4 +76,6 @@ public interface AppComponent {
     void inject(AddCategoryFragment f);
 
     void inject(AddProductFragment f);
+
+    void inject(SingleInquiryFragment f);
 }

@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.shahid.fashionista_mobile.fragments.CartFragment;
+import com.shahid.fashionista_mobile.fragments.CategoriesFragment;
 import com.shahid.fashionista_mobile.fragments.FavouritesFragment;
 import com.shahid.fashionista_mobile.fragments.HomeFragment;
 import com.shahid.fashionista_mobile.fragments.OrdersFragment;
+import com.shahid.fashionista_mobile.fragments.ProfileFragment;
 
 public class NavigationPagerAdapter extends FragmentStateAdapter {
     public NavigationPagerAdapter(@NonNull Fragment fragment) {
@@ -17,7 +19,7 @@ public class NavigationPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = null;
+        Fragment fragment;
 
         switch (position) {
             case 0: {
@@ -32,8 +34,16 @@ public class NavigationPagerAdapter extends FragmentStateAdapter {
                 fragment = new FavouritesFragment();
                 break;
             }
-            default: {
+            case 3: {
                 fragment = new OrdersFragment();
+                break;
+            }
+            case 4: {
+                fragment = new CategoriesFragment();
+                break;
+            }
+            default: {
+                fragment = new ProfileFragment();
                 break;
             }
         }
@@ -43,6 +53,6 @@ public class NavigationPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 6;
     }
 }

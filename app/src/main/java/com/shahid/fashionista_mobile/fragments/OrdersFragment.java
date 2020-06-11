@@ -12,8 +12,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.PurchaseAdapter;
-import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.FragmentOrdersBinding;
 import com.shahid.fashionista_mobile.dto.response.PurchaseListResponse;
 import com.shahid.fashionista_mobile.services.CartService;
@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class OrdersFragment extends AuthFragment implements ServiceCallback, ItemClickCallback {
+public class OrdersFragment extends AuthFragment implements ServiceCallback, onItemClickListener {
 
     @Inject
     CartService cartService;
@@ -95,10 +95,10 @@ public class OrdersFragment extends AuthFragment implements ServiceCallback, Ite
         if (currentError != null) {
             error.setValue(null);
         }
-        if (authState == null) {
+        if (auth == null) {
             return;
         }
-        cartService.getPurchases("Bearer " + authState.getToken(), 0, this);
+        cartService.getPurchases("Bearer " + auth.getToken(), 0, this);
     }
 
     @Override

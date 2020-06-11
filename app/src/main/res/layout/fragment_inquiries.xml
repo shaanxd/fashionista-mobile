@@ -1,19 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.InquiriesFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.shahid.fashionista_mobile.NumberFormatter" />
+
+        <variable
+            name="loading"
+            type="boolean" />
+
+        <variable
+            name="error"
+            type="String" />
+
+        <variable
+            name="current"
+            type="int" />
+
+        <variable
+            name="total"
+            type="int" />
+
+        <variable
+            name="size"
+            type="int" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inquiries Fragment" />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{loading ? View.VISIBLE : View.GONE}">
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{!loading &amp;&amp; error != null ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{error}" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:visibility="@{!loading &amp;&amp; error == null ? View.VISIBLE : View.GONE}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/inquiries"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:visibility="@{size != 0 ? View.VISIBLE : View.GONE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="@{size == 0 ? View.VISIBLE : View.GONE}">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_orders"
+                    android:tint="@color/colorWhite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Inquiries are Empty!"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
+                <Button
+                    android:id="@+id/previousButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{!(current == 0 || loading)}"
+                    android:text="Previous" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{NumberFormatter.getIntAsString(current)}"
+                    android:textAlignment="textEnd" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="/" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{NumberFormatter.getIntAsString(total)}"
+                    android:textAlignment="textStart" />
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{!(current == total || loading)}"
+                    android:text="Next" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
 </layout>

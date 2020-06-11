@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
+import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.InquiryAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentInquiryBinding;
@@ -76,13 +78,19 @@ public class InquiryFragment extends RootFragment implements ServiceCallback {
         binding.setSize(size);
 
         if (adapter == null) {
-            adapter = new InquiryAdapter(page.getInquiries());
+            adapter = new InquiryAdapter(page.getInquiries(), this::onItemClick);
             inquiryList.setAdapter(adapter);
         } else {
-            adapter.setReviews(page.getInquiries());
+            adapter.setInquiries(page.getInquiries());
         }
 
         binding.setLoading(false);
+    }
+
+    private void onItemClick(String inquiry) {
+        Bundle bundle = new Bundle();
+        bundle.putString("INQUIRY_DETAILS", inquiry);
+        CustomNavigator.navigate(rootNavController, R.id.action_productFragment_to_singleInquiryFragment, bundle);
     }
 
     private void onNextClick(View v) {

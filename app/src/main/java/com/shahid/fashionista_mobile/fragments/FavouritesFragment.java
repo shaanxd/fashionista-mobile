@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.ProductAdapter;
-import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.FragmentFavouritesBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.services.ProductService;
@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class FavouritesFragment extends AuthFragment implements ServiceCallback, ItemClickCallback {
+public class FavouritesFragment extends AuthFragment implements ServiceCallback, onItemClickListener {
 
     @Inject
     ProductService service;
@@ -79,10 +79,10 @@ public class FavouritesFragment extends AuthFragment implements ServiceCallback,
     private void getFavouritesFromApi() {
         loading.setValue(true);
         error.setValue(null);
-        if (authState == null) {
+        if (auth == null) {
             return;
         }
-        service.getFavourites("Bearer " + authState.getToken(), this);
+        service.getFavourites("Bearer " + auth.getToken(), this);
     }
 
     private void onLoadingChange(Boolean loading) {

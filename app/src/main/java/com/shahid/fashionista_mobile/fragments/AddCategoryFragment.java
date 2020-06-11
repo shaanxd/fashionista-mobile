@@ -102,14 +102,14 @@ public class AddCategoryFragment extends AuthFragment implements ServiceCallback
         if (!validator.validate()) {
             return;
         }
-        if (authState == null) {
+        if (auth == null) {
             return;
         }
         if (adapter.getItemCount() == 0) {
             DynamicToast.makeError(activity, "Please select an image.").show();
             return;
         }
-        String typeString = "";
+        String typeString;
 
         switch (typeGroup.getCheckedRadioButtonId()) {
             case R.id.typeBrand: {
@@ -153,7 +153,7 @@ public class AddCategoryFragment extends AuthFragment implements ServiceCallback
 
         binding.setLoading(true);
 
-        service.createCategory("Bearer " + authState.getToken(), request, this);
+        service.createCategory("Bearer " + auth.getToken(), request, this);
     }
 
     private void onAddImageClick(View view) {

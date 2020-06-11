@@ -178,7 +178,7 @@ public class AddProductFragment extends AuthFragment {
     }
 
     private void onAddProductClick(View view) {
-        if (authState == null) {
+        if (auth == null) {
             return;
         }
         if (!validator.validate()) {
@@ -239,7 +239,7 @@ public class AddProductFragment extends AuthFragment {
 
         binding.setAdding(true);
 
-        service.createProduct("Bearer " + authState.getToken(), request, new ServiceCallback() {
+        service.createProduct("Bearer " + auth.getToken(), request, new ServiceCallback() {
             @Override
             public void onSuccess(Response mResponse) {
                 DynamicToast.makeSuccess(activity, "Product added successfully!").show();

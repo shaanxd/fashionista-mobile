@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.shahid.fashionista_mobile.R;
-import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.ViewHolderProductBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 
@@ -16,9 +16,9 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     private List<ProductResponse> products;
-    private ItemClickCallback callback;
+    private onItemClickListener callback;
 
-    public ProductAdapter(List<ProductResponse> products, ItemClickCallback callback) {
+    public ProductAdapter(List<ProductResponse> products, onItemClickListener callback) {
         this.products = products;
         this.callback = callback;
     }
@@ -42,9 +42,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private ViewHolderProductBinding binding;
-        private ItemClickCallback callback;
+        private onItemClickListener callback;
 
-        ViewHolder(@NonNull ViewHolderProductBinding binding, ItemClickCallback callback) {
+        ViewHolder(@NonNull ViewHolderProductBinding binding, onItemClickListener callback) {
             super(binding.getRoot());
             this.binding = binding;
             this.callback = callback;

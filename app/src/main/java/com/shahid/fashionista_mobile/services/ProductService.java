@@ -6,10 +6,12 @@ import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.dto.request.CategoryRequest;
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
 import com.shahid.fashionista_mobile.dto.request.ProductRequest;
+import com.shahid.fashionista_mobile.dto.request.ReplyRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
 import com.shahid.fashionista_mobile.dto.response.AllTagsResponse;
 import com.shahid.fashionista_mobile.dto.response.FavouriteResponse;
 import com.shahid.fashionista_mobile.dto.response.InquiryListResponse;
+import com.shahid.fashionista_mobile.dto.response.InquiryResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.dto.response.ProductResponse;
 import com.shahid.fashionista_mobile.dto.response.ReviewListResponse;
@@ -38,12 +40,12 @@ public class ProductService {
     }
 
     public void getProductReviews(String id, int page, int size, ServiceCallback callback) {
-        Call<ReviewListResponse> call = api.getProductReviews(id, page, size);
+        Call<ReviewListResponse> call = api.getProductReviews(id, page, size, "updatedAt,desc");
         call.enqueue(new CustomCallback<>(callback));
     }
 
     public void getProductInquiries(String id, int page, int size, ServiceCallback callback) {
-        Call<InquiryListResponse> call = api.getProductInquiries(id, page, size);
+        Call<InquiryListResponse> call = api.getProductInquiries(id, page, size, "updatedAt,desc");
         call.enqueue(new CustomCallback<>(callback));
     }
 
@@ -99,6 +101,16 @@ public class ProductService {
                 request.getStock(),
                 request.getTags()
         );
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void getAllInquiries(String token, int page, ServiceCallback callback) {
+        Call<InquiryListResponse> call = api.getAllInquiries(token, page, 10, "updatedAt,desc");
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void addReply(String id, String token, ReplyRequest reply, ServiceCallback callback) {
+        Call<InquiryResponse> call = api.addReply(id, token, reply);
         call.enqueue(new CustomCallback<>(callback));
     }
 }

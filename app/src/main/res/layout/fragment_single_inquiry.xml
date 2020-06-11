@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.AddInquiryFragment">
+
+    <data>
+
+        <import type="com.shahid.fashionista_mobile.StringFormatter" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="inquiry"
+            type="com.shahid.fashionista_mobile.dto.response.InquiryResponse" />
+
+        <variable
+            name="auth"
+            type="com.shahid.fashionista_mobile.dto.response.AuthenticationResponse" />
+
+        <variable
+            name="loading"
+            type="boolean" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorLightGray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.8"
+                    android:padding="10dp"
+                    android:text="INQUIRY"
+                    android:textAppearance="?attr/textAppearanceListItemSecondary"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorLightGray" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/placeholder_img" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="20dp"
+                android:background="#dddddd" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.8"
+                android:padding="10dp"
+                android:text="@{inquiry.product.name.toUpperCase()}"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceListItemSecondary"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/user_avatar_background"
+                    android:gravity="center"
+                    android:text="@{StringFormatter.getFirstCharacter(inquiry.owner.fullName)}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{inquiry.owner.fullName}" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="A Day ago"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{inquiry.title}"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{inquiry.description}"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:letterSpacing="0.8"
+                android:padding="10dp"
+                android:text="REPLIES"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceListItemSecondary"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/replies"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="@{inquiry.replies.size() == 0 ? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="No replies yet. Be the first one to!"
+                    android:textAlignment="center" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="@{auth != null &amp;&amp; auth.role.equals(`ADMIN`) ? View.VISIBLE : View.GONE}">
+
+                <EditText
+                    android:id="@+id/reply"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{!loading}"
+                    android:gravity="top"
+                    android:hint="Type your reply here." />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="@{!loading}"
+                    android:gravity="center"
+                    android:text="REPLY" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

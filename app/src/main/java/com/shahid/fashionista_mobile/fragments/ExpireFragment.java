@@ -18,7 +18,7 @@ public abstract class ExpireFragment extends RootFragment {
     SessionStorage sessionStorage;
     @Nullable
     @Inject
-    AuthenticationResponse authState;
+    AuthenticationResponse auth;
 
     public ExpireFragment() {
         // Required empty public constructor
@@ -32,7 +32,7 @@ public abstract class ExpireFragment extends RootFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (authState != null) {
+        if (auth != null) {
             sessionStorage.attachObserver(this, authParam -> {
                 if (authParam == null) {
                     rootNavController.navigate(R.id.action_navigationFragment_to_logoutFragment);

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.shahid.fashionista_mobile.R;
-import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.ViewHolderCartBinding;
 import com.shahid.fashionista_mobile.dto.response.CartItemResponse;
 
@@ -17,9 +17,9 @@ import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private List<CartItemResponse> items;
-    private ItemClickCallback callback;
+    private onItemClickListener callback;
 
-    public CartAdapter(List<CartItemResponse> items, ItemClickCallback callback) {
+    public CartAdapter(List<CartItemResponse> items, onItemClickListener callback) {
         this.items = items;
         this.callback = callback;
     }
@@ -43,9 +43,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ViewHolderCartBinding binding;
-        ItemClickCallback callback;
+        onItemClickListener callback;
 
-        ViewHolder(@NonNull ViewHolderCartBinding binding, ItemClickCallback callback) {
+        ViewHolder(@NonNull ViewHolderCartBinding binding, onItemClickListener callback) {
             super(binding.getRoot());
             this.binding = binding;
             this.callback = callback;

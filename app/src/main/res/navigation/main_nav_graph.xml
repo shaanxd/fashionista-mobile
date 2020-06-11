@@ -127,6 +127,9 @@
         <action
             android:id="@+id/action_productFragment_to_addReviewFragment"
             app:destination="@id/addReviewFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_singleInquiryFragment"
+            app:destination="@id/singleInquiryFragment" />
 
     </fragment>
 
@@ -161,6 +164,9 @@
         <action
             android:id="@+id/action_adminNavigationFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_adminNavigationFragment_to_singleInquiryFragment"
+            app:destination="@id/singleInquiryFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -172,5 +178,9 @@
         android:name="com.shahid.fashionista_mobile.fragments.AddCategoryFragment"
         android:label="fragment_add_category"
         tools:layout="@layout/fragment_add_category" />
+    <fragment
+        android:id="@+id/singleInquiryFragment"
+        android:name="com.shahid.fashionista_mobile.fragments.SingleInquiryFragment"
+        android:label="SingleInquiryFragment" />
 
 </navigation>

@@ -97,7 +97,7 @@ public class AddInquiryFragment extends AuthFragment implements ServiceCallback 
         if (!validator.validate()) {
             return;
         }
-        if (authState == null) {
+        if (auth == null) {
             return;
         }
 
@@ -106,7 +106,7 @@ public class AddInquiryFragment extends AuthFragment implements ServiceCallback 
 
         loading.setValue(true);
         InquiryRequest request = new InquiryRequest(title, description);
-        service.addInquiry(product.getId(), "Bearer " + authState.getToken(), request, this);
+        service.addInquiry(product.getId(), "Bearer " + auth.getToken(), request, this);
     }
 
     @Override

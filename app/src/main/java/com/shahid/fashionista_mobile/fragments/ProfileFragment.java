@@ -33,5 +33,9 @@ public class ProfileFragment extends AuthFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (auth != null) {
+            binding.setProfile(auth);
+        }
     }
 }

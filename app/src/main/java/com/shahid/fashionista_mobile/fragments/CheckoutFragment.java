@@ -145,11 +145,11 @@ public class CheckoutFragment extends AuthFragment implements ServiceCallback {
                 paymentMethod
         );
 
-        if (authState == null) {
+        if (auth == null) {
             return;
         }
 
-        service.purchaseCart("Bearer " + authState.getToken(), request, this);
+        service.purchaseCart("Bearer " + auth.getToken(), request, this);
     }
 
     @Override

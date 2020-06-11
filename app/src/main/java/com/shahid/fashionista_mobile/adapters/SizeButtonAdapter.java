@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shahid.fashionista_mobile.callbacks.onSizeClickListener;
 import com.shahid.fashionista_mobile.databinding.ViewHolderSizeButtonBinding;
 
 import java.util.List;
@@ -64,9 +65,7 @@ public class SizeButtonAdapter extends RecyclerView.Adapter<SizeButtonAdapter.Vi
             binding.radioButton.setText(size);
             binding.radioButton.setChecked(checked);
 
-            binding.radioButton.setOnClickListener(v -> {
-                listener.onSizeClick(size, getAdapterPosition());
-            });
+            binding.radioButton.setOnClickListener(v -> listener.onSizeClick(size, getAdapterPosition()));
         }
     }
 }

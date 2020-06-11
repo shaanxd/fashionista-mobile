@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.shahid.fashionista_mobile.StringFormatter;
-import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.ViewHolderPurchaseBinding;
 import com.shahid.fashionista_mobile.dto.response.PurchaseResponse;
 
@@ -16,9 +16,9 @@ import java.util.List;
 
 public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.ViewHolder> {
     private List<PurchaseResponse> purchases;
-    private ItemClickCallback callback;
+    private onItemClickListener callback;
 
-    public PurchaseAdapter(List<PurchaseResponse> purchases, ItemClickCallback callback) {
+    public PurchaseAdapter(List<PurchaseResponse> purchases, onItemClickListener callback) {
         this.purchases = purchases;
         this.callback = callback;
     }
@@ -47,7 +47,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.ViewHo
             this.binding = binding;
         }
 
-        void bind(PurchaseResponse purchase, ItemClickCallback callback, boolean last) {
+        void bind(PurchaseResponse purchase, onItemClickListener callback, boolean last) {
             binding.setPurchase(purchase);
 
             String[] formattedDate = StringFormatter.getDayOfWeek(purchase.getOrderedAt()).split("-");

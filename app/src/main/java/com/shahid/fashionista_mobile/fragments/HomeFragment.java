@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.ProductAdapter;
-import com.shahid.fashionista_mobile.callbacks.ItemClickCallback;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.FragmentHomeBinding;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
 import com.shahid.fashionista_mobile.services.ProductService;
@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class HomeFragment extends ExpireFragment implements ServiceCallback, ItemClickCallback {
+public class HomeFragment extends ExpireFragment implements ServiceCallback, onItemClickListener {
     @Inject
     ProductService service;
     private FragmentHomeBinding binding;
@@ -121,6 +121,9 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, Ite
 
     @Override
     public void onItemClick(String id) {
+        if (auth != null && auth.getRole().equals("ADMIN")) {
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString("PRODUCT_ID", id);
         rootNavController.navigate(R.id.productFragment, bundle);

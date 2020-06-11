@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.ViewHolderInquiryBinding;
 import com.shahid.fashionista_mobile.dto.response.InquiryResponse;
 
@@ -13,9 +15,11 @@ import java.util.List;
 
 public class InquiryAdapter extends RecyclerView.Adapter<InquiryAdapter.ViewHolder> {
     private List<InquiryResponse> inquiries;
+    private onItemClickListener callback;
 
-    public InquiryAdapter(List<InquiryResponse> inquiries) {
+    public InquiryAdapter(List<InquiryResponse> inquiries, onItemClickListener callback) {
         this.inquiries = inquiries;
+        this.callback = callback;
     }
 
     @NonNull
@@ -27,10 +31,10 @@ public class InquiryAdapter extends RecyclerView.Adapter<InquiryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull InquiryAdapter.ViewHolder holder, int position) {
-        holder.bind(inquiries.get(position));
+        holder.bind(inquiries.get(position), callback);
     }
 
-    public void setReviews(List<InquiryResponse> inquiries) {
+    public void setInquiries(List<InquiryResponse> inquiries) {
         this.inquiries = inquiries;
         this.notifyDataSetChanged();
     }
@@ -48,8 +52,12 @@ public class InquiryAdapter extends RecyclerView.Adapter<InquiryAdapter.ViewHold
             this.binding = binding;
         }
 
-        void bind(InquiryResponse inquiries) {
-            binding.setInquiry(inquiries);
+        void bind(InquiryResponse inquiry, onItemClickListener callback) {
+            binding.setInquiry(inquiry);
+            binding.inquiry.setOnClickListener(v -> {
+                String json = new Gson().toJson(inquiry);
+                callback.onItemClick(json);
+            });
         }
     }
 }

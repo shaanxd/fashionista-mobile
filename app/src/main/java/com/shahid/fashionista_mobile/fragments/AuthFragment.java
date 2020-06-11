@@ -21,7 +21,7 @@ public abstract class AuthFragment extends ExpireFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (authState == null) {
+        if (auth == null) {
             rootNavController.navigate(R.id.loginFragment);
         }
     }

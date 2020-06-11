@@ -1,5 +1,5 @@
 package com.shahid.fashionista_mobile.callbacks;
 
-public interface ItemClickCallback {
+public interface onItemClickListener {
     void onItemClick(String id);
 }

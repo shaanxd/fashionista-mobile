@@ -7,9 +7,15 @@
 
         <import type="com.shahid.fashionista_mobile.StringFormatter" />
 
+        <import type="android.view.View" />
+
         <variable
-            name="inquiry"
-            type="com.shahid.fashionista_mobile.dto.response.InquiryResponse" />
+            name="reply"
+            type="com.shahid.fashionista_mobile.dto.response.ReplyResponse" />
+
+        <variable
+            name="last"
+            type="boolean" />
     </data>
 
     <LinearLayout
@@ -36,7 +42,7 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/user_avatar_background"
                     android:gravity="center"
-                    android:text="@{StringFormatter.getFirstCharacter(inquiry.owner.fullName)}" />
+                    android:text="@{StringFormatter.getFirstCharacter(reply.owner.fullName)}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -46,7 +52,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{inquiry.owner.fullName}" />
+                        android:text="@{reply.owner.fullName}" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -62,21 +68,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@{inquiry.title}"
+                android:text="@{reply.reply}"
                 android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{inquiry.description}"
-                android:textSize="10sp" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/colorLightGray" />
+            android:background="@color/colorLightGray"
+            android:visibility="@{last ? View.GONE : View.VISIBLE}" />
 
     </LinearLayout>
 

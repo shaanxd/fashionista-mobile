@@ -32,8 +32,8 @@ public class AdminNavigationFragment extends RootFragment {
     private List<Integer> tabIcons = Arrays.asList(
             R.drawable.icon_store,
             R.drawable.icon_orders,
-            R.drawable.icon_favourite,
-            R.drawable.icon_favourite
+            R.drawable.icon_categories,
+            R.drawable.icon_profile
     );
     private List<String> tabHeadings = Arrays.asList("OUR PRODUCTS", "INQUIRIES", "CATEGORIES", "YOUR PROFILE");
 

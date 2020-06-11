@@ -6,14 +6,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shahid.fashionista_mobile.callbacks.FileListener;
+import com.shahid.fashionista_mobile.callbacks.onFileChangeListener;
 import com.shahid.fashionista_mobile.databinding.ViewHolderFileBinding;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> implements FileListener {
+public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> implements onFileChangeListener {
     private List<File> files;
     private boolean isOne;
 
@@ -68,9 +68,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> im
 
         void bind(File file, FileAdapter callback, int position) {
             binding.setName(file.getName());
-            binding.removeButton.setOnClickListener(v -> {
-                callback.unregisterFile(position);
-            });
+            binding.removeButton.setOnClickListener(v -> callback.unregisterFile(position));
         }
     }
 }

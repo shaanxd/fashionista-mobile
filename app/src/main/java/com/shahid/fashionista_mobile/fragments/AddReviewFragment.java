@@ -100,7 +100,7 @@ public class AddReviewFragment extends AuthFragment implements ServiceCallback {
         if (!validator.validate()) {
             return;
         }
-        if (authState == null) {
+        if (auth == null) {
             return;
         }
         float value = this.ratingBar.getRating();
@@ -115,7 +115,7 @@ public class AddReviewFragment extends AuthFragment implements ServiceCallback {
 
         loading.setValue(true);
         ReviewRequest request = new ReviewRequest(title, description, value);
-        service.addReview(product.getId(), "Bearer " + authState.getToken(), request, this);
+        service.addReview(product.getId(), "Bearer " + auth.getToken(), request, this);
     }
 
     @Override
