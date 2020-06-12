@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:paddingVertical="15dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"

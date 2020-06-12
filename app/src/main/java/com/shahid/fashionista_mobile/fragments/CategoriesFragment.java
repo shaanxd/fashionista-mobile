@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
+import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.CategoryAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.databinding.FragmentCategoriesBinding;
@@ -61,12 +63,18 @@ public class CategoriesFragment extends ExpireFragment implements ServiceCallbac
             return;
         }
 
-        brands.setAdapter(new CategoryAdapter(response.getBrands(), true));
-        genders.setAdapter(new CategoryAdapter(response.getGenders(), false));
-        types.setAdapter(new CategoryAdapter(response.getTypes(), true));
+        brands.setAdapter(new CategoryAdapter(response.getBrands(), true, this::onItemClick));
+        genders.setAdapter(new CategoryAdapter(response.getGenders(), false, this::onItemClick));
+        types.setAdapter(new CategoryAdapter(response.getTypes(), true, this::onItemClick));
 
         binding.setLoading(false);
 
+    }
+
+    private void onItemClick(String tagJSON) {
+        Bundle bundle = new Bundle();
+        bundle.putString("TAG", tagJSON);
+        CustomNavigator.navigate(rootNavController, R.id.categoryProductFragment, bundle);
     }
 
     @Override

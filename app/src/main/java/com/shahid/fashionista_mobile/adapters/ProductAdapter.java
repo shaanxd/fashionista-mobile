@@ -40,6 +40,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return products.size();
     }
 
+    public void setProducts(List<ProductResponse> products) {
+        this.products = products;
+        this.notifyDataSetChanged();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         private ViewHolderProductBinding binding;
         private onItemClickListener callback;

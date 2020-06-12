@@ -6,6 +6,7 @@ import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
 import com.shahid.fashionista_mobile.dto.request.CategoryRequest;
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
 import com.shahid.fashionista_mobile.dto.request.ProductRequest;
+import com.shahid.fashionista_mobile.dto.request.ProductTagRequest;
 import com.shahid.fashionista_mobile.dto.request.ReplyRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
 import com.shahid.fashionista_mobile.dto.response.AllTagsResponse;
@@ -111,6 +112,11 @@ public class ProductService {
 
     public void addReply(String id, String token, ReplyRequest reply, ServiceCallback callback) {
         Call<InquiryResponse> call = api.addReply(id, token, reply);
+        call.enqueue(new CustomCallback<>(callback));
+    }
+
+    public void getProductsByTag(ProductTagRequest request, int page, ServiceCallback callback) {
+        Call<ProductListResponse> call = api.getProductsByType(request, page, 1);
         call.enqueue(new CustomCallback<>(callback));
     }
 }

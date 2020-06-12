@@ -8,24 +8,33 @@
 
         <import type="android.view.View" />
 
-        <import type="com.shahid.fashionista_mobile.dto.response.PurchaseListResponse" />
+        <import type="com.shahid.fashionista_mobile.NumberFormatter" />
 
         <variable
             name="loading"
-            type="Boolean" />
+            type="boolean" />
 
         <variable
             name="error"
             type="String" />
 
         <variable
-            name="orders"
-            type="PurchaseListResponse" />
+            name="current"
+            type="int" />
+
+        <variable
+            name="total"
+            type="int" />
+
+        <variable
+            name="size"
+            type="int" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
@@ -53,16 +62,58 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp"
-            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; orders != null &amp;&amp; orders.purchases.size() > 0 ? View.VISIBLE : View.GONE }">
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; size > 0 ? View.VISIBLE : View.GONE }">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/purchasesView"
+                android:id="@+id/orders"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp">
+
+                <Button
+                    android:id="@+id/previousButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{!(current == 0 || loading)}"
+                    android:text="Previous" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{NumberFormatter.getIntAsString(current)}"
+                    android:textAlignment="textEnd" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="/" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{NumberFormatter.getIntAsString(total)}"
+                    android:textAlignment="textStart" />
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{!(current == total || loading)}"
+                    android:text="Next" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -71,7 +122,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; orders != null &amp;&amp; orders.purchases.size() == 0 ? View.VISIBLE : View.GONE}">
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; size == 0 ? View.VISIBLE : View.GONE}">
 
             <ImageView
                 android:layout_width="50dp"
@@ -98,6 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{error}" />
+
         </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
 </layout>

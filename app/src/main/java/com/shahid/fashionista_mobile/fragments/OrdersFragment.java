@@ -7,13 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.PurchaseAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
-import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.FragmentOrdersBinding;
 import com.shahid.fashionista_mobile.dto.response.PurchaseListResponse;
 import com.shahid.fashionista_mobile.services.CartService;
@@ -22,14 +21,20 @@ import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class OrdersFragment extends AuthFragment implements ServiceCallback, onItemClickListener {
+public class OrdersFragment extends AuthFragment implements ServiceCallback {
 
     @Inject
     CartService cartService;
-    private MutableLiveData<Boolean> loading = new MutableLiveData<>(true);
-    private MutableLiveData<String> error = new MutableLiveData<>(null);
-    private MutableLiveData<PurchaseListResponse> purchases = new MutableLiveData<>(null);
+
+    PurchaseAdapter adapter;
+
+    RecyclerView orders;
+
     private FragmentOrdersBinding binding;
+
+    int current = 0;
+    int total = 0;
+    int size = 0;
 
     public OrdersFragment() {
         // Required empty public constructor
@@ -52,74 +57,79 @@ public class OrdersFragment extends AuthFragment implements ServiceCallback, onI
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loading.observe(getViewLifecycleOwner(), this::onLoadingChange);
-        error.observe(getViewLifecycleOwner(), this::onErrorChange);
-        purchases.observe(getViewLifecycleOwner(), this::onPurchaseChange);
+        binding.setLoading(true);
+
+        orders = binding.orders;
+
+        //Set pagination on clicks
+        binding.nextButton.setOnClickListener(this::onNextClick);
+        binding.previousButton.setOnClickListener(this::onPreviousClick);
+
+        getOrders(current);
+    }
+
+    private void onPreviousClick(View view) {
+        if (current != 0) {
+            getOrders(current - 1);
+        }
+    }
+
+    private void onNextClick(View view) {
+        if (current != total) {
+            getOrders(current + 1);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getOrdersFromApi();
+        getOrders(current);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        loading.setValue(true);
+        binding.setLoading(true);
     }
 
-    private void onPurchaseChange(PurchaseListResponse purchases) {
-        binding.setOrders(purchases);
-
-        if (purchases != null && purchases.getPurchases().size() > 0) {
-            PurchaseAdapter adapter = new PurchaseAdapter(purchases.getPurchases(), this);
-            binding.purchasesView.setAdapter(adapter);
-        }
-    }
-
-    private void onErrorChange(String error) {
-        binding.setError(error);
-    }
-
-    private void onLoadingChange(Boolean loading) {
-        binding.setLoading(loading);
-    }
-
-    private void getOrdersFromApi() {
-        Boolean currentLoading = loading.getValue();
-        if (currentLoading == null || !currentLoading) {
-            loading.setValue(true);
-        }
-        String currentError = error.getValue();
-        if (currentError != null) {
-            error.setValue(null);
-        }
+    private void getOrders(int page) {
         if (auth == null) {
             return;
         }
-        cartService.getPurchases("Bearer " + auth.getToken(), 0, this);
+        cartService.getPurchases("Bearer " + auth.getToken(), page, this);
     }
 
     @Override
     public void onSuccess(Response mResponse) {
-        PurchaseListResponse responseBody = (PurchaseListResponse) mResponse.body();
-
-        if (responseBody == null) {
+        PurchaseListResponse page = (PurchaseListResponse) mResponse.body();
+        if (page == null) {
             return;
         }
 
-        purchases.setValue(responseBody);
-        loading.setValue(false);
+        current = page.getCurrent();
+        total = page.getTotal();
+        size = page.getPurchases().size();
+
+        binding.setCurrent(current);
+        binding.setTotal(total);
+        binding.setSize(size);
+
+        if (adapter == null) {
+            adapter = new PurchaseAdapter(page.getPurchases(), this::onItemClick);
+        } else {
+            adapter.setPurchases(page.getPurchases());
+        }
+        orders.setAdapter(adapter);
+
+        binding.setLoading(false);
     }
 
     @Override
     public void onFailure(String mErrorMessage) {
-        error.setValue(mErrorMessage);
-        loading.setValue(false);
+        binding.setError(mErrorMessage);
+        binding.setLoading(false);
     }
 
-    @Override
     public void onItemClick(String id) {
         Bundle bundle = new Bundle();
         bundle.putString("ORDER_DETAILS", id);

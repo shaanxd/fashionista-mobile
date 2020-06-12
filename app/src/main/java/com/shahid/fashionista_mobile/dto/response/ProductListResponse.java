@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductListResponse {
-    private long total;
-    private long current;
+    private int total;
+    private int current;
     private List<ProductResponse> products = new ArrayList<>();
 }

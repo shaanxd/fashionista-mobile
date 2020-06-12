@@ -38,7 +38,7 @@ public class CartService {
     }
 
     public void getPurchases(String token, int pageNumber, ServiceCallback callback) {
-        Call<PurchaseListResponse> call = api.getPurchases(token, pageNumber, 8, "createdAt,desc");
+        Call<PurchaseListResponse> call = api.getPurchases(token, pageNumber, 10, "createdAt,desc");
         call.enqueue(new CustomCallback<>(callback));
     }
 

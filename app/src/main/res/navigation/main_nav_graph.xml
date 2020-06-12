@@ -188,5 +188,9 @@
         android:name="com.shahid.fashionista_mobile.fragments.SingleInquiryFragment"
         android:label="SingleInquiryFragment"
         tools:layout="@layout/fragment_single_inquiry" />
+    <fragment
+        android:id="@+id/categoryProductFragment"
+        android:name="com.shahid.fashionista_mobile.fragments.CategoryProductFragment"
+        android:label="CategoryProductFragment" />
 
 </navigation>

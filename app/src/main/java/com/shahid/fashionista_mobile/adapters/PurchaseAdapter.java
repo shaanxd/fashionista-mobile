@@ -39,6 +39,11 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.ViewHo
         return purchases.size();
     }
 
+    public void setPurchases(List<PurchaseResponse> purchases) {
+        this.purchases = purchases;
+        this.notifyDataSetChanged();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         ViewHolderPurchaseBinding binding;
 

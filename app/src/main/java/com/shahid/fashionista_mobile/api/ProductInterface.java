@@ -1,6 +1,7 @@
 package com.shahid.fashionista_mobile.api;
 
 import com.shahid.fashionista_mobile.dto.request.InquiryRequest;
+import com.shahid.fashionista_mobile.dto.request.ProductTagRequest;
 import com.shahid.fashionista_mobile.dto.request.ReplyRequest;
 import com.shahid.fashionista_mobile.dto.request.ReviewRequest;
 import com.shahid.fashionista_mobile.dto.response.AllTagsResponse;
@@ -89,4 +90,7 @@ public interface ProductInterface {
 
     @POST("/api/products/add-reply/{id}")
     Call<InquiryResponse> addReply(@Path("id") String id, @Header("Authorization") String token, @Body ReplyRequest request);
+
+    @POST("/api/products/by-type")
+    Call<ProductListResponse> getProductsByType(@Body ProductTagRequest request, @Query("page") int page, @Query("size") int size);
 }

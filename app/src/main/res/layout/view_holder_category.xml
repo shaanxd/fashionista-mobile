@@ -29,6 +29,7 @@
             android:visibility="@{reverse &amp;&amp; !last ? View.VISIBLE : View.GONE}" />
 
         <RelativeLayout
+            android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">

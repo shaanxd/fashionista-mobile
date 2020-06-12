@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.shahid.fashionista_mobile.R;
+import com.shahid.fashionista_mobile.callbacks.onItemClickListener;
 import com.shahid.fashionista_mobile.databinding.ViewHolderCategoryBinding;
 import com.shahid.fashionista_mobile.dto.response.TagResponse;
 
@@ -16,10 +18,12 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private List<TagResponse> items;
     private boolean isReverse;
+    private onItemClickListener callback;
 
-    public CategoryAdapter(List<TagResponse> items, boolean isReverse) {
+    public CategoryAdapter(List<TagResponse> items, boolean isReverse, onItemClickListener callback) {
         this.items = items;
         this.isReverse = isReverse;
+        this.callback = callback;
     }
 
     @NonNull
@@ -31,7 +35,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
-        holder.bind(items.get(position), position == items.size() - 1, isReverse);
+        holder.bind(items.get(position), position == items.size() - 1, isReverse, callback);
     }
 
     @Override
@@ -47,7 +51,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             this.binding = binding;
         }
 
-        void bind(TagResponse item, boolean isLast, boolean isReverse) {
+        void bind(TagResponse item, boolean isLast, boolean isReverse, onItemClickListener callback) {
             binding.setTag(item);
             binding.setLast(isLast);
             binding.setReverse(isReverse);
@@ -56,6 +60,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     .load(item.getImage())
                     .placeholder(R.drawable.placeholder_img)
                     .into(binding.image);
+
+            binding.category.setOnClickListener(v -> {
+                callback.onItemClick(new Gson().toJson(item));
+            });
         }
     }
 }
