@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.AddCategoryFragment">
+    tools:context=".fragments.SearchFragment">
 
     <data>
 
@@ -11,7 +11,7 @@
         <import type="com.shahid.fashionista_mobile.NumberFormatter" />
 
         <variable
-            name="title"
+            name="term"
             type="String" />
 
         <variable
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:letterSpacing="0.5"
-                    android:text="@{title}"
+                    android:text="@string/search"
                     android:textSize="16sp" />
 
                 <View
@@ -153,18 +153,19 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:contentDescription="@string/image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_store"
+                android:contentDescription="@string/image"
+                android:src="@drawable/icon_search"
                 android:tint="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/oops_could_not_find_any_products"
-                android:textSize="18sp" />
+                android:padding="10dp"
+                android:text="@{`Oops! Could not find any products tagged ` + term}"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
         </LinearLayout>
 

@@ -5,10 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SplashFragment">
 
-    <TextView
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Fashionista"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_to_fashionista" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </RelativeLayout>

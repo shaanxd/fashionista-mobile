@@ -18,8 +18,8 @@ import com.shahid.fashionista_mobile.fragments.LoginFragment;
 import com.shahid.fashionista_mobile.fragments.NavigationFragment;
 import com.shahid.fashionista_mobile.fragments.OrdersFragment;
 import com.shahid.fashionista_mobile.fragments.ProductFragment;
-import com.shahid.fashionista_mobile.fragments.ProfileFragment;
 import com.shahid.fashionista_mobile.fragments.RatingFragment;
+import com.shahid.fashionista_mobile.fragments.SearchFragment;
 import com.shahid.fashionista_mobile.fragments.SignUpFragment;
 import com.shahid.fashionista_mobile.fragments.SingleInquiryFragment;
 import com.shahid.fashionista_mobile.fragments.SplashFragment;
@@ -67,8 +67,6 @@ public interface AppComponent {
 
     void inject(InquiriesFragment f);
 
-    void inject(ProfileFragment f);
-
     void inject(CategoriesFragment f);
 
     void inject(AddCategoryFragment f);
@@ -78,4 +76,6 @@ public interface AppComponent {
     void inject(SingleInquiryFragment f);
 
     void inject(CategoryProductFragment f);
+
+    void inject(SearchFragment f);
 }

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".fragments.SignUpFragment">
+    tools:context=".fragments.SignUpFragment"
+    tools:ignore="SmallSp">
 
     <RelativeLayout
         android:id="@+id/hiddenLayout"
@@ -12,74 +13,150 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:layout_centerInParent="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/firstNameTxt"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_first_name"
-                    android:maxLines="1" />
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:letterSpacing="0.2"
+                    android:text="@string/hey_there_let_s_signup"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/lastNameTxt"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_last_name"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="5dp"
+                            android:text="@string/first_name"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:id="@+id/firstNameTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_first_name"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
+                            android:maxLines="1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="5dp"
+                            android:text="@string/last_name"
+                            android:textSize="10sp" />
+
+                        <EditText
+                            android:id="@+id/lastNameTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_last_name"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
+                            android:maxLines="1" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/email_address"
+                    android:textSize="10sp" />
+
+                <EditText
+                    android:id="@+id/emailTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_email_address"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/enter_password"
+                    android:textSize="10sp" />
+
+                <EditText
+                    android:id="@+id/passwordTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/re_enter_password"
+                    android:textSize="10sp" />
+
+                <EditText
+                    android:id="@+id/confirmPasswordTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_confirm_password"
+                    android:importantForAutofill="no"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+                <Button
+                    android:id="@+id/signUpBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/btn_sign_up" />
+
+                <Button
+                    android:id="@+id/signInBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_sign_in" />
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/emailTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/hint_email_address"
-                android:maxLines="1" />
-
-            <EditText
-                android:id="@+id/passwordTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/hint_password"
-                android:maxLines="1" />
-
-            <EditText
-                android:id="@+id/confirmPasswordTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/hint_confirm_password"
-                android:maxLines="1" />
-
-            <Button
-                android:id="@+id/signUpBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/btn_sign_up" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/signInBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="@string/btn_sign_in" />
+        </ScrollView>
 
     </RelativeLayout>
 

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="SmallSp">
 
     <data>
+
         <import type="com.shahid.fashionista_mobile.dto.response.PurchaseResponse" />
+
         <import type="com.shahid.fashionista_mobile.StringFormatter" />
+
         <import type="android.view.View" />
+
         <variable
             name="purchase"
             type="PurchaseResponse" />
@@ -62,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:text="@{day}"
                         android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/colorAccent"
                         android:textSize="20sp" />
 
                     <TextView
@@ -126,8 +132,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightGray"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
             android:visibility="@{last ? View.GONE : View.VISIBLE}" />
 
     </LinearLayout>

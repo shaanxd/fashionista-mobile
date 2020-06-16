@@ -9,45 +9,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.ProductAdapter;
 import com.shahid.fashionista_mobile.callbacks.ServiceCallback;
-import com.shahid.fashionista_mobile.databinding.FragmentCategoryProductBinding;
+import com.shahid.fashionista_mobile.databinding.FragmentSearchBinding;
 import com.shahid.fashionista_mobile.dto.request.ProductTagRequest;
 import com.shahid.fashionista_mobile.dto.response.ProductListResponse;
-import com.shahid.fashionista_mobile.dto.response.TagResponse;
 import com.shahid.fashionista_mobile.services.ProductService;
-
-import java.util.Collections;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import retrofit2.Response;
 
-public class CategoryProductFragment extends ExpireFragment implements ServiceCallback {
+public class SearchFragment extends ExpireFragment implements ServiceCallback {
 
     @Inject
     ProductService service;
 
     ProductTagRequest request;
-    TagResponse tag;
+    String term;
 
     RecyclerView products;
 
     ProductAdapter adapter;
 
-    FragmentCategoryProductBinding binding;
-
     int current = 0;
     int total = 0;
     int size = 0;
 
-    public CategoryProductFragment() {
-    }
+    FragmentSearchBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,16 +52,13 @@ public class CategoryProductFragment extends ExpireFragment implements ServiceCa
             return;
         }
 
-        String tagJSON = bundle.getString("TAG", "");
-        tag = new Gson().fromJson(tagJSON, TagResponse.class);
-        List<String> ids = Collections.singletonList(tag.getId());
-        request = new ProductTagRequest(ids);
+        term = bundle.getString("SEARCH_TERM", "");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentCategoryProductBinding.inflate(LayoutInflater.from(inflater.getContext()), container, false);
+        binding = FragmentSearchBinding.inflate(LayoutInflater.from(inflater.getContext()), container, false);
         return binding.getRoot();
     }
 
@@ -78,8 +67,8 @@ public class CategoryProductFragment extends ExpireFragment implements ServiceCa
         super.onViewCreated(view, savedInstanceState);
 
         binding.setLoading(true);
-        binding.setTitle(tag.getName().toUpperCase());
         binding.backButton.setOnClickListener(this::onBackClick);
+        binding.setTerm(term);
 
         products = binding.products;
 
@@ -87,7 +76,7 @@ public class CategoryProductFragment extends ExpireFragment implements ServiceCa
         binding.nextButton.setOnClickListener(this::onNextClick);
         binding.previousButton.setOnClickListener(this::onPreviousClick);
 
-        getProductsByType(current);
+        getProductsByName(current);
     }
 
     private void onBackClick(View view) {
@@ -96,19 +85,19 @@ public class CategoryProductFragment extends ExpireFragment implements ServiceCa
 
     private void onPreviousClick(View view) {
         if (current != 0) {
-            getProductsByType(current - 1);
+            getProductsByName(current - 1);
         }
     }
 
     private void onNextClick(View view) {
         if (current != total) {
-            getProductsByType(current + 1);
+            getProductsByName(current + 1);
         }
     }
 
-    private void getProductsByType(int page) {
+    private void getProductsByName(int page) {
         binding.setLoading(true);
-        service.getProductsByTag(request, page, this);
+        service.getProductsByName(term, page, this);
     }
 
     @Override

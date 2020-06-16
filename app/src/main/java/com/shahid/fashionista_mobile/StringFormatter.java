@@ -2,6 +2,8 @@ package com.shahid.fashionista_mobile;
 
 import android.annotation.SuppressLint;
 
+import com.shahid.fashionista_mobile.dto.response.PurchaseResponse;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -25,5 +27,9 @@ public class StringFormatter {
 
     public static String getFirstCharacter(String name) {
         return String.valueOf(name.charAt(0));
+    }
+
+    public static String getPurchaseAddress(PurchaseResponse purchase) {
+        return purchase.getAddress().toUpperCase() + ", " + purchase.getCity().toUpperCase() + ", " + purchase.getCountry().toUpperCase();
     }
 }

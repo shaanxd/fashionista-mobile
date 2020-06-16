@@ -41,9 +41,9 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="0.5dp"
+                    android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorWhite" />
+                    android:background="@color/colorAccent" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/addProductButton"
@@ -106,7 +106,8 @@
             app:defaultNavHost="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:navGraph="@navigation/admin_nav_graph" />
+            app:navGraph="@navigation/admin_nav_graph"
+            tools:ignore="FragmentTagUsage" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/admin_bottom_nav"

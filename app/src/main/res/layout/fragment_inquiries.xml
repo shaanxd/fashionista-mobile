@@ -42,6 +42,20 @@
             android:layout_height="match_parent"
             android:visibility="@{loading ? View.VISIBLE : View.GONE}">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.6"
+                    android:text="@string/loading"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -82,19 +96,21 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:visibility="@{size == 0 ? View.VISIBLE : View.GONE}">
+                android:visibility="@{size == 0 ? View.VISIBLE : View.GONE}"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
+                    android:contentDescription="@string/image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/icon_inquiry"
-                    android:tint="@color/colorWhite" />
+                    android:tint="@color/colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Inquiries are Empty!"
+                    android:text="@string/inquiries_are_empty"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -111,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:enabled="@{!(current == 0 || loading)}"
-                    android:text="Previous" />
+                    android:text="@string/previous" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -124,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:text="/" />
+                    android:text="@string/dash" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -138,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:enabled="@{!(current == total || loading)}"
-                    android:text="Next" />
+                    android:text="@string/next" />
 
             </LinearLayout>
 

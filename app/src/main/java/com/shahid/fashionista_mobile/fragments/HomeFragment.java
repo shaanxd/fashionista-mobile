@@ -1,9 +1,12 @@
 package com.shahid.fashionista_mobile.fragments;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.shahid.fashionista_mobile.CustomNavigator;
 import com.shahid.fashionista_mobile.FashionApp;
 import com.shahid.fashionista_mobile.R;
 import com.shahid.fashionista_mobile.adapters.ProductAdapter;
@@ -63,6 +68,25 @@ public class HomeFragment extends ExpireFragment implements ServiceCallback, onI
         loading.observe(getViewLifecycleOwner(), this::onLoadingChange);
         productList.observe(getViewLifecycleOwner(), this::onProductsChange);
         error.observe(getViewLifecycleOwner(), this::onErrorChange);
+
+        binding.term.setOnEditorActionListener(this::onKeyListener);
+    }
+
+    private boolean onKeyListener(TextView textView, int i, KeyEvent keyEvent) {
+        boolean handled = false;
+        if (i == EditorInfo.IME_ACTION_DONE) {
+            String text = binding.term.getText().toString();
+            if (text.isEmpty()) {
+                DynamicToast.makeWarning(activity, "Please enter a search term.").show();
+                handled = false;
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("SEARCH_TERM", text);
+                CustomNavigator.navigate(rootNavController, R.id.searchFragment, bundle);
+                handled = true;
+            }
+        }
+        return handled;
     }
 
     @Override

@@ -134,7 +134,7 @@ public class CheckoutFragment extends AuthFragment implements ServiceCallback {
         String city = this.city.getText().toString();
         String country = this.country.getText().toString();
 
-        String paymentMethod = this.paymentMethod.isChecked() ? "CARD_PAYMENT" : "CASH_PAYMENT";
+        String paymentMethod = this.paymentMethod.isChecked() ? "CARD_PAYMENT" : "CASH_ON_DELIVERY";
 
         PurchaseRequest request = new PurchaseRequest(
                 cart,

@@ -45,9 +45,9 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="0.5dp"
+                    android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorWhite" />
+                    android:background="@color/colorAccent" />
 
                 <Button
                     android:id="@+id/logoutButton"
@@ -81,7 +81,8 @@
             app:defaultNavHost="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:navGraph="@navigation/user_nav_graph" />
+            app:navGraph="@navigation/user_nav_graph"
+            tools:ignore="FragmentTagUsage" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/user_bottom_nav"

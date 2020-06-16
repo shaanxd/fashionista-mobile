@@ -57,6 +57,9 @@ public interface ProductInterface {
     @GET("/api/tags/all")
     Call<AllTagsResponse> getAllProductTags();
 
+    @GET("/api/products/search/{name}")
+    Call<ProductListResponse> getProductsByName(@Path("name") String name, @Query("page") int page, @Query("size") int size);
+
     @Multipart
     @POST("/api/admin/create-tag")
     Call<Object> createCategory(

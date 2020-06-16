@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.CheckoutFragment">
+    tools:context=".fragments.CheckoutFragment"
+    tools:ignore="SmallSp">
 
     <data>
 
@@ -33,7 +34,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -48,28 +49,29 @@
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_weight="1"
-                        android:background="@color/colorLightGray" />
+                        android:background="@color/colorAccent" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Checkout"
+                        android:letterSpacing="0.5"
                         android:textAppearance="?attr/textAppearanceListItemSecondary"
-                        android:textSize="20sp" />
+                        android:text="@string/checkout"
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_weight="1"
-                        android:background="@color/colorLightGray" />
+                        android:background="@color/colorAccent" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
-                    android:text="Product Information"
+                    android:text="@string/product_information"
                     android:textAlignment="center" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -83,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
-                    android:text="Contact Information"
+                    android:text="@string/contact_information"
                     android:textAlignment="center" />
 
                 <LinearLayout
@@ -102,7 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:paddingHorizontal="5dp"
-                            android:text="First name"
+                            android:text="@string/first_name_simple"
                             android:textSize="10sp" />
 
 
@@ -111,7 +113,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:enabled="@{loading ? false : true}"
-                            android:hint="First name"
+                            android:hint="@string/first_name_simple"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
                             android:maxLines="1" />
 
                     </LinearLayout>
@@ -131,7 +135,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:paddingHorizontal="5dp"
-                            android:text="Last name"
+                            android:text="@string/last_name_simple"
                             android:textSize="10sp" />
 
                         <EditText
@@ -139,7 +143,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:enabled="@{loading ? false : true}"
-                            android:hint="Last name"
+                            android:hint="@string/last_name_simple"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
                             android:maxLines="1" />
 
                     </LinearLayout>
@@ -151,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingHorizontal="5dp"
-                    android:text="Address"
+                    android:text="@string/address_simple"
                     android:textSize="10sp" />
 
                 <EditText
@@ -159,7 +165,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{loading ? false : true}"
-                    android:hint="Address"
+                    android:hint="@string/address_simple"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
                     android:maxLines="1" />
 
                 <TextView
@@ -167,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingHorizontal="5dp"
-                    android:text="City"
+                    android:text="@string/city_simple"
                     android:textSize="10sp" />
 
                 <EditText
@@ -175,7 +183,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{loading ? false : true}"
-                    android:hint="City"
+                    android:hint="@string/city_simple"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
                     android:maxLines="1" />
 
                 <TextView
@@ -183,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:paddingHorizontal="5dp"
-                    android:text="Country / Region"
+                    android:text="@string/country_region"
                     android:textSize="10sp" />
 
                 <EditText
@@ -191,14 +201,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{loading ? false : true}"
-                    android:hint="Country / Region"
+                    android:hint="@string/country_region"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
                     android:maxLines="1" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
-                    android:text="Payment Information"
+                    android:text="@string/payment_information"
                     android:textAlignment="center" />
 
                 <LinearLayout
@@ -211,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Card Payment" />
+                        android:text="@string/card_payment" />
 
                     <Switch
                         android:id="@+id/paymentMethod"
@@ -225,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Cash Payment" />
+                        android:text="@string/cash_payment" />
 
                 </LinearLayout>
 
@@ -240,7 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:paddingHorizontal="5dp"
-                        android:text="Card Number"
+                        android:text="@string/card_number"
                         android:textSize="10sp" />
 
                     <EditText
@@ -248,7 +260,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="@{loading ? false : true}"
-                        android:hint="Card Number"
+                        android:hint="@string/card_number"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
                         android:maxLines="1" />
 
                     <LinearLayout
@@ -267,7 +281,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:paddingHorizontal="5dp"
-                                android:text="CVV"
+                                android:text="@string/cvv"
                                 android:textSize="10sp" />
 
 
@@ -276,7 +290,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:enabled="@{loading ? false : true}"
-                                android:hint="CVV"
+                                android:hint="@string/cvv"
+                                android:importantForAutofill="no"
+                                android:inputType="number"
                                 android:maxLines="1" />
 
                         </LinearLayout>
@@ -296,7 +312,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:paddingHorizontal="5dp"
-                                android:text="Expiration Date"
+                                android:text="@string/expiration_date"
                                 android:textSize="10sp" />
 
                             <EditText
@@ -304,8 +320,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:enabled="@{loading ? false : true}"
-                                android:hint="Expiration Date"
-                                android:maxLines="1" />
+                                android:hint="@string/expiration_date"
+                                android:importantForAutofill="no"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                tools:ignore="TextFields" />
 
                         </LinearLayout>
 
@@ -323,7 +342,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:enabled="@{loading ? false : true}"
-            android:text="Checkout" />
+            android:text="@string/checkout" />
 
     </LinearLayout>
 

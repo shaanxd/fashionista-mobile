@@ -93,20 +93,22 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; products != null &amp;&amp; products.products.size() == 0 ? View.VISIBLE : View.GONE}">
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; products != null &amp;&amp; products.products.size() == 0 ? View.VISIBLE : View.GONE}"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
+                android:contentDescription="@string/image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/icon_favourite"
-                android:tint="@color/colorWhite" />
+                android:tint="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="18sp"
-                android:text="Favourites is Empty!" />
+                android:text="@string/favourites_is_empty" />
 
         </LinearLayout>
 

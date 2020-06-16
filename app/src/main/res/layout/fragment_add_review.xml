@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.AddReviewFragment">
+    tools:context=".fragments.AddReviewFragment"
+    tools:ignore="SmallSp">
 
     <data>
 
@@ -36,24 +37,26 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorLightGray" />
+                    android:background="@color/colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Add Review"
+                    android:letterSpacing="0.5"
+                    android:text="@string/add_review"
                     android:textAppearance="?attr/textAppearanceListItemSecondary"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorLightGray" />
+                    android:background="@color/colorAccent" />
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/image"
                 android:id="@+id/thumbnailImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,10 +67,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="20dp"
-                android:background="#dddddd" />
+                android:background="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/productName"
@@ -82,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Overall Rating"
+                android:text="@string/overall_rating"
                 android:textSize="10sp" />
 
             <RatingBar
@@ -99,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Review Title"
+                android:text="@string/review_title"
                 android:textSize="10sp" />
 
             <EditText
@@ -107,14 +110,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="@{loading ? false : true}"
-                android:hint="Enter title"
+                android:hint="@string/enter_title"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:maxLines="1" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Review Description"
+                android:text="@string/review_description"
                 android:textSize="10sp" />
 
             <EditText
@@ -123,8 +128,10 @@
                 android:layout_height="wrap_content"
                 android:enabled="@{loading ? false : true}"
                 android:gravity="top"
-                android:hint="Tell us what you think"
+                android:hint="@string/tell_us_what_you_think"
                 android:maxLines="5"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:minLines="5" />
 
             <Button
@@ -133,7 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:enabled="@{loading ? false : true}"
-                android:text="Add Review" />
+                android:text="@string/add_review" />
 
         </LinearLayout>
 

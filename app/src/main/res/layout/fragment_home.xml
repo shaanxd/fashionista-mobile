@@ -79,6 +79,39 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/term"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/search_products"
+                        android:imeOptions="actionDone"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:letterSpacing=".2"
+                        android:maxLines="1"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/image"
+                        android:padding="5dp"
+                        android:src="@drawable/icon_search"
+                        android:tint="@color/colorPrimary" />
+
+                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/productView"
                     android:layout_width="match_parent"
@@ -93,19 +126,21 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; products != null &amp;&amp; products.products.size() == 0 ? View.VISIBLE : View.GONE}">
+            android:visibility="@{!loading &amp;&amp; error == null &amp;&amp; products != null &amp;&amp; products.products.size() == 0 ? View.VISIBLE : View.GONE}"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
+                android:contentDescription="@string/image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/icon_store"
-                android:tint="@color/colorWhite" />
+                android:tint="@color/colorAccent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Home is Empty!"
+                android:text="@string/home_is_empty"
                 android:textSize="18sp" />
 
         </LinearLayout>

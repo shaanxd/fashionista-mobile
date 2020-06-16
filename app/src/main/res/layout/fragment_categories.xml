@@ -27,6 +27,20 @@
             android:layout_height="match_parent"
             android:visibility="@{loading ? View.VISIBLE : View.GONE}">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.6"
+                    android:text="@string/loading"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -60,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:letterSpacing="1"
                     android:padding="10dp"
-                    android:text="BRANDS"
+                    android:text="@string/brands"
                     android:textAlignment="textEnd"
                     android:textSize="16sp" />
 
@@ -78,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:letterSpacing="1"
                     android:padding="10dp"
-                    android:text="SEX"
+                    android:text="@string/gender"
                     android:textAlignment="textStart"
                     android:textSize="16sp" />
 
@@ -95,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:letterSpacing="1"
                     android:padding="10dp"
-                    android:text="TYPES"
+                    android:text="@string/types"
                     android:textAlignment="textEnd"
                     android:textSize="16sp" />
 

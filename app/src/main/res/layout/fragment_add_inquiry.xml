@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.AddInquiryFragment">
+    tools:context=".fragments.AddInquiryFragment"
+    tools:ignore="SmallSp">
 
     <data>
 
@@ -36,24 +37,26 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorLightGray" />
+                    android:background="@color/colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Add Inquiry"
+                    android:letterSpacing="0.5"
+                    android:text="@string/add_inquiry"
                     android:textAppearance="?attr/textAppearanceListItemSecondary"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorLightGray" />
+                    android:background="@color/colorAccent" />
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/image"
                 android:id="@+id/thumbnailImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,10 +67,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="20dp"
-                android:background="#dddddd" />
+                android:background="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/productName"
@@ -82,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Inquiry Title"
+                android:text="@string/inquiry_title"
                 android:textSize="10sp" />
 
             <EditText
@@ -90,14 +93,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="@{loading ? false : true}"
-                android:hint="Enter Question"
+                android:hint="@string/enter_question"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:maxLines="1" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Inquiry Description"
+                android:text="@string/inquiry_description"
                 android:textSize="10sp" />
 
             <EditText
@@ -106,8 +111,10 @@
                 android:layout_height="wrap_content"
                 android:enabled="@{loading ? false : true}"
                 android:gravity="top"
-                android:hint="Explain us your inquiry."
+                android:hint="@string/explain_us_your_inquiry"
                 android:maxLines="5"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:minLines="5" />
 
             <Button
@@ -116,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:enabled="@{loading ? false : true}"
-                android:text="Add Inquiry" />
+                android:text="@string/add_inquiry" />
 
         </LinearLayout>
 

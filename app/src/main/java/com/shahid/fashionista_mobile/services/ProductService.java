@@ -119,4 +119,9 @@ public class ProductService {
         Call<ProductListResponse> call = api.getProductsByType(request, page, 1);
         call.enqueue(new CustomCallback<>(callback));
     }
+
+    public void getProductsByName(String term, int page, ServiceCallback callback) {
+        Call<ProductListResponse> call = api.getProductsByName(term, page, 6);
+        call.enqueue(new CustomCallback<>(callback));
+    }
 }

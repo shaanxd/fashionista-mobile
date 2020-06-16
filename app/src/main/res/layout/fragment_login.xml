@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".fragments.LoginFragment">
+    tools:context=".fragments.LoginFragment"
+    tools:ignore="SmallSp">
 
     <RelativeLayout
         android:id="@+id/hiddenLayout"
@@ -18,24 +19,54 @@
             android:layout_centerInParent="true"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:letterSpacing="0.2"
+                android:text="@string/hey_there_let_s_login"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                android:text="@string/email_address"
+                android:textSize="10sp" />
+
             <EditText
                 android:id="@+id/emailTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_email_address" />
+                android:hint="@string/hint_email_address"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="5dp"
+                android:text="@string/enter_password"
+                android:textSize="10sp" />
 
             <EditText
                 android:id="@+id/passwordTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/hint_password" />
+                android:hint="@string/hint_password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:maxLines="1" />
 
             <Button
                 android:id="@+id/signInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="@string/btn_sign_in" />
 
         </LinearLayout>

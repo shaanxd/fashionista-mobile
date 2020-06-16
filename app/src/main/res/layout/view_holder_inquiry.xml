@@ -51,7 +51,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="A Day ago"
+                        android:text="@string/a_day_ago"
                         android:textSize="10sp" />
 
                 </LinearLayout>
@@ -75,8 +75,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorLightGray" />
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
     </LinearLayout>
 

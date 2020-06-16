@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.AddInquiryFragment">
+    tools:context=".fragments.AddInquiryFragment"
+    tools:ignore="SmallSp">
 
     <data>
 
@@ -29,7 +30,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -43,25 +44,26 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorLightGray" />
+                    android:background="@color/colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:letterSpacing="0.8"
+                    android:letterSpacing="0.5"
                     android:padding="10dp"
-                    android:text="INQUIRY"
+                    android:text="@string/inquiry"
                     android:textAppearance="?attr/textAppearanceListItemSecondary"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:background="@color/colorLightGray" />
+                    android:background="@color/colorAccent" />
             </LinearLayout>
 
             <ImageView
+                android:contentDescription="@string/image"
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,10 +74,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="1dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="20dp"
-                android:background="#dddddd" />
+                android:background="@color/colorAccent" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -115,7 +117,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="A Day ago"
+                        android:text="@string/a_day_ago"
                         android:textSize="10sp" />
 
                 </LinearLayout>
@@ -142,7 +144,7 @@
                 android:layout_marginTop="10dp"
                 android:letterSpacing="0.8"
                 android:padding="10dp"
-                android:text="REPLIES"
+                android:text="@string/replies"
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
                 android:textSize="16sp" />
@@ -166,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="No replies yet. Be the first one to!"
+                    android:text="@string/no_replies_yet_be_the_first_one_to"
                     android:textAlignment="center" />
 
 
@@ -180,12 +182,14 @@
                 android:visibility="@{auth != null &amp;&amp; auth.role.equals(`ADMIN`) ? View.VISIBLE : View.GONE}">
 
                 <EditText
+                    android:hint="@string/type_your_reply_here"
+                    android:importantForAutofill="no"
                     android:id="@+id/reply"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{!loading}"
                     android:gravity="top"
-                    android:hint="Type your reply here." />
+                    android:inputType="text" />
 
                 <View
                     android:layout_width="10dp"
@@ -197,7 +201,7 @@
                     android:layout_height="match_parent"
                     android:enabled="@{!loading}"
                     android:gravity="center"
-                    android:text="REPLY" />
+                    android:text="@string/reply" />
 
             </LinearLayout>
 
